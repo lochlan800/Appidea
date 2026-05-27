@@ -199,370 +199,363 @@
 
 const QUESTIONS = [
   {
-    id: 'goal', badge: 'Your motivation', dim: 'goal',
-    text: 'What\'s your main goal with this app?',
-    hint: 'This shapes every recommendation. Be honest.',
-    placeholder: 'e.g. I want to build something I use every day to solve a real frustration I have...',
+    id: 'week_context', badge: 'Your Week', dim: 'goal',
+    text: 'What does a typical week look like for you?',
+    hint: 'Think about where your time and energy actually goes — not the ideal, the real version.',
+    placeholder: 'e.g. I spend most of my week doing freelance design work while building a side project in the evenings...',
     textToKey: {
-      income:   ['money','earn','revenue','profit','sell','paid','saas','subscription','charge'],
-      personal: ['myself','my own','i use','i need','frustrat','annoy','daily','itch','personal problem'],
-      impact:   ['help','people','others','world','change','difference','community','benefit','society'],
-      fun:      ['fun','enjoy','cool','interesting','exciting','creative','challenge','love building']
+      personal: ['solo','alone','myself','my own','head down','quiet','focused','independent','remote'],
+      income:   ['client','freelanc','side hustle','income','earn','revenue','consulting','sell','business','gig'],
+      fun:      ['creative','passion','art','music','writing','hobbies','love doing','enjoy','make things','design'],
+      impact:   ['help','difference','mission','cause','meaning','purpose','community','teach','volunteer','nonprofit']
     },
     options: [
-      { key:'income',   emoji:'💰', title:'Generate income',           desc:'Subscriptions, one-time sales, or licensing.' },
-      { key:'personal', emoji:'🔧', title:'Solve my own frustration',  desc:'A daily tool that fixes something personal.' },
-      { key:'impact',   emoji:'🌍', title:'Help a lot of people',      desc:'Useful to many, even if it earns nothing first.' },
-      { key:'fun',      emoji:'🎮', title:'Build something enjoyable', desc:'Fun to make and fun to use — that\'s enough.' }
+      { key:'personal', emoji:'🏠', title:'Mostly solo, head-down work',           desc:'I manage my own projects, time, and output alone.' },
+      { key:'income',   emoji:'💼', title:'Client work, freelancing, or a side hustle', desc:'Building income streams, often juggling multiple things.' },
+      { key:'fun',      emoji:'🎨', title:'Creative projects and personal passions', desc:'A lot of my time goes toward things I genuinely love doing.' },
+      { key:'impact',   emoji:'🌱', title:'Something I hope makes a difference',    desc:'I work on things that feel bigger than just me.' }
     ]
   },
   {
-    id: 'problem_source', badge: 'Where it came from', dim: 'audience',
-    dimKeyMap: { mine:'self', others:'niche', gap:'business', read:'broad' },
-    text: 'Where did this problem idea come from?',
-    hint: 'How you discovered it tells us who you\'re really building for.',
-    placeholder: 'e.g. I notice I spend ages looking for notes I\'ve already written, and no tool I\'ve tried fixes it...',
+    id: 'deep_interest', badge: 'What You Care About', dim: 'domain',
+    text: 'What topic do you find yourself reading about even when you don\'t have to?',
+    hint: 'Not what you think you should care about — what you actually click on at midnight.',
+    placeholder: 'e.g. I\'m always reading about productivity systems — I\'ve tried every method and still can\'t stop experimenting...',
     textToKey: {
-      self:     ['myself','my own','i have','i face','daily','always','every day','personally'],
-      niche:    ['friend','colleague','people i know','others around me','team','coworker'],
-      business: ['market','gap','opportunity','research','underserved','unmet','spotted'],
-      broad:    ['everyone','common','universal','widespread','most people','read','heard']
+      productivity: ['work smarter','get things done','productivity','focus','efficiency','systems','how to','tips'],
+      health:       ['health','fitness','feel better','diet','workout','sleep','habits','wellness','nutrition'],
+      finance:      ['money','investing','financial','wealth','budget','income','savings','earn','crypto'],
+      creative:     ['making','art','writing','music','ideas','creative','design','photography','craft']
     },
     options: [
-      { key:'mine',   emoji:'🎯', title:'It\'s my own daily struggle',     desc:'I am the user — building for myself.' },
-      { key:'others', emoji:'👥', title:'I\'ve watched others face it',    desc:'People around me deal with this constantly.' },
-      { key:'gap',    emoji:'💡', title:'I spotted an unserved gap',       desc:'Research or instinct told me it\'s underserved.' },
-      { key:'read',   emoji:'📖', title:'I heard about it and it clicked', desc:'A story, article, or conversation sparked it.' }
+      { key:'productivity', emoji:'⚡', title:'How to work smarter and get more done',             desc:'Productivity systems, focus, and efficiency.' },
+      { key:'health',       emoji:'💪', title:'Health, fitness, and how to feel better',           desc:'Habits, wellness, nutrition, and exercise.' },
+      { key:'finance',      emoji:'💸', title:'Money, investing, and building financial security', desc:'Personal finance and wealth building.' },
+      { key:'creative',     emoji:'🎨', title:'Making things — art, writing, music, ideas',        desc:'Craft, creativity, and expression.' }
     ]
   },
   {
-    id: 'domain', badge: 'The space', dim: 'domain',
-    text: 'Which area of life does this problem live in?',
-    hint: 'Pick the one you think about, read about, or care about most.',
-    placeholder: 'e.g. It\'s about staying focused during deep work — I lose hours to distractions every day...',
+    id: 'your_world', badge: 'Your World', dim: 'audience',
+    text: 'Which of these comes closest to describing your situation right now?',
+    hint: 'Think about your day-to-day reality — who you work with and how you spend your time.',
+    placeholder: 'e.g. I work as an independent consultant from home, with a few long-term clients I check in with weekly...',
     textToKey: {
-      productivity: ['task','focus','procrastinat','organiz','schedul','meeting','project','workflow','plan','todo'],
-      health:       ['workout','fitness','sleep','eat','health','habit','exercise','weight','stress','energy','diet'],
-      finance:      ['money','budget','spend','invoice','income','earn','payment','cost','freelanc','client','bill'],
-      creative:     ['writing','design','creat','art','music','draw','learn','skill','read','book','idea','content']
+      self:     ['solo','myself','alone','my own','independent','self-employed','remote','work from home'],
+      niche:    ['profession','community','field','industry','colleagues','peers','specialist','part of'],
+      business: ['company','team','startup','corporate','clients','enterprise','organisation','manager'],
+      broad:    ['figuring out','variety','many hats','general','mixed','all sorts','different things']
     },
     options: [
-      { key:'productivity', emoji:'⚡', title:'Productivity & work',       desc:'Focus, tasks, projects, getting more done.' },
-      { key:'health',       emoji:'💪', title:'Health & personal growth',  desc:'Habits, fitness, sleep, energy, mindset.' },
-      { key:'finance',      emoji:'💸', title:'Money & finances',          desc:'Budgeting, invoicing, earning, spending.' },
-      { key:'creative',     emoji:'🎨', title:'Creativity & learning',     desc:'Writing, design, skills, reading, making.' }
+      { key:'self',     emoji:'🧍', title:'I work mostly for myself or on my own things',   desc:'Independent, self-directed — own time, own agenda.' },
+      { key:'niche',    emoji:'👔', title:"I'm part of a specific profession or community", desc:'A defined world with shared problems and language.' },
+      { key:'business', emoji:'🏢', title:'I work in or with companies and teams',          desc:'Corporate, startup, or client-facing context.' },
+      { key:'broad',    emoji:'🌐', title:"I'm figuring things out and wearing many hats",  desc:'Between things, exploring, or generalist by choice.' }
     ]
   },
   {
-    id: 'user_type', badge: 'Your user', dim: 'audience',
-    text: 'Who do you picture using this app?',
-    hint: 'Paint a quick picture — the clearer the user, the sharper the product.',
-    placeholder: 'e.g. A freelance designer juggling 3 clients, always chasing invoices, never sure who owes what...',
+    id: 'what_drives', badge: 'What Drives You', dim: 'goal',
+    text: 'When you imagine doing your best work, what\'s the feeling that drives you most?',
+    hint: 'Not the outcome — the feeling in the moment when things are clicking.',
+    placeholder: 'e.g. I love the feeling of solving a puzzle no one else has cracked — the moment something hard clicks into place...',
     textToKey: {
-      self:     ['like me','same as me','similar to me','myself','own problem','i would use'],
-      niche:    ['developer','designer','freelancer','student','writer','creator','professional','marketer'],
-      business: ['business','company','team','startup','enterprise','client','agency','b2b'],
-      broad:    ['anyone','everyone','all ages','universal','mainstream','general','wide audience']
+      fun:      ['curiosity','joy','love','making','fun','explore','discover','tinker','play','create','puzzle'],
+      personal: ['fix','solve','bother','frustrate','annoy','itch','scratch','improve','my own'],
+      impact:   ['help','people','contribute','difference','change','serve','others','community','real'],
+      income:   ['freedom','financial','money','income','earn','replace','livelihood','independence','sustain']
     },
     options: [
-      { key:'self',     emoji:'🧍', title:'Someone exactly like me',      desc:'Same job, same daily frustrations as me.' },
-      { key:'niche',    emoji:'👔', title:'A specific niche or profession', desc:'Developers, freelancers, writers, etc.' },
-      { key:'business', emoji:'🏢', title:'Businesses or teams',           desc:'Work context — companies or professionals.' },
-      { key:'broad',    emoji:'🌐', title:'Anyone with this frustration',  desc:'Universal problem across all backgrounds.' }
+      { key:'fun',      emoji:'🎮', title:'Pure curiosity and the joy of making',            desc:'The process itself is the reward.' },
+      { key:'personal', emoji:'🔧', title:'Fixing something that genuinely bothers me',      desc:'Scratching my own itch — building what I need.' },
+      { key:'impact',   emoji:'🌍', title:'Knowing my work actually helps real people',      desc:'The impact on others gives it meaning.' },
+      { key:'income',   emoji:'💰', title:'Building something that creates real financial freedom', desc:'I want to earn from what I make.' }
     ]
   },
   {
-    id: 'audience', badge: 'Primary user', dim: 'audience',
-    text: 'If you had to pick one primary user, who would it be?',
-    hint: 'Think about who you\'d call first to beta test it.',
-    placeholder: 'e.g. Mostly myself — I\'d build it for my own workflow and share it if it works...',
+    id: 'complaints', badge: 'Your Frustrations', dim: 'domain',
+    text: 'What do you find yourself complaining about most — to yourself or others?',
+    hint: 'Complaints are clues. What keeps coming up as broken, slow, or painful in your life?',
+    placeholder: 'e.g. I always complain about how much time I waste switching between apps and losing track of what I was doing...',
     textToKey: {
-      self:     ['me ','myself','i would','my own','personal tool','for myself'],
-      niche:    ['niche','specific group','community','developers','designers','freelancers'],
-      business: ['businesses','b2b','companies','teams','enterprise','professional'],
-      broad:    ['anyone','everyone','broad','wide','general public','mass market']
+      productivity: ['time','wasted','admin','task','email','meeting','organised','workflow','context switch','slow'],
+      health:       ['consistent','habit','healthy','routine','energy','sleep','fitness','diet','stress','balance'],
+      finance:      ['money','invoice','budget','expenses','financial','confusing','painful','billing','taxes'],
+      creative:     ['creative','blocked','distracted','scattered','ideas','note','inspiration','learning','focus']
     },
     options: [
-      { key:'self',     emoji:'🧍', title:'Me — I\'m the main user',       desc:'Scratching my own itch first.' },
-      { key:'niche',    emoji:'👥', title:'People in my field or niche',    desc:'A specific, identifiable group.' },
-      { key:'business', emoji:'🏢', title:'Businesses or professionals',    desc:'Paying customers solving a work problem.' },
-      { key:'broad',    emoji:'🌐', title:'Anyone — as wide as possible',   desc:'A universal frustration most people share.' }
+      { key:'productivity', emoji:'⚡', title:'How much of my time gets wasted on pointless admin',   desc:'The overhead that eats into real work.' },
+      { key:'health',       emoji:'💪', title:'How hard it is to stay consistent with healthy habits', desc:'The gap between knowing and doing.' },
+      { key:'finance',      emoji:'💸', title:'How confusing and painful money management is',          desc:'Nothing about this should be this hard.' },
+      { key:'creative',     emoji:'🎨', title:'How hard it is to stay creative and keep learning',      desc:'The blocks, the scatter, the unfinished things.' }
     ]
   },
   {
-    id: 'time_waste', badge: 'Time drain', dim: 'domain',
-    text: 'What do you waste too much time on every week?',
-    hint: 'Think of moments where you sigh and think "there has to be a better way."',
-    placeholder: 'e.g. I manually copy data between spreadsheets and send the same status update emails to clients every Friday...',
+    id: 'natural_gift', badge: 'Your Natural Gift', dim: 'strength',
+    text: 'What do people come to you for — at work, among friends, or online?',
+    hint: 'What you get asked for without advertising it is usually your clearest edge.',
+    placeholder: 'e.g. People always DM me for advice on design tools and how to make their slides look professional...',
     textToKey: {
-      productivity: ['task','email','meeting','context switch','focus','plans','schedule','admin'],
-      health:       ['meal prep','workout','tracking','sleep','routine','habit','eating','exercise'],
-      finance:      ['invoic','expense','receipt','payment','budget','money tracking','billing'],
-      creative:     ['note','capture','ideas','reading list','research','writing','content','learning']
+      builder:   ['code','build','tech','technical','automate','develop','script','software','engineering'],
+      designer:  ['design','visual','look','brand','feel','ui','ux','aesthetic','creative','figma'],
+      expert:    ['advice','knowledge','know','expert','experience','industry','domain','understand','strategy'],
+      connector: ['people','relationships','connect','introduce','communicate','manage','lead','pitch','network']
     },
     options: [
-      { key:'productivity', emoji:'⚡', title:'Work tasks & admin',        desc:'Emails, status updates, chasing things.' },
-      { key:'health',       emoji:'💪', title:'Health & routine admin',    desc:'Meal prep, logging workouts, routines.' },
-      { key:'finance',      emoji:'💸', title:'Financial admin',           desc:'Invoicing, expense tracking, billing.' },
-      { key:'creative',     emoji:'🎨', title:'Capturing & organising ideas', desc:'Notes, reading lists, research.' }
+      { key:'builder',   emoji:'💻', title:'Anything technical — code, tools, automations',       desc:'I can build things others can only imagine.' },
+      { key:'designer',  emoji:'✏️',  title:'Making things look and feel genuinely good',          desc:'Taste and craft that others notice and trust.' },
+      { key:'expert',    emoji:'📊', title:'Deep knowledge in a specific domain or industry',      desc:'I understand this space better than most.' },
+      { key:'connector', emoji:'🤝', title:'People, relationships, communication, or leadership',  desc:'I get things done through others.' }
     ]
   },
   {
-    id: 'strength', badge: 'Your edge', dim: 'strength',
-    text: 'What\'s your biggest strength going into this?',
-    hint: 'Lean into what you\'re genuinely good at — it shapes the best product.',
-    placeholder: 'e.g. I\'ve been a designer for 8 years — I can make something that looks genuinely great...',
+    id: 'who_frustrated', badge: 'Who Has This Problem', dim: 'audience',
+    text: 'When you see a problem that bothers you, who are the people stuck with it?',
+    hint: 'Think about the last thing you complained about — who else is dealing with that same thing?',
+    placeholder: 'e.g. Honestly, anyone who runs their own small business — the invoicing and admin is brutal for all of them...',
     textToKey: {
-      builder:   ['code','build','develop','full stack','backend','frontend','engineer','program','technical'],
-      designer:  ['design','visual','brand','ux','ui','figma','aesthetic','layout','look and feel'],
-      expert:    ['domain','industry','years experience','understand the market','know the problem','expert'],
-      connector: ['people','community','grow','sell','talk to users','network','communicate','marketing']
+      self:     ['me','myself','i am','just me','primarily me','my own','i deal','i face'],
+      niche:    ['specific','group','community','field','know well','like me','profession','my world'],
+      business: ['teams','companies','businesses','professional','loses','cost','productivity'],
+      broad:    ['everyone','universal','anyone','widespread','most people','common problem']
     },
     options: [
-      { key:'builder',   emoji:'💻', title:'I can build it myself',      desc:'Strong technical skills, can ship end to end.' },
-      { key:'designer',  emoji:'✏️',  title:'I have great design taste',  desc:'I make interfaces feel genuinely good.' },
-      { key:'expert',    emoji:'📊', title:'I know this market deeply',   desc:'Domain expertise most people don\'t have.' },
-      { key:'connector', emoji:'🤝', title:'I\'m great with people',      desc:'Grow communities, talk to users, sell.' }
+      { key:'self',     emoji:'🎯', title:"Mostly me — I'm the one stuck with it",               desc:'This is personal. I live with this problem daily.' },
+      { key:'niche',    emoji:'👥', title:"A specific group I'm part of or know well",            desc:'A defined community with this as a shared pain.' },
+      { key:'business', emoji:'🏢', title:'Teams or companies who lose money or time to it',      desc:'A professional context where this costs real dollars.' },
+      { key:'broad',    emoji:'🌐', title:"Almost everyone — it's a near-universal frustration",  desc:'The problem cuts across all kinds of people.' }
     ]
   },
   {
-    id: 'tech_level', badge: 'Technical ability', dim: 'strength',
-    dimKeyMap: { strong:'builder', nocode:'designer', partner:'connector', learning:'expert' },
-    text: 'How would you describe your technical ability right now?',
-    hint: 'Helps us match you to ideas that fit your current build capacity.',
-    placeholder: 'e.g. I\'m comfortable with JavaScript but I\'ve never built a backend from scratch...',
+    id: 'work_mode', badge: 'How You Work Best', dim: 'strength',
+    text: 'Which of these feels most like you when you\'re in your element?',
+    hint: 'Not what you can do — what makes you lose track of time when you\'re doing it.',
+    placeholder: 'e.g. I get completely absorbed when I\'m designing something from scratch — layout, colour, the whole thing...',
     textToKey: {
-      builder:   ['code','develop','build anything','full stack','backend','frontend','strong dev','engineer'],
-      designer:  ['webflow','bubble','no-code','glide','airtable','low-code','without coding'],
-      connector: ['need a co-founder','need a developer','partner','technical cofounder'],
-      expert:    ['learning','picking up','self-taught','figuring it out','not technical']
+      builder:   ['build','make','code','develop','ship','create','problem solve','technical','engineer'],
+      designer:  ['design','shape','look','feel','craft','visual','polish','layout','beautiful'],
+      expert:    ['think','analyse','research','dig deep','understand','strategy','knowledge','insight'],
+      connector: ['people','collaborate','communicate','lead','teach','present','relationship','work with']
     },
     options: [
-      { key:'strong',  emoji:'🚀', title:'Strong developer',               desc:'I can build almost anything myself.' },
-      { key:'nocode',  emoji:'🧩', title:'No-code / low-code comfortable', desc:'Webflow, Bubble, Glide — I can ship.' },
-      { key:'partner', emoji:'🤝', title:'I\'d need a technical partner',  desc:'I bring domain knowledge, not the code.' },
-      { key:'learning',emoji:'📚', title:'Learning as I go',               desc:'Building the app is part of the journey.' }
+      { key:'builder',   emoji:'🚀', title:"I'm in flow when I'm building or making something",         desc:'Hands-on, producing, shipping.' },
+      { key:'designer',  emoji:'✏️',  title:"I'm at my best shaping how something looks or feels",       desc:'Craft, aesthetics, and experience.' },
+      { key:'expert',    emoji:'📊', title:"I'm most valuable when I bring deep knowledge to a problem",  desc:'Analysis, expertise, strategy.' },
+      { key:'connector', emoji:'🗣️', title:"I come alive when I'm working with or for people",           desc:'Collaboration, communication, leadership.' }
     ]
   },
   {
-    id: 'app_admire', badge: 'Inspiration', dim: 'style',
-    text: 'What do you love most about an app you actually enjoy using?',
-    hint: 'Not what it does — how it feels. A specific interaction, the speed, a design detail.',
-    placeholder: 'e.g. I love how Notion is so flexible without feeling overwhelming, or how Duolingo streaks make me come back daily...',
+    id: 'time_drain', badge: 'Where Time Goes', dim: 'domain',
+    text: 'On a typical workday, what genuinely wastes your time the most?',
+    hint: 'The thing you sigh about, defer to later, or do on autopilot without getting anything real done.',
+    placeholder: 'e.g. I spend way too long on back-and-forth emails setting up meetings that could be a 2-minute decision...',
     textToKey: {
-      utility:    ['simple','fast','clean','minimal','one thing','quick','efficient','frictionless','instant'],
-      delightful: ['beautiful','design','look','feel','aesthetic','polished','animation','magical','elegant'],
-      tracker:    ['streak','progress','track','chart','data','stats','history','insight','pattern'],
-      social:     ['share','together','friend','team','community','collaborate','invite','people']
+      productivity: ['task','email','meeting','context switch','admin','overhead','status','chase','follow up'],
+      health:       ['routine','habit','meal','workout','health','prep','tracking','energy','friction'],
+      finance:      ['invoice','expense','billing','payment','budget','receipt','financial','admin','money'],
+      creative:     ['note','capture','idea','reading','writing','content','scattered','half-finished','project']
     },
     options: [
-      { key:'utility',    emoji:'⚡', title:'The simplicity',        desc:'Does one thing brilliantly. No clutter.' },
-      { key:'delightful', emoji:'✨', title:'The design and feel',   desc:'Beautiful, polished, a delight to open.' },
-      { key:'tracker',    emoji:'📈', title:'The progress system',   desc:'Streaks, charts, data that feels rewarding.' },
-      { key:'social',     emoji:'👫', title:'How it involves others', desc:'Sharing, collaboration, community.' }
+      { key:'productivity', emoji:'⚡', title:'Task and communication overhead',              desc:'Emails, meetings, status updates, chasing.' },
+      { key:'health',       emoji:'💪', title:'The friction of healthy routines',             desc:'Meal prep, logging workouts, staying on track.' },
+      { key:'finance',      emoji:'💸', title:'Financial paperwork and money admin',           desc:'Invoicing, expenses, receipts, billing.' },
+      { key:'creative',     emoji:'🎨', title:'Scattered notes, ideas, and half-finished things', desc:'The chaos of capturing and continuing.' }
     ]
   },
   {
-    id: 'revenue', badge: 'Business model', dim: 'goal',
-    dimKeyMap: { subscription:'income', onetime:'income', freemium:'impact', notyet:'personal' },
-    text: 'What revenue model feels most natural to you?',
-    hint: 'No wrong answer — great apps have started with zero monetisation.',
-    placeholder: 'e.g. I\'d probably make it free at first to get users, then add a Pro tier for power features...',
+    id: 'tool_love', badge: 'Your Style', dim: 'style',
+    text: 'When you discover an app or tool you love, what makes it click for you?',
+    hint: 'Think about the last thing you recommended to someone — what made it worth sharing?',
+    placeholder: 'e.g. I love when something just works without me having to think — zero learning curve, instant result...',
     textToKey: {
-      income:   ['subscription','recurring','monthly','annual','saas','one-time','buy once','license','charge'],
-      impact:   ['free','freemium','open source','donate','community','wide adoption'],
-      personal: ['not yet','no monetiz','later','first version','free first','worry about that later']
+      utility:    ['simple','fast','works','frictionless','clean','instant','quick','minimal','efficient','just does it'],
+      delightful: ['beautiful','design','looks','feels','polished','well-made','attention to detail','thoughtful'],
+      tracker:    ['progress','streak','data','history','track','log','see over time','improve','insight','chart'],
+      social:     ['share','together','others','community','friend','people','better with others','collaborate']
     },
     options: [
-      { key:'subscription', emoji:'🔄', title:'Monthly subscription',    desc:'Recurring revenue, users pay to keep access.' },
-      { key:'onetime',      emoji:'💳', title:'One-time purchase',        desc:'Pay once, own it — classic software model.' },
-      { key:'freemium',     emoji:'🎁', title:'Free + premium tier',      desc:'Broad free access, charge for power users.' },
-      { key:'notyet',       emoji:'🌱', title:'Not focused on money yet', desc:'Build it first, monetise later.' }
+      { key:'utility',    emoji:'⚡', title:'It just works — fast, simple, no friction',           desc:'Instant value. No learning curve. Gets out of my way.' },
+      { key:'delightful', emoji:'✨', title:'It feels beautiful and considered',                   desc:'Obvious care went into every detail.' },
+      { key:'tracker',    emoji:'📈', title:'It shows me my progress over time',                   desc:"Seeing how far I've come keeps me coming back." },
+      { key:'social',     emoji:'👫', title:"It's better because other people are in it",          desc:'The value multiplies with the people around me.' }
     ]
   },
   {
-    id: 'scope', badge: 'Scope', dim: 'style',
-    dimKeyMap: { onething:'utility', few:'tracker', full:'social', platform:'delightful' },
-    text: 'What\'s your ideal scope for version 1?',
-    hint: 'Smaller is usually better — but be honest about what excites you.',
-    placeholder: 'e.g. I\'d want just one perfectly polished feature — if it does one thing better than anyone else, that\'s enough...',
+    id: 'ambition', badge: 'Your Ambition', dim: 'goal',
+    text: 'If what you built actually worked — what would "working" really mean to you?',
+    hint: 'Skip the modest answer. What would genuinely feel like a win?',
+    placeholder: 'e.g. Honestly, if 10,000 people used it every day and I earned enough to work on it full-time, that would feel real...',
     textToKey: {
-      utility:    ['one thing','single','focused','just one','minimal','sharp','tight'],
-      tracker:    ['few features','several','connected','small product','cohesive'],
-      social:     ['full','complete','everything','comprehensive','all-in-one'],
-      delightful: ['platform','extensible','api','plugin','others build on']
+      personal: ['use it myself','daily','every day','saves me','personal','my workflow','i rely'],
+      impact:   ['strangers','others','help people','change','thousands','lives','make a difference'],
+      income:   ['income','revenue','replace','earn','paying','financial','consistent','salary','living'],
+      fun:      ['proud','built it','craft','challenge','regardless','process','learning','enjoyed']
     },
     options: [
-      { key:'onething',  emoji:'🎯', title:'One thing done perfectly',  desc:'Sharp utility that solves exactly one problem.' },
-      { key:'few',       emoji:'🗂️', title:'A few connected features',  desc:'Small but coherent — 3–5 things that work together.' },
-      { key:'full',      emoji:'📦', title:'A full-featured product',   desc:'Everything the user needs in one place.' },
-      { key:'platform',  emoji:'🏗️', title:'A platform for others',     desc:'A foundation others can extend or build on.' }
+      { key:'personal', emoji:'🔧', title:'I use it myself every day and it saves me real time',    desc:'It becomes a genuine part of my daily life.' },
+      { key:'impact',   emoji:'🌍', title:'Strangers tell me it changed how they work or live',     desc:"Real-world impact on people I'll never meet." },
+      { key:'income',   emoji:'💰', title:'It generates consistent income — maybe even replaces a job', desc:'Financial proof that it works.' },
+      { key:'fun',      emoji:'🎮', title:"I'm proud of what I made, regardless of how many people use it", desc:'The craft itself was worth it.' }
     ]
   },
   {
-    id: 'expertise', badge: 'Your knowledge', dim: 'strength',
-    text: 'What do people regularly come to you for help with?',
-    hint: 'Friends, colleagues, online — what knowledge or skill do they ask about?',
-    placeholder: 'e.g. People always ask me how to set up their finances, or how to get into coding, or how to pitch ideas to clients...',
+    id: 'superpower', badge: 'Your Superpower', dim: 'strength',
+    text: 'Be honest: what\'s the one thing you\'re genuinely better at than most people you know?',
+    hint: 'The thing that comes naturally to you but seems hard for others — that\'s a product moat.',
+    placeholder: 'e.g. I can look at any interface and immediately see 5 things that would make it dramatically better...',
     textToKey: {
-      builder:   ['code','build','software','develop','tech','script','automate','deploy'],
-      designer:  ['design','ux','ui','brand','look','visual','figma','logo','aesthetic'],
-      expert:    ['business','finance','strategy','market','domain','industry','invest','consult'],
-      connector: ['people','communication','network','pitch','sell','grow','community','manage']
+      builder:   ['code','build','technical','develop','ship','automate','engineer','software'],
+      designer:  ['design','taste','look','feel','visual','aesthetic','craft','creative direction'],
+      expert:    ['understand','know','domain','expert','market','insight','experience','knowledge'],
+      connector: ['people','relationships','network','influence','communicate','persuade','get things done']
     },
     options: [
-      { key:'builder',   emoji:'💻', title:'Tech, code, or building things', desc:'Software, tools, automation, debugging.' },
-      { key:'designer',  emoji:'🎨', title:'Design, visuals, or branding',   desc:'UI, brand identity, how things look.' },
-      { key:'expert',    emoji:'📊', title:'Business, strategy, or domain knowledge', desc:'Industry expertise most people lack.' },
-      { key:'connector', emoji:'🗣️', title:'People, communication, or facilitation', desc:'Advice, pitching, managing relationships.' }
+      { key:'builder',   emoji:'💻', title:'I can build things — code, systems, technical work',     desc:'End-to-end. No need to wait for a developer.' },
+      { key:'designer',  emoji:'✏️',  title:'I have real taste — things I make look and feel good',  desc:'Craft that others can see and feel.' },
+      { key:'expert',    emoji:'📊', title:'I understand a subject or market better than most',      desc:'Context that most builders don\'t have.' },
+      { key:'connector', emoji:'🤝', title:"I'm unusually good with people — I get things done through others", desc:'Influence, relationships, trust.' }
     ]
   },
   {
-    id: 'experience', badge: 'UX feeling', dim: 'style',
-    text: 'What kind of experience do you most want to create?',
-    hint: 'Think about how the user feels the moment they open your app.',
-    placeholder: 'e.g. I want it to feel like a calm, focused ritual every morning — nothing unnecessary, just what you need...',
+    id: 'who_serve', badge: "Who You'd Serve", dim: 'audience',
+    text: 'If you helped someone solve a problem this week — who would you most want it to be?',
+    hint: 'Picture the call or message you\'d feel best about sending — who\'s on the other end?',
+    placeholder: 'e.g. Honestly, someone running a small creative business — a photographer or designer trying to look more professional...',
     textToKey: {
-      utility:    ['fast','frictionless','in and out','simple','clean','one click','quick','minimal'],
-      tracker:    ['progress','streak','track','log','data','see improvement','motivated','chart'],
-      social:     ['share','together','team','friend','community','collaborate','invite','group'],
-      delightful: ['beautiful','polished','magical','delight','feel premium','surprising','wow']
+      self:     ['myself','me','i would','my own','personally','i\'m the'],
+      niche:    ['professional','my field','my world','exact','like me','specialist','industry'],
+      business: ['job','work','company','team','career','corporate','client','their job'],
+      broad:    ['anyone','everyone','background irrelevant','most people','universal','whoever']
     },
     options: [
-      { key:'utility',    emoji:'⚡', title:'Fast and frictionless',     desc:'In, done, out. Every second saved matters.' },
-      { key:'tracker',    emoji:'📈', title:'Satisfying progress',       desc:'Streaks, charts — seeing growth feels rewarding.' },
-      { key:'social',     emoji:'👫', title:'Social and collaborative',  desc:'Better together — sharing, building with others.' },
-      { key:'delightful', emoji:'✨', title:'Beautiful and delightful',  desc:'Every interaction feels polished, a bit magical.' }
+      { key:'self',     emoji:'🧍', title:"Honestly — myself. I'm the person I'm trying to help.",  desc:'Build for me first, ship it after.' },
+      { key:'niche',    emoji:'👔', title:'Someone in my exact professional world',                  desc:'They speak my language. I know their problems.' },
+      { key:'business', emoji:'🏢', title:'A professional trying to do their job better',            desc:'A clear work context with real stakes.' },
+      { key:'broad',    emoji:'🌐', title:'Anyone facing the same frustration — background irrelevant', desc:'The problem is the connector, not the profile.' }
     ]
   },
   {
-    id: 'time_avail', badge: 'Your bandwidth', dim: 'style',
-    dimKeyMap: { weekend:'utility', side:'tracker', fulltime:'social', flexible:'delightful' },
-    text: 'How much time can you dedicate to building this?',
-    hint: 'Be realistic — the right idea fits the time you actually have.',
-    placeholder: 'e.g. I\'ve got maybe 5–10 hours a week, serious evenings and full weekends when I\'m excited about something...',
+    id: 'interaction_style', badge: "How You'd Use It", dim: 'style',
+    text: 'If a tool magically fixed your biggest frustration, how would you want to interact with it?',
+    hint: 'Think about the rhythm of it — when, how often, and how it fits into real life.',
+    placeholder: 'e.g. A quick check-in every morning that takes 2 minutes, then I forget about it for the rest of the day...',
     textToKey: {
-      utility:    ['weekend','few hours','spare time','side project','limited','small blocks'],
-      tracker:    ['evening','one day','dedicated','part time','regular','after work'],
-      social:     ['full time','all in','focused','main priority','committed','full attention'],
-      delightful: ['flexible','depends','momentum','excited','as much as it deserves']
+      utility:    ['quick','daily','in and out','under a minute','fast','every day','simple','minimal'],
+      tracker:    ['builds over time','log','track','picture','history','review','see progress','longer term'],
+      social:     ['share','with others','together','group','people','collaborative','community'],
+      delightful: ['look forward','open','enjoy','experience','something special','ritual','moment']
     },
     options: [
-      { key:'weekend',  emoji:'🌅', title:'Weekends only',              desc:'A few hours — needs to be a realistic side project.' },
-      { key:'side',     emoji:'🌙', title:'1–2 dedicated days / week',  desc:'Serious evenings and dedicated work blocks.' },
-      { key:'fulltime', emoji:'🔥', title:'Full-time focus',            desc:'This is the priority right now — all in.' },
-      { key:'flexible', emoji:'🌊', title:'Depends on momentum',        desc:'I\'ll put in as much as the project earns.' }
+      { key:'utility',    emoji:'⚡', title:'A quick daily action — in and out in under a minute',    desc:'Frictionless. Fits in the gaps of real life.' },
+      { key:'tracker',    emoji:'📈', title:'Something that builds a picture over time',              desc:'The value compounds the longer I use it.' },
+      { key:'social',     emoji:'👫', title:'Something better when shared with others',               desc:'More useful, more fun, with people around me.' },
+      { key:'delightful', emoji:'✨', title:'Something I actually look forward to opening',           desc:'An experience worth making time for.' }
     ]
   },
   {
-    id: 'success_def', badge: 'Success', dim: 'goal',
-    text: 'What would make this app feel truly worth building?',
-    hint: 'Not metrics — the feeling. What outcome would make you genuinely proud?',
-    placeholder: 'e.g. If I woke up and opened it before checking anything else, and strangers discovered it and said it saved them an hour a week...',
+    id: 'build_domain', badge: 'The Space', dim: 'domain',
+    text: 'If you were going to build something, which area of life feels most natural to focus on?',
+    hint: "You've been thinking about your frustrations — which world does the solution live in?",
+    placeholder: 'e.g. Probably something around work and focus — I keep coming back to how hard it is to do deep work consistently...',
     textToKey: {
-      income:   ['earn','money','revenue','paying customers','income','profit'],
-      personal: ['i use','myself','daily','every morning','my own routine','actually use'],
-      impact:   ['others','strangers','people','change','help','difference','thousands'],
-      fun:      ['enjoy building','process','learn from it','proud of the code','challenge']
+      productivity: ['work','task','focus','productivity','getting things done','organised','projects','workflow'],
+      health:       ['health','fitness','habits','wellbeing','physical','nutrition','sleep','mental health'],
+      finance:      ['money','budget','freelancing','earnings','income','financial','invoicing','saving'],
+      creative:     ['creative','writing','learning','art','making','design','skills','craft','knowledge']
     },
     options: [
-      { key:'income',   emoji:'💰', title:'It earns consistent income',             desc:'Paying customers who renew month after month.' },
-      { key:'personal', emoji:'🔧', title:'I use it myself every single day',       desc:'It becomes part of my daily routine.' },
-      { key:'impact',   emoji:'🌍', title:'It genuinely changes how others work',   desc:'Strangers say it saved them real time or stress.' },
-      { key:'fun',      emoji:'🎮', title:'The building process itself is rewarding', desc:'I\'d be proud of what I made regardless of users.' }
+      { key:'productivity', emoji:'⚡', title:'Work, tasks, focus, and getting things done',  desc:'The engine of professional and personal output.' },
+      { key:'health',       emoji:'💪', title:'Physical health, habits, and wellbeing',       desc:'The systems that keep us at our best.' },
+      { key:'finance',      emoji:'💸', title:'Money, budgeting, freelancing, or earnings',   desc:'The layer that makes everything else possible.' },
+      { key:'creative',     emoji:'🎨', title:'Creativity, learning, writing, or making',     desc:'The space where ideas become things.' }
     ]
   },
   {
-    id: 'relationship', badge: 'Your connection', dim: 'audience',
-    dimKeyMap: { daily:'self', watched:'niche', resonated:'broad', researched:'business' },
-    text: 'How close are you to this problem personally?',
-    hint: 'The closer you are to the problem, the better your solution instincts.',
-    placeholder: 'e.g. I face this myself every single day at work — it costs me probably an hour each day of wasted effort...',
+    id: 'worth_nights', badge: 'Your Motivation', dim: 'goal',
+    text: 'What would make building this feel worth the late nights?',
+    hint: "Imagine 3am and you're still working on it. What thought keeps you going?",
+    placeholder: 'e.g. If I could eventually run it as a proper business and stop freelancing — that would be worth any amount of late nights...',
     textToKey: {
-      self:     ['daily','myself','every day','i face','i deal','personally','firsthand'],
-      niche:    ['friend','colleague','people i know','team','watched','around me'],
-      broad:    ['read','heard','article','podcast','resonated','clicked','discovered'],
-      business: ['research','market','data','trend','analysis','spotted','opportunity']
+      personal: ['use it','myself','daily','my own','personal','i rely','actually use','my problem'],
+      impact:   ['helps people','others','strangers','difference','many people','lives','real impact'],
+      income:   ['income','money','revenue','financial','replace','earn','living','salary','pay'],
+      fun:      ['craft','challenge','build it well','proud','learning','process','regardless']
     },
     options: [
-      { key:'daily',      emoji:'🎯', title:'I face it myself every day',   desc:'This is personal — I am the user.' },
-      { key:'watched',    emoji:'👀', title:'I\'ve watched others struggle', desc:'I see people around me dealing with it.' },
-      { key:'resonated',  emoji:'💡', title:'I read about it and it clicked', desc:'Found it through content, not lived experience.' },
-      { key:'researched', emoji:'🔍', title:'I spotted it through research',  desc:'Analytical discovery — market or trend data.' }
+      { key:'personal', emoji:'🔧', title:'Using it myself every day and knowing it solves my problem',  desc:'It pays for itself in my own time saved.' },
+      { key:'impact',   emoji:'🌍', title:"Knowing it helps a lot of people I'll never meet",            desc:'Scale makes the late nights worthwhile.' },
+      { key:'income',   emoji:'💰', title:'Generating real income from something I created',              desc:'Financial proof of concept.' },
+      { key:'fun',      emoji:'🎮', title:'The challenge and craft of building it well',                  desc:'The process is the reward.' }
     ]
   },
   {
-    id: 'validation', badge: 'Validation', dim: 'strength',
-    dimKeyMap: { build:'builder', talk:'connector', landing:'designer', ship:'builder' },
-    text: 'How would you validate this idea before going deep?',
-    hint: 'Your instinct here reveals how you naturally like to work.',
-    placeholder: 'e.g. I\'d probably just build a rough version in a weekend and show it to 5 people I trust...',
+    id: 'unfair_advantage', badge: 'Your Advantage', dim: 'strength',
+    text: 'What unfair advantage do you bring that most people starting from scratch wouldn\'t have?',
+    hint: 'Think about what makes your version of this uniquely positioned to win.',
+    placeholder: 'e.g. I\'ve spent 6 years doing financial planning — I know exactly what\'s wrong with every tool on the market...',
     textToKey: {
-      builder:   ['build','prototype','code it','make it','develop','rough version','weekend build'],
-      connector: ['talk','interview','user research','5 people','ask them','listen first'],
-      designer:  ['landing page','mockup','design it first','show a concept','waitlist'],
-      expert:    ['just ship','launch it','release','post it','put it out there']
+      builder:   ['build it','code','develop','no waiting','technical','engineer','ship it myself'],
+      designer:  ['design','beautiful','intuitive','look great','feel right','craft','taste','visual'],
+      expert:    ['understand','know','domain','market','experience','insight','context','depth'],
+      connector: ['know people','reach them','network','audience','relationships','community','trust']
     },
     options: [
-      { key:'build',   emoji:'🛠️', title:'Build a rough prototype',          desc:'Get something working and test it on real users.' },
-      { key:'talk',    emoji:'💬', title:'Talk to 5 people with the problem', desc:'Deep user interviews before writing any code.' },
-      { key:'landing', emoji:'🖥️', title:'Put up a landing page',             desc:'Describe the product and see who signs up.' },
-      { key:'ship',    emoji:'🚀', title:'Just ship and see what happens',    desc:'Bias to action — I\'ll learn faster by doing.' }
+      { key:'builder',   emoji:'💻', title:'I can build it myself — no waiting on developers',          desc:'Speed and autonomy from day one.' },
+      { key:'designer',  emoji:'✏️',  title:'I can make it beautiful and intuitive from day one',        desc:'A bar most early products never reach.' },
+      { key:'expert',    emoji:'📊', title:'I understand the problem space better than most builders',   desc:'Insider knowledge that shapes better decisions.' },
+      { key:'connector', emoji:'🤝', title:'I know the right people and how to reach them',              desc:'Distribution advantage before the product ships.' }
     ]
   },
   {
-    id: 'wish_existed', badge: 'The dream', dim: 'domain',
-    text: 'Complete this: "The app I wish existed right now is…"',
-    hint: 'Whatever comes to mind first is usually the right answer.',
-    placeholder: 'e.g. ...a single inbox that groups all my client messages from email, Slack, and WhatsApp into one place...',
+    id: 'user_image', badge: 'Your User', dim: 'audience',
+    text: 'Picture someone pulling out their phone to use what you\'ve built. Who are they?',
+    hint: 'A real person, not a demographic. What are they doing right before they open your app?',
+    placeholder: 'e.g. A freelance photographer who just finished a shoot and needs to invoice the client before she forgets...',
     textToKey: {
-      productivity: ['task','focus','work','meeting','project','organize','schedule','plan','remind'],
-      health:       ['habit','health','fitness','sleep','eat','workout','energy','mindset'],
-      finance:      ['money','budget','invoice','income','spend','earn','payment','client'],
-      creative:     ['write','design','learn','idea','create','read','skill','content','art']
+      self:     ['like me','same as me','look like me','my situation','i would','myself'],
+      niche:    ['specific profession','community','field','my world','defined','their industry'],
+      business: ['professional','work','job','company','team','career','corporate','doing their job'],
+      broad:    ['anyone','different backgrounds','variety','universal','many kinds','background irrelevant']
     },
     options: [
-      { key:'productivity', emoji:'⚡', title:'Something that saves work time',      desc:'A smarter daily work tool.' },
-      { key:'health',       emoji:'💪', title:'Something for health or habits',      desc:'Helps me stay healthier, consistently.' },
-      { key:'finance',      emoji:'💸', title:'Something financial',                 desc:'Simplifies money or client management.' },
-      { key:'creative',     emoji:'🎨', title:'Something creative or educational',   desc:'Helps me create or learn consistently.' }
+      { key:'self',     emoji:'🧍', title:'Someone who looks a lot like me',              desc:'Same situation, same frustrations, same story.' },
+      { key:'niche',    emoji:'👔', title:'Someone in a specific profession or community', desc:'Defined identity, specific daily context.' },
+      { key:'business', emoji:'🏢', title:'A professional trying to do their job better',  desc:'Clear work context with performance at stake.' },
+      { key:'broad',    emoji:'🌐', title:'Someone who could be anyone with this problem',  desc:'The problem defines them, not the profile.' }
     ]
   },
   {
-    id: 'v1_priority', badge: 'First version', dim: 'style',
-    dimKeyMap: { speed:'utility', polish:'delightful', depth:'tracker', flex:'social' },
-    text: 'What matters most when you ship your first version?',
-    hint: 'You can\'t optimise for everything at once — pick your real priority.',
-    placeholder: 'e.g. I\'d want it to look genuinely good from day one — first impressions are everything in consumer apps...',
+    id: 'product_feel', badge: 'Product Feel', dim: 'style',
+    text: 'When you imagine the thing you\'d build at its best, what\'s the feeling it gives the person using it?',
+    hint: 'Not the features. The emotion in the first 30 seconds of using it.',
+    placeholder: 'e.g. Relief — like someone finally built the thing I\'ve been asking for and it just works exactly how I imagined...',
     textToKey: {
-      utility:    ['fast','ship fast','quickly','done over perfect','speed','launch first'],
-      delightful: ['polish','beautiful','quality','premium','great design','look good','feel right'],
-      tracker:    ['complete','depth','thorough','solve fully','doesn\'t cut corners'],
-      social:     ['flexible','configurable','adaptable','customizable','user controlled']
+      utility:    ['relief','weight lifted','finally','works','easier','simple','done','off my plate'],
+      delightful: ['delight','surprised','wow','didn\'t expect','premium','beautiful','pleasure'],
+      tracker:    ['proud','progress','improving','better','see it','watch myself','growth'],
+      social:     ['connection','not alone','together','shared','community','others get it']
     },
     options: [
-      { key:'speed',  emoji:'⚡', title:'Ship fast',              desc:'Get something out — done beats perfect.' },
-      { key:'polish', emoji:'💎', title:'Look great from day one', desc:'First impressions matter — must feel premium.' },
-      { key:'depth',  emoji:'🎯', title:'Solve it completely',    desc:'No shortcuts — the core must be fully done.' },
-      { key:'flex',   emoji:'🧩', title:'Make it configurable',   desc:'Flexibility is the feature — adapt to any workflow.' }
+      { key:'utility',    emoji:'⚡', title:'Relief — like a weight just got lifted',                   desc:'The problem is gone. Instantly.' },
+      { key:'delightful', emoji:'✨', title:"Delight — something they didn't expect to be this good",   desc:'A pleasant shock. This is what software should feel like.' },
+      { key:'tracker',    emoji:'📈', title:'Pride — watching themselves improve over time',             desc:'Evidence of progress that motivates more progress.' },
+      { key:'social',     emoji:'👫', title:"Connection — they're not dealing with it alone anymore",   desc:'The app creates belonging.' }
     ]
   },
   {
-    id: 'one_sentence', badge: 'Final thought', dim: 'style',
-    text: 'One sentence: what would the perfect version of your app do?',
-    hint: 'Elevator pitch to a stranger. What\'s the one thing it does?',
-    placeholder: 'e.g. It would automatically remind me to follow up with exactly the right person at exactly the right time...',
+    id: 'v1_core', badge: 'Your Version 1', dim: 'style',
+    text: 'If you had to ship something in the next 8 weeks — what would the one core thing it does be?',
+    hint: "Strip away everything optional. What's the single thing that makes it worth using at all?",
+    placeholder: 'e.g. Just a smart daily task list that actually helps me decide what to work on first — nothing else to start...',
     textToKey: {
-      utility:    ['save time','faster','easier','automate','removes','eliminates','in seconds'],
-      tracker:    ['track','build habit','consistent','every day','log','progress','improve over time'],
-      social:     ['together','collaborate','share','team','connect','other people','group'],
-      delightful: ['feel good','love using','look forward','beautiful','enjoy','seamless','effortless']
+      utility:    ['one action','solve immediately','instant','quick','immediate','done','removes','single thing'],
+      tracker:    ['log','review','track','progress','over time','see','build a picture','history'],
+      social:     ['share','others','together','community','invite','group','other people'],
+      delightful: ['premium','feels great','polished','well-made','beautiful','quality','first open','wow']
     },
     options: [
-      { key:'utility',    emoji:'⚡', title:'Save real time every day',       desc:'Removes a daily friction for good.' },
-      { key:'tracker',    emoji:'📈', title:'Help me build a lasting habit',  desc:'Makes consistency automatic over time.' },
-      { key:'social',     emoji:'👫', title:'Connect or collaborate with others', desc:'Better because it involves people.' },
-      { key:'delightful', emoji:'✨', title:'Create something I look forward to', desc:'An experience worth opening every day.' }
+      { key:'utility',    emoji:'⚡', title:'One action that solves the problem immediately',          desc:'No preamble. Just the thing, working.' },
+      { key:'tracker',    emoji:'📈', title:'A simple way to log and review progress over time',       desc:'The value builds the longer they use it.' },
+      { key:'social',     emoji:'👫', title:'A way to do or share something with other people',        desc:'Better together from day one.' },
+      { key:'delightful', emoji:'✨', title:'Something that feels genuinely premium on first open',    desc:'Quality as the hook.' }
     ]
   }
 ];
@@ -960,26 +953,25 @@ function renderResults() {
 
   const goalLabels = { income:'earn income', personal:'solve your own daily frustration', impact:'help a lot of people', fun:'build something genuinely fun' };
   const domainLabels = { productivity:'productivity', health:'health & growth', finance:'money management', creative:'creativity & learning' };
-  const goalAns = answers.goal?.choice;
-  const domAns  = answers.domain?.choice;
-  if (goalAns && domAns) {
+  const goalAns   = QUESTIONS.filter(q => q.dim === 'goal').map(q => answers[q.id]?.choice).find(Boolean);
+  const domainAns = QUESTIONS.filter(q => q.dim === 'domain').map(q => answers[q.id]?.choice).find(Boolean);
+  if (goalAns && domainAns) {
     document.getElementById('results-sub').textContent =
-      `Your goal is to ${goalLabels[goalAns] || goalAns} in the ${domainLabels[domAns] || domAns} space.`;
+      `Your goal is to ${goalLabels[goalAns] || goalAns} in the ${domainLabels[domainAns] || domainAns} space.`;
   }
 
-  // User quote — pick the most interesting text answer
-  const quoteOrder = ['wish_existed','one_sentence','problem_source','time_waste','success_def'];
+  // User quote — pick the longest personal text answer
+  const quoteText = Object.values(answers)
+    .map(a => a?.text || '')
+    .filter(t => t.length > 25)
+    .sort((a, b) => b.length - a.length)[0];
   const quoteWrap = document.getElementById('user-quote-wrap');
   quoteWrap.innerHTML = '';
-  for (const qid of quoteOrder) {
-    const val = answers[qid]?.text;
-    if (val && val.length > 20) {
-      const div = document.createElement('div');
-      div.className = 'user-quote';
-      div.textContent = val;
-      quoteWrap.appendChild(div);
-      break;
-    }
+  if (quoteText) {
+    const div = document.createElement('div');
+    div.className = 'user-quote';
+    div.textContent = quoteText;
+    quoteWrap.appendChild(div);
   }
 
   const container = document.getElementById('ideas-container');
