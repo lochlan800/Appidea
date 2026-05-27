@@ -191,13 +191,17 @@
   </div>
 
 <script>
-// ── QUESTIONS ──────────────────────────────────────────
+// ── QUESTION POOL ──────────────────────────────────────
+// 50+ questions. The first 20 are the "core" arc (always-eligible).
+// The rest are conditional — they only become eligible when the user's
+// emerging profile matches their `requires` predicate. selectNextQuestion()
+// rotates through them, preferring under-asked dimensions + targeted branches.
 // Every question has: options (choose) + placeholder (write)
 // dim: primary scoring dimension
 // dimKeyMap: optional remap of option keys → dimension keys
 // textToKey: keyword → option key mapping for text-only answers
 
-const QUESTIONS = [
+const QUESTION_POOL = [
   {
     id: 'week_context', badge: 'Your Week', dim: 'goal',
     text: 'What does a typical week look like for you?',
@@ -742,10 +746,17 @@ const IDEAS = [
 
 // ── STATE ───────────────────────────────────────────────
 let answers = {};       // { questionId: { choice: key|null, text: string } }
+let askedPath = [];     // ids of questions in the order they were shown
 let currentQ = 0;
 let currentAnswer = { choice: null, text: '' };
+const TOTAL_QUESTIONS = 20;
+const ANCHOR_QUESTION_ID = 'week_context';
 
 // ── SCORING ─────────────────────────────────────────────
+function findQ(id) {
+  return QUESTION_POOL.find(q => q.id === id);
+}
+
 function resolveKey(q, rawKey) {
   return q.dimKeyMap ? (q.dimKeyMap[rawKey] || rawKey) : rawKey;
 }
@@ -783,13 +794,59 @@ function textKeywordBonus(text, idea) {
   return bonus;
 }
 
+// Strongest emerging key in a dimension based on answers so far.
+function leadingKey(dim) {
+  const tally = {};
+  for (const id of askedPath) {
+    const q = findQ(id);
+    if (!q || q.dim !== dim) continue;
+    const ans = answers[id];
+    if (!ans) continue;
+    let key = ans.choice ? resolveKey(q, ans.choice) : null;
+    if (!key && ans.text && q.textToKey) {
+      const inferred = detectIntent(ans.text, q.textToKey);
+      if (inferred) key = resolveKey(q, inferred);
+    }
+    if (key) tally[key] = (tally[key] || 0) + 1;
+  }
+  let best = null, bestC = 0;
+  for (const [k, c] of Object.entries(tally)) {
+    if (c > bestC) { best = k; bestC = c; }
+  }
+  return best;
+}
+
+function dimCount(dim) {
+  return askedPath.filter(id => findQ(id)?.dim === dim).length;
+}
+
+// Picks the next question based on emerging profile + dimension balance.
+function selectNextQuestion() {
+  const ctx = { lead: leadingKey, dimCount, asked: askedPath };
+  const eligible = QUESTION_POOL.filter(q =>
+    !askedPath.includes(q.id) &&
+    (!q.requires || q.requires(ctx))
+  );
+  if (eligible.length === 0) return null;
+  let best = null, bestScore = -Infinity;
+  for (const q of eligible) {
+    let score = 0;
+    score -= dimCount(q.dim) * 2.5;       // balance: avoid over-asking same dim
+    if (q.requires) score += 1.8;          // targeted questions score higher
+    score += (q.priority || 0);
+    score += Math.random() * 0.4;          // jitter for tie-breaks
+    if (score > bestScore) { bestScore = score; best = q; }
+  }
+  return best;
+}
+
 function scoreIdeas() {
   return IDEAS.map(idea => {
     let total = 0, count = 0;
-    for (const q of QUESTIONS) {
-      const ans = answers[q.id];
-      if (!ans) continue;
-      // Choice answer → full weight
+    for (const id of askedPath) {
+      const q = findQ(id);
+      const ans = answers[id];
+      if (!q || !ans) continue;
       if (ans.choice) {
         const key = resolveKey(q, ans.choice);
         if (idea.scores[q.dim]?.[key] != null) {
@@ -797,7 +854,6 @@ function scoreIdeas() {
           count++;
         }
       }
-      // Text → keyword bonus + intent (only if no choice)
       if (ans.text && ans.text.length >= 3) {
         const bonus = textKeywordBonus(ans.text, idea);
         total += bonus;
@@ -819,7 +875,8 @@ function scoreIdeas() {
 }
 
 function shouldExitEarly() {
-  const choiceDone = QUESTIONS.slice(0, currentQ + 1).filter(q => answers[q.id]?.choice != null).length;
+  const choiceDone = askedPath.slice(0, currentQ + 1)
+    .filter(id => answers[id]?.choice != null).length;
   if (choiceDone < 5) return false;
   const ranked = scoreIdeas();
   const gap = ranked[2].raw - ranked[3].raw;
@@ -831,7 +888,7 @@ function shouldExitEarly() {
 
 // ── UI ───────────────────────────────────────────────────
 function setProgress(index) {
-  const pct = Math.round((index / QUESTIONS.length) * 100);
+  const pct = Math.round((index / TOTAL_QUESTIONS) * 100);
   document.getElementById('progress-fill').style.width = pct + '%';
   document.getElementById('progress-pct').textContent = pct + '%';
   document.getElementById('q-num').textContent = index + 1;
@@ -854,7 +911,7 @@ function updateNextButton() {
 }
 
 function renderQuestion(index) {
-  const q = QUESTIONS[index];
+  const q = findQ(askedPath[index]);
   const saved = answers[q.id] || { choice: null, text: '' };
   currentAnswer = { choice: saved.choice, text: saved.text };
 
@@ -901,13 +958,13 @@ function renderQuestion(index) {
   updateNextButton();
   showScreen('question-screen');
 
-  // Focus textarea if no choice
   if (!currentAnswer.choice) setTimeout(() => {}, 0);
 }
 
 // ── NAVIGATION ───────────────────────────────────────────
 function startQuiz() {
   answers = {};
+  askedPath = [ANCHOR_QUESTION_ID];
   currentQ = 0;
   currentAnswer = { choice: null, text: '' };
   renderQuestion(0);
@@ -915,13 +972,20 @@ function startQuiz() {
 
 function nextQuestion() {
   if (currentAnswer.choice === null && currentAnswer.text.length < 3) return;
-  answers[QUESTIONS[currentQ].id] = { ...currentAnswer };
+  answers[askedPath[currentQ]] = { ...currentAnswer };
 
   if ([7, 11, 15, 19].includes(currentQ) && shouldExitEarly()) {
     showResults(); return;
   }
   currentQ++;
-  if (currentQ >= QUESTIONS.length) { showResults(); return; }
+  if (currentQ >= TOTAL_QUESTIONS) { showResults(); return; }
+
+  // If user navigated back then forward, reuse the already-picked id
+  if (!askedPath[currentQ]) {
+    const next = selectNextQuestion();
+    if (!next) { showResults(); return; }
+    askedPath.push(next.id);
+  }
   renderQuestion(currentQ);
 }
 
@@ -939,6 +1003,7 @@ function showResults() {
 
 function restart() {
   answers = {};
+  askedPath = [];
   currentQ = 0;
   currentAnswer = { choice: null, text: '' };
   document.getElementById('progress-container').classList.remove('visible');
@@ -953,8 +1018,8 @@ function renderResults() {
 
   const goalLabels = { income:'earn income', personal:'solve your own daily frustration', impact:'help a lot of people', fun:'build something genuinely fun' };
   const domainLabels = { productivity:'productivity', health:'health & growth', finance:'money management', creative:'creativity & learning' };
-  const goalAns   = QUESTIONS.filter(q => q.dim === 'goal').map(q => answers[q.id]?.choice).find(Boolean);
-  const domainAns = QUESTIONS.filter(q => q.dim === 'domain').map(q => answers[q.id]?.choice).find(Boolean);
+  const goalAns   = askedPath.map(id => { const q = findQ(id); return q?.dim === 'goal'   ? answers[id]?.choice : null; }).find(Boolean);
+  const domainAns = askedPath.map(id => { const q = findQ(id); return q?.dim === 'domain' ? answers[id]?.choice : null; }).find(Boolean);
   if (goalAns && domainAns) {
     document.getElementById('results-sub').textContent =
       `Your goal is to ${goalLabels[goalAns] || goalAns} in the ${domainLabels[domainAns] || domainAns} space.`;
