@@ -6,572 +6,125 @@
   <title>AppIdea — Discover What to Build</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #0c0c14;
-      --bg2: #13131f;
-      --card: #1a1a2b;
-      --card-hover: #21213a;
-      --border: rgba(255,255,255,0.08);
-      --border-active: rgba(139,92,246,0.55);
-      --accent: #8b5cf6;
-      --accent2: #6366f1;
-      --accent-glow: rgba(139,92,246,0.22);
-      --text: #f0f0f8;
-      --muted: #7878a0;
-      --green: #10b981;
-      --text-border: rgba(139,92,246,0.35);
+      --bg: #0c0c14; --card: #1a1a2b; --card-hover: #21213a;
+      --border: rgba(255,255,255,0.08); --border-active: rgba(139,92,246,0.55);
+      --accent: #8b5cf6; --accent2: #6366f1; --accent-glow: rgba(139,92,246,0.22);
+      --text: #f0f0f8; --muted: #7878a0; --green: #10b981;
     }
+    html, body { min-height: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+    body { display: flex; flex-direction: column; align-items: center; padding: 24px 16px 64px; }
 
-    html, body {
-      min-height: 100%;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 24px 16px 64px;
-    }
-
-    /* ── Progress ── */
-    #progress-container {
-      width: 100%;
-      max-width: 620px;
-      margin-bottom: 28px;
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
+    /* Progress */
+    #progress-container { width: 100%; max-width: 640px; margin-bottom: 24px; opacity: 0; transition: opacity 0.4s; }
     #progress-container.visible { opacity: 1; }
+    #progress-header { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 7px; }
+    #progress-track { height: 3px; background: rgba(255,255,255,0.07); border-radius: 4px; overflow: hidden; }
+    #progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 4px; transition: width 0.55s cubic-bezier(0.4,0,0.2,1); width: 0%; }
 
-    #progress-header {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
+    /* Screens */
+    .screen { width: 100%; max-width: 640px; }
+    @keyframes fadeUp   { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes slideOut { from { opacity:1; transform:translateX(0);     } to { opacity:0; transform:translateX(-28px); } }
+    @keyframes slideIn  { from { opacity:0; transform:translateX(28px);  } to { opacity:1; transform:translateX(0); } }
+    .screen.entering { animation: slideIn 0.32s ease forwards; }
+    .screen.leaving  { animation: slideOut 0.25s ease forwards; }
 
-    #progress-track {
-      height: 3px;
-      background: rgba(255,255,255,0.07);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    #progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent2), var(--accent));
-      border-radius: 4px;
-      transition: width 0.55s cubic-bezier(0.4,0,0.2,1);
-      width: 0%;
-    }
-
-    /* ── Screen animations ── */
-    .screen {
-      width: 100%;
-      max-width: 620px;
-    }
-
-    @keyframes fadeUp   { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes slideOut { from { opacity:1; transform:translateX(0);     } to { opacity:0; transform:translateX(-32px); } }
-    @keyframes slideIn  { from { opacity:0; transform:translateX(32px);  } to { opacity:1; transform:translateX(0); } }
-
-    .screen.entering { animation: slideIn 0.35s ease forwards; }
-    .screen.leaving  { animation: slideOut 0.28s ease forwards; }
-
-    /* ── Welcome ── */
-    #welcome {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding-top: 52px;
-      animation: fadeUp 0.5s ease forwards;
-    }
-
-    .logo-mark {
-      width: 76px; height: 76px;
-      border-radius: 22px;
-      background: linear-gradient(135deg, var(--accent2), var(--accent));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 34px;
-      margin-bottom: 28px;
-      box-shadow: 0 0 48px var(--accent-glow);
-    }
-
-    .welcome-title {
-      font-size: clamp(28px, 5vw, 42px);
-      font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: -0.5px;
-      margin-bottom: 16px;
-    }
-
-    .welcome-title span {
-      background: linear-gradient(135deg, #c4b5fd, var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .welcome-sub {
-      font-size: 16px;
-      color: var(--muted);
-      line-height: 1.65;
-      max-width: 460px;
-      margin-bottom: 36px;
-    }
-
-    .stats-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-bottom: 40px;
-    }
-
-    .stat-pill {
-      padding: 7px 16px;
-      border-radius: 20px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      font-size: 13px;
-      color: var(--muted);
-    }
-
+    /* Welcome */
+    #welcome { display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: 48px; animation: fadeUp 0.5s ease forwards; }
+    .logo-mark { width: 72px; height: 72px; border-radius: 20px; background: linear-gradient(135deg, var(--accent2), var(--accent)); display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 26px; box-shadow: 0 0 48px var(--accent-glow); }
+    .welcome-title { font-size: clamp(26px, 5vw, 40px); font-weight: 700; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 14px; }
+    .welcome-title span { background: linear-gradient(135deg, #c4b5fd, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .welcome-sub { font-size: 15px; color: var(--muted); line-height: 1.65; max-width: 440px; margin-bottom: 32px; }
+    .stats-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 36px; }
+    .stat-pill { padding: 6px 14px; border-radius: 20px; background: var(--card); border: 1px solid var(--border); font-size: 12px; color: var(--muted); }
     .stat-pill strong { color: var(--text); }
-
-    .btn-primary {
-      padding: 15px 40px;
-      font-size: 15px;
-      font-weight: 600;
-      color: white;
-      background: linear-gradient(135deg, var(--accent2), var(--accent));
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 4px 24px var(--accent-glow);
-      letter-spacing: 0.2px;
-    }
+    .btn-primary { padding: 14px 36px; font-size: 15px; font-weight: 600; color: white; background: linear-gradient(135deg, var(--accent2), var(--accent)); border: none; border-radius: 12px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 4px 24px var(--accent-glow); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--accent-glow); }
-    .btn-primary:active { transform: translateY(0); }
 
-    /* ── Question ── */
+    /* Question screen */
     #question-screen { display: none; }
+    .q-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .q-badge { font-size: 11px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: var(--accent); padding: 3px 10px; border-radius: 8px; background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.22); }
+    .q-text { font-size: clamp(18px, 3.2vw, 24px); font-weight: 700; line-height: 1.3; letter-spacing: -0.3px; margin-bottom: 6px; }
+    .q-hint { font-size: 13px; color: var(--muted); margin-bottom: 18px; line-height: 1.5; }
 
-    .q-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
+    /* Options grid */
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 0; }
+    @media (max-width: 480px) { .options-grid { grid-template-columns: 1fr; } }
+    .option-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 14px; cursor: pointer; transition: border-color 0.18s, background 0.18s, transform 0.13s, box-shadow 0.18s; text-align: left; display: flex; align-items: flex-start; gap: 10px; }
+    .option-card:hover { border-color: var(--border-active); background: var(--card-hover); transform: translateY(-1px); box-shadow: 0 3px 16px rgba(139,92,246,0.1); }
+    .option-card.selected { border-color: var(--accent); background: rgba(139,92,246,0.1); box-shadow: 0 0 0 3px rgba(139,92,246,0.12); }
+    .option-emoji { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .option-body { flex: 1; min-width: 0; }
+    .option-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .option-desc  { font-size: 11.5px; color: var(--muted); line-height: 1.35; }
 
-    .q-badge {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--accent);
-      padding: 3px 10px;
-      border-radius: 10px;
-      background: rgba(139,92,246,0.12);
-      border: 1px solid rgba(139,92,246,0.25);
-    }
+    /* OR divider */
+    .or-divider { display: flex; align-items: center; gap: 10px; margin: 14px 0 12px; }
+    .or-divider::before, .or-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .or-divider span { font-size: 11px; color: var(--muted); white-space: nowrap; letter-spacing: 0.5px; }
 
-    .q-type-tag {
-      font-size: 11px;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .q-text {
-      font-size: clamp(19px, 3.5vw, 26px);
-      font-weight: 700;
-      line-height: 1.3;
-      letter-spacing: -0.3px;
-      margin-bottom: 8px;
-    }
-
-    .q-hint {
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 24px;
-      line-height: 1.5;
-    }
-
-    /* Choice options */
-    .options-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 11px;
-    }
-
-    @media (max-width: 500px) { .options-grid { grid-template-columns: 1fr; } }
-
-    .option-card {
-      background: var(--card);
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 17px 16px;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s, transform 0.15s, box-shadow 0.2s;
-      text-align: left;
-    }
-    .option-card:hover {
-      border-color: var(--border-active);
-      background: var(--card-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(139,92,246,0.12);
-    }
-    .option-card.selected {
-      border-color: var(--accent);
-      background: rgba(139,92,246,0.1);
-      box-shadow: 0 0 0 3px rgba(139,92,246,0.14);
-    }
-
-    .option-emoji { font-size: 22px; margin-bottom: 9px; display: block; }
-    .option-title { font-size: 13.5px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-    .option-desc  { font-size: 12px; color: var(--muted); line-height: 1.4; }
-
-    /* Text input */
-    .text-input-wrap {
-      position: relative;
-    }
-
-    .text-area {
-      width: 100%;
-      min-height: 120px;
-      background: var(--card);
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 16px 18px;
-      font-size: 15px;
-      color: var(--text);
-      font-family: inherit;
-      resize: vertical;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      line-height: 1.6;
-    }
+    /* Text area */
+    .text-area { width: 100%; min-height: 80px; background: var(--card); border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 15px; font-size: 14px; color: var(--text); font-family: inherit; resize: vertical; outline: none; transition: border-color 0.2s, box-shadow 0.2s; line-height: 1.55; }
     .text-area::placeholder { color: var(--muted); }
-    .text-area:focus {
-      border-color: var(--text-border);
-      box-shadow: 0 0 0 3px rgba(139,92,246,0.1);
-    }
-
-    .text-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 8px;
-    }
-
-    .skip-btn {
-      background: none;
-      border: none;
-      color: var(--muted);
-      font-size: 13px;
-      cursor: pointer;
-      padding: 4px 0;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      transition: color 0.2s;
-    }
-    .skip-btn:hover { color: var(--text); }
-
-    .char-count {
-      font-size: 12px;
-      color: var(--muted);
-      transition: color 0.2s;
-    }
+    .text-area:focus { border-color: rgba(139,92,246,0.4); box-shadow: 0 0 0 3px rgba(139,92,246,0.08); }
+    .text-footer { display: flex; justify-content: flex-end; margin-top: 5px; }
+    .char-count { font-size: 11px; color: var(--muted); }
     .char-count.limit { color: #f59e0b; }
 
     /* Actions */
-    .q-actions {
-      margin-top: 22px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .btn-back {
-      background: none;
-      border: 1.5px solid var(--border);
-      color: var(--muted);
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: border-color 0.2s, color 0.2s;
-    }
+    .q-actions { margin-top: 18px; display: flex; justify-content: space-between; align-items: center; }
+    .btn-back { background: none; border: 1.5px solid var(--border); color: var(--muted); padding: 9px 18px; border-radius: 9px; cursor: pointer; font-size: 13px; transition: border-color 0.2s, color 0.2s; }
     .btn-back:hover { border-color: var(--muted); color: var(--text); }
+    .btn-next { padding: 11px 26px; font-size: 14px; font-weight: 600; color: white; background: linear-gradient(135deg, var(--accent2), var(--accent)); border: none; border-radius: 9px; cursor: pointer; transition: opacity 0.2s, transform 0.15s; opacity: 0.3; pointer-events: none; }
+    .btn-next.active { opacity: 1; pointer-events: all; }
+    .btn-next.active:hover { transform: translateY(-2px); }
 
-    .btn-next {
-      padding: 12px 30px;
-      font-size: 14px;
-      font-weight: 600;
-      color: white;
-      background: linear-gradient(135deg, var(--accent2), var(--accent));
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: opacity 0.2s, transform 0.15s, box-shadow 0.15s;
-      opacity: 0.35;
-      pointer-events: none;
-      box-shadow: 0 4px 16px var(--accent-glow);
-    }
-    .btn-next.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-    .btn-next.active:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 24px var(--accent-glow);
-    }
-
-    /* ── Loading ── */
-    #loading-screen {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 0;
-      text-align: center;
-    }
-
-    .spinner {
-      width: 48px; height: 48px;
-      border-radius: 50%;
-      border: 3px solid rgba(255,255,255,0.07);
-      border-top-color: var(--accent);
-      animation: spin 0.75s linear infinite;
-      margin-bottom: 24px;
-    }
+    /* Loading */
+    #loading-screen { display: none; flex-direction: column; align-items: center; padding: 72px 0; text-align: center; }
+    .spinner { width: 44px; height: 44px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.07); border-top-color: var(--accent); animation: spin 0.75s linear infinite; margin-bottom: 20px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    .loading-text { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
-    .loading-sub  { font-size: 14px; color: var(--muted); }
-
-    .loading-steps {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      list-style: none;
-    }
-    .loading-steps li {
-      font-size: 13px;
-      color: var(--muted);
-      animation: fadeUp 0.4s ease both;
-    }
+    .loading-text { font-size: 17px; font-weight: 600; margin-bottom: 7px; }
+    .loading-sub  { font-size: 13px; color: var(--muted); }
+    .loading-steps { margin-top: 18px; list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .loading-steps li { font-size: 12px; color: var(--muted); animation: fadeUp 0.4s ease both; }
     .loading-steps li:nth-child(1) { animation-delay: 0.2s; }
     .loading-steps li:nth-child(2) { animation-delay: 0.6s; }
     .loading-steps li:nth-child(3) { animation-delay: 1.0s; }
 
-    /* ── Results ── */
+    /* Results */
     #results-screen { display: none; }
-
-    .results-header {
-      text-align: center;
-      margin-bottom: 32px;
-      animation: fadeUp 0.5s ease forwards;
-    }
-
-    .results-badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 20px;
-      background: rgba(16,185,129,0.12);
-      border: 1px solid rgba(16,185,129,0.28);
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--green);
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-
-    .results-title {
-      font-size: clamp(22px, 4vw, 30px);
-      font-weight: 700;
-      letter-spacing: -0.3px;
-      margin-bottom: 10px;
-    }
-
-    .results-sub {
-      font-size: 15px;
-      color: var(--muted);
-      line-height: 1.55;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    /* User quote */
-    .user-quote {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      border-radius: 0 10px 10px 0;
-      padding: 12px 16px;
-      font-size: 14px;
-      color: var(--text);
-      font-style: italic;
-      line-height: 1.55;
-      margin-bottom: 28px;
-      animation: fadeUp 0.5s 0.1s ease both;
-    }
-
-    .user-quote::before {
-      content: '"';
-      font-size: 24px;
-      color: var(--accent);
-      line-height: 1;
-      display: block;
-      margin-bottom: 4px;
-      font-style: normal;
-    }
-
-    /* Idea cards */
-    .idea-card {
-      background: var(--card);
-      border: 1.5px solid var(--border);
-      border-radius: 18px;
-      padding: 24px;
-      margin-bottom: 18px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    .idea-card:hover {
-      border-color: rgba(139,92,246,0.4);
-      box-shadow: 0 8px 32px rgba(139,92,246,0.1);
-    }
-
+    .results-header { text-align: center; margin-bottom: 28px; animation: fadeUp 0.5s ease forwards; }
+    .results-badge { display: inline-block; padding: 3px 11px; border-radius: 20px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25); font-size: 11px; font-weight: 600; color: var(--green); letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 12px; }
+    .results-title { font-size: clamp(20px, 4vw, 28px); font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; }
+    .results-sub { font-size: 14px; color: var(--muted); line-height: 1.55; max-width: 460px; margin: 0 auto; }
+    .user-quote { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; padding: 11px 15px; font-size: 13.5px; color: var(--text); font-style: italic; line-height: 1.55; margin-bottom: 24px; animation: fadeUp 0.5s 0.1s ease both; }
+    .user-quote::before { content: '"'; font-size: 22px; color: var(--accent); line-height: 1; display: block; margin-bottom: 3px; font-style: normal; }
+    .idea-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; padding: 22px; margin-bottom: 16px; transition: border-color 0.3s, box-shadow 0.3s; }
+    .idea-card:hover { border-color: rgba(139,92,246,0.38); box-shadow: 0 6px 28px rgba(139,92,246,0.09); }
     .idea-card:nth-child(1) { animation: fadeUp 0.5s 0.15s ease both; }
     .idea-card:nth-child(2) { animation: fadeUp 0.5s 0.25s ease both; }
     .idea-card:nth-child(3) { animation: fadeUp 0.5s 0.35s ease both; }
-
-    .idea-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 4px;
-    }
-
-    .idea-name {
-      font-size: 19px;
-      font-weight: 700;
-      letter-spacing: -0.2px;
-      flex: 1;
-      padding-right: 12px;
-    }
-
-    .idea-rank {
-      width: 30px; height: 30px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent2), var(--accent));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .idea-tagline {
-      font-size: 13.5px;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 18px;
-    }
-
-    .idea-section { margin-bottom: 16px; }
-
-    .idea-section-label {
-      font-size: 10.5px;
-      font-weight: 600;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 7px;
-    }
-
-    .idea-target { font-size: 14px; color: var(--text); line-height: 1.5; }
-
-    .features-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
-    .features-list li {
-      font-size: 13.5px;
-      color: var(--text);
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
-      line-height: 1.45;
-    }
-    .features-list li::before {
-      content: '→';
-      color: var(--accent);
-      font-weight: 600;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .idea-value {
-      font-size: 13.5px;
-      color: var(--text);
-      line-height: 1.6;
-      padding: 12px 16px;
-      background: rgba(139,92,246,0.07);
-      border-left: 3px solid var(--accent);
-      border-radius: 0 8px 8px 0;
-    }
-
-    /* Match score bar */
-    .match-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
+    .idea-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+    .idea-name { font-size: 18px; font-weight: 700; letter-spacing: -0.2px; flex: 1; padding-right: 10px; }
+    .idea-rank { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--accent2), var(--accent)); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .idea-tagline { font-size: 13px; color: var(--accent); font-weight: 500; margin-bottom: 16px; }
+    .match-row { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; }
     .match-label { font-size: 11px; color: var(--muted); white-space: nowrap; }
-    .match-bar {
-      flex: 1;
-      height: 4px;
-      background: rgba(255,255,255,0.07);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .match-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent2), var(--accent));
-      border-radius: 4px;
-    }
+    .match-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.07); border-radius: 4px; overflow: hidden; }
+    .match-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 4px; }
     .match-pct { font-size: 11px; color: var(--accent); font-weight: 600; white-space: nowrap; }
-
-    /* Results footer */
-    .results-footer {
-      text-align: center;
-      margin-top: 28px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      animation: fadeUp 0.5s 0.5s ease both;
-    }
-    .results-footer p { font-size: 14px; color: var(--muted); margin-bottom: 14px; }
-
-    .btn-restart {
-      background: none;
-      border: 1.5px solid var(--border);
-      color: var(--muted);
-      padding: 10px 24px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: border-color 0.2s, color 0.2s;
-    }
+    .idea-section { margin-bottom: 14px; }
+    .idea-section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .idea-target { font-size: 13.5px; color: var(--text); line-height: 1.5; }
+    .features-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .features-list li { font-size: 13px; color: var(--text); display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; }
+    .features-list li::before { content: '→'; color: var(--accent); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+    .idea-value { font-size: 13px; color: var(--text); line-height: 1.6; padding: 11px 14px; background: rgba(139,92,246,0.07); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; }
+    .results-footer { text-align: center; margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--border); animation: fadeUp 0.5s 0.5s ease both; }
+    .results-footer p { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+    .btn-restart { background: none; border: 1.5px solid var(--border); color: var(--muted); padding: 9px 22px; border-radius: 9px; cursor: pointer; font-size: 13px; transition: border-color 0.2s, color 0.2s; }
     .btn-restart:hover { border-color: var(--accent); color: var(--accent); }
   </style>
 </head>
@@ -585,626 +138,705 @@
     <div id="progress-track"><div id="progress-fill"></div></div>
   </div>
 
-  <!-- Welcome -->
   <div id="welcome" class="screen">
     <div class="logo-mark">💡</div>
     <h1 class="welcome-title">Find the app you<br><span>actually want to build</span></h1>
-    <p class="welcome-sub">
-      20 questions designed to uncover your interests, strengths, and frustrations — then surface 3 personalised app ideas with a full product brief for each.
-    </p>
+    <p class="welcome-sub">20 questions with a twist — every question lets you pick an option <em>or</em> write your own answer, or both. The more you share, the better the match.</p>
     <div class="stats-row">
       <span class="stat-pill"><strong>20</strong> questions</span>
-      <span class="stat-pill">Mix of <strong>choice + free text</strong></span>
-      <span class="stat-pill">Early exit when <strong>pattern is clear</strong></span>
-      <span class="stat-pill"><strong>3 ideas</strong> + product briefs</span>
+      <span class="stat-pill">Choose <strong>or</strong> write — your call</span>
+      <span class="stat-pill">Early exit when pattern is clear</span>
+      <span class="stat-pill"><strong>3 ideas</strong> + full product briefs</span>
     </div>
-    <button class="btn-primary" onclick="startQuiz()">Start finding my idea →</button>
+    <button class="btn-primary" onclick="startQuiz()">Find my app idea →</button>
   </div>
 
-  <!-- Question -->
   <div id="question-screen" class="screen">
-    <div class="q-meta">
-      <span class="q-badge" id="q-badge">Question 1</span>
-      <span class="q-type-tag" id="q-type-tag"></span>
-    </div>
+    <div class="q-meta"><span class="q-badge" id="q-badge">Q1</span></div>
     <h2 class="q-text" id="q-text"></h2>
     <p class="q-hint" id="q-hint"></p>
-    <div id="q-body"></div>
+    <div class="options-grid" id="options-grid"></div>
+    <div class="or-divider"><span>or write your own answer</span></div>
+    <textarea class="text-area" id="text-area" rows="3"></textarea>
+    <div class="text-footer"><span class="char-count" id="char-count">0 / 260</span></div>
     <div class="q-actions">
       <button class="btn-back" id="btn-back" onclick="goBack()">← Back</button>
       <button class="btn-next" id="btn-next" onclick="nextQuestion()">Continue →</button>
     </div>
   </div>
 
-  <!-- Loading -->
-  <div id="loading-screen" class="screen" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:80px 0; text-align:center;">
+  <div id="loading-screen" class="screen" style="display:none; flex-direction:column; align-items:center; padding:72px 0; text-align:center;">
     <div class="spinner"></div>
     <p class="loading-text">Analysing your answers…</p>
-    <p class="loading-sub">Matching against 22 curated app ideas</p>
+    <p class="loading-sub">Matching across 22 curated app ideas</p>
     <ul class="loading-steps">
-      <li>✦ Mapping your goals and strengths</li>
-      <li>✦ Scoring ideas against your answers</li>
+      <li>✦ Mapping goals and strengths</li>
+      <li>✦ Scoring ideas against your profile</li>
       <li>✦ Building your product briefs</li>
     </ul>
   </div>
 
-  <!-- Results -->
   <div id="results-screen" class="screen">
     <div class="results-header">
       <div class="results-badge">✓ Match complete</div>
       <h2 class="results-title">Your top 3 app ideas</h2>
-      <p class="results-sub" id="results-sub">Based on everything you told us, here's what we'd build.</p>
+      <p class="results-sub" id="results-sub">Based on everything you shared, here's what we'd build.</p>
     </div>
     <div id="user-quote-wrap"></div>
     <div id="ideas-container"></div>
     <div class="results-footer">
-      <p>Not quite right? Try different answers to get new ideas.</p>
+      <p>Not quite right? Try different answers for new results.</p>
       <button class="btn-restart" onclick="restart()">↺ Start over</button>
     </div>
   </div>
 
 <script>
-// ─────────────────────────────────────────────────────────
-//  QUESTIONS
-//  type: 'choice' | 'text'
-//  dim: which scoring dimension this feeds
-//  For choice: options[] with key mapped to dimension values
-//  For text:   placeholder, maxLen, affects (array of dims)
-// ─────────────────────────────────────────────────────────
+// ── QUESTIONS ──────────────────────────────────────────
+// Every question has: options (choose) + placeholder (write)
+// dim: primary scoring dimension
+// dimKeyMap: optional remap of option keys → dimension keys
+// textToKey: keyword → option key mapping for text-only answers
 
 const QUESTIONS = [
   {
-    id: 'goal',
-    type: 'choice',
-    badge: 'Your motivation',
+    id: 'goal', badge: 'Your motivation', dim: 'goal',
     text: 'What\'s your main goal with this app?',
-    hint: 'Be honest — this shapes every recommendation that follows.',
-    dim: 'goal',
+    hint: 'This shapes every recommendation. Be honest.',
+    placeholder: 'e.g. I want to build something I use every day to solve a real frustration I have...',
+    textToKey: {
+      income:   ['money','earn','revenue','profit','sell','paid','saas','subscription','charge'],
+      personal: ['myself','my own','i use','i need','frustrat','annoy','daily','itch','personal problem'],
+      impact:   ['help','people','others','world','change','difference','community','benefit','society'],
+      fun:      ['fun','enjoy','cool','interesting','exciting','creative','challenge','love building']
+    },
     options: [
-      { key: 'income',   emoji: '💰', title: 'Generate income',             desc: 'A product that earns money — subscriptions, one-time sales, licensing.' },
-      { key: 'personal', emoji: '🔧', title: 'Solve my own frustration',    desc: 'A tool I\'d use every single day to fix something that genuinely annoys me.' },
-      { key: 'impact',   emoji: '🌍', title: 'Help a lot of people',        desc: 'Something genuinely useful to many people, even if it earns nothing at first.' },
-      { key: 'fun',      emoji: '🎮', title: 'Build something enjoyable',   desc: 'The joy is in making it — I want it to be fun to build and fun to use.' }
+      { key:'income',   emoji:'💰', title:'Generate income',           desc:'Subscriptions, one-time sales, or licensing.' },
+      { key:'personal', emoji:'🔧', title:'Solve my own frustration',  desc:'A daily tool that fixes something personal.' },
+      { key:'impact',   emoji:'🌍', title:'Help a lot of people',      desc:'Useful to many, even if it earns nothing first.' },
+      { key:'fun',      emoji:'🎮', title:'Build something enjoyable', desc:'Fun to make and fun to use — that\'s enough.' }
     ]
   },
   {
-    id: 'problem_text',
-    type: 'text',
-    badge: 'The problem',
-    text: 'What problem do you keep running into that no app solves well for you?',
-    hint: 'Don\'t filter yourself — raw frustrations make the best product ideas.',
-    placeholder: 'e.g. I can never find a simple way to track which friends I haven\'t spoken to in a while...',
-    maxLen: 300,
-    affects: ['domain', 'audience']
-  },
-  {
-    id: 'domain',
-    type: 'choice',
-    badge: 'The space',
-    text: 'Which area of life does that problem live in?',
-    hint: 'Pick whichever you think about, read about, or talk about the most.',
-    dim: 'domain',
+    id: 'problem_source', badge: 'Where it came from', dim: 'audience',
+    dimKeyMap: { mine:'self', others:'niche', gap:'business', read:'broad' },
+    text: 'Where did this problem idea come from?',
+    hint: 'How you discovered it tells us who you\'re really building for.',
+    placeholder: 'e.g. I notice I spend ages looking for notes I\'ve already written, and no tool I\'ve tried fixes it...',
+    textToKey: {
+      self:     ['myself','my own','i have','i face','daily','always','every day','personally'],
+      niche:    ['friend','colleague','people i know','others around me','team','coworker'],
+      business: ['market','gap','opportunity','research','underserved','unmet','spotted'],
+      broad:    ['everyone','common','universal','widespread','most people','read','heard']
+    },
     options: [
-      { key: 'productivity', emoji: '⚡', title: 'Productivity & work',       desc: 'Focus, tasks, projects, meetings, workflows, or getting more done.' },
-      { key: 'health',       emoji: '💪', title: 'Health & personal growth',   desc: 'Habits, fitness, sleep, energy, mindset, or becoming a better version of you.' },
-      { key: 'finance',      emoji: '💸', title: 'Money & finances',           desc: 'Budgeting, earning, invoicing, tracking income, or understanding spending.' },
-      { key: 'creative',     emoji: '🎨', title: 'Creativity & learning',      desc: 'Writing, design, reading, building skills, or making things you\'re proud of.' }
+      { key:'mine',   emoji:'🎯', title:'It\'s my own daily struggle',     desc:'I am the user — building for myself.' },
+      { key:'others', emoji:'👥', title:'I\'ve watched others face it',    desc:'People around me deal with this constantly.' },
+      { key:'gap',    emoji:'💡', title:'I spotted an unserved gap',       desc:'Research or instinct told me it\'s underserved.' },
+      { key:'read',   emoji:'📖', title:'I heard about it and it clicked', desc:'A story, article, or conversation sparked it.' }
     ]
   },
   {
-    id: 'user_desc',
-    type: 'text',
-    badge: 'Your user',
-    text: 'Describe who you picture using this app. What does their day look like?',
-    hint: 'The clearer your user, the sharper the product. Paint a quick picture.',
-    placeholder: 'e.g. A freelance designer juggling 3 clients, always chasing invoices and forgetting to follow up...',
-    maxLen: 300,
-    affects: ['audience', 'domain']
+    id: 'domain', badge: 'The space', dim: 'domain',
+    text: 'Which area of life does this problem live in?',
+    hint: 'Pick the one you think about, read about, or care about most.',
+    placeholder: 'e.g. It\'s about staying focused during deep work — I lose hours to distractions every day...',
+    textToKey: {
+      productivity: ['task','focus','procrastinat','organiz','schedul','meeting','project','workflow','plan','todo'],
+      health:       ['workout','fitness','sleep','eat','health','habit','exercise','weight','stress','energy','diet'],
+      finance:      ['money','budget','spend','invoice','income','earn','payment','cost','freelanc','client','bill'],
+      creative:     ['writing','design','creat','art','music','draw','learn','skill','read','book','idea','content']
+    },
+    options: [
+      { key:'productivity', emoji:'⚡', title:'Productivity & work',       desc:'Focus, tasks, projects, getting more done.' },
+      { key:'health',       emoji:'💪', title:'Health & personal growth',  desc:'Habits, fitness, sleep, energy, mindset.' },
+      { key:'finance',      emoji:'💸', title:'Money & finances',          desc:'Budgeting, invoicing, earning, spending.' },
+      { key:'creative',     emoji:'🎨', title:'Creativity & learning',     desc:'Writing, design, skills, reading, making.' }
+    ]
   },
   {
-    id: 'audience',
-    type: 'choice',
-    badge: 'Target user',
-    text: 'Who would be your primary user?',
+    id: 'user_type', badge: 'Your user', dim: 'audience',
+    text: 'Who do you picture using this app?',
+    hint: 'Paint a quick picture — the clearer the user, the sharper the product.',
+    placeholder: 'e.g. A freelance designer juggling 3 clients, always chasing invoices, never sure who owes what...',
+    textToKey: {
+      self:     ['like me','same as me','similar to me','myself','own problem','i would use'],
+      niche:    ['developer','designer','freelancer','student','writer','creator','professional','marketer'],
+      business: ['business','company','team','startup','enterprise','client','agency','b2b'],
+      broad:    ['anyone','everyone','all ages','universal','mainstream','general','wide audience']
+    },
+    options: [
+      { key:'self',     emoji:'🧍', title:'Someone exactly like me',      desc:'Same job, same daily frustrations as me.' },
+      { key:'niche',    emoji:'👔', title:'A specific niche or profession', desc:'Developers, freelancers, writers, etc.' },
+      { key:'business', emoji:'🏢', title:'Businesses or teams',           desc:'Work context — companies or professionals.' },
+      { key:'broad',    emoji:'🌐', title:'Anyone with this frustration',  desc:'Universal problem across all backgrounds.' }
+    ]
+  },
+  {
+    id: 'audience', badge: 'Primary user', dim: 'audience',
+    text: 'If you had to pick one primary user, who would it be?',
     hint: 'Think about who you\'d call first to beta test it.',
-    dim: 'audience',
+    placeholder: 'e.g. Mostly myself — I\'d build it for my own workflow and share it if it works...',
+    textToKey: {
+      self:     ['me ','myself','i would','my own','personal tool','for myself'],
+      niche:    ['niche','specific group','community','developers','designers','freelancers'],
+      business: ['businesses','b2b','companies','teams','enterprise','professional'],
+      broad:    ['anyone','everyone','broad','wide','general public','mass market']
+    },
     options: [
-      { key: 'self',     emoji: '🧍', title: 'Me — I\'m the main user',     desc: 'Scratching my own itch. If I love it, others probably will too.' },
-      { key: 'niche',    emoji: '👥', title: 'People in my field or niche',  desc: 'A specific group: developers, designers, freelancers, readers, parents, etc.' },
-      { key: 'business', emoji: '🏢', title: 'Businesses or professionals',  desc: 'Companies or solo operators who\'d pay to solve a real work problem.' },
-      { key: 'broad',    emoji: '🌐', title: 'Anyone — as wide as possible', desc: 'A universal frustration that most people have regardless of background.' }
+      { key:'self',     emoji:'🧍', title:'Me — I\'m the main user',       desc:'Scratching my own itch first.' },
+      { key:'niche',    emoji:'👥', title:'People in my field or niche',    desc:'A specific, identifiable group.' },
+      { key:'business', emoji:'🏢', title:'Businesses or professionals',    desc:'Paying customers solving a work problem.' },
+      { key:'broad',    emoji:'🌐', title:'Anyone — as wide as possible',   desc:'A universal frustration most people share.' }
     ]
   },
   {
-    id: 'time_waste',
-    type: 'text',
-    badge: 'Time drain',
-    text: 'What do you waste too much time on every week that could be easier?',
-    hint: 'Think about the moments where you sigh and think "there has to be a better way."',
-    placeholder: 'e.g. Manually copying data between spreadsheets and sending the same update emails to clients...',
-    maxLen: 280,
-    affects: ['domain', 'style']
+    id: 'time_waste', badge: 'Time drain', dim: 'domain',
+    text: 'What do you waste too much time on every week?',
+    hint: 'Think of moments where you sigh and think "there has to be a better way."',
+    placeholder: 'e.g. I manually copy data between spreadsheets and send the same status update emails to clients every Friday...',
+    textToKey: {
+      productivity: ['task','email','meeting','context switch','focus','plans','schedule','admin'],
+      health:       ['meal prep','workout','tracking','sleep','routine','habit','eating','exercise'],
+      finance:      ['invoic','expense','receipt','payment','budget','money tracking','billing'],
+      creative:     ['note','capture','ideas','reading list','research','writing','content','learning']
+    },
+    options: [
+      { key:'productivity', emoji:'⚡', title:'Work tasks & admin',        desc:'Emails, status updates, chasing things.' },
+      { key:'health',       emoji:'💪', title:'Health & routine admin',    desc:'Meal prep, logging workouts, routines.' },
+      { key:'finance',      emoji:'💸', title:'Financial admin',           desc:'Invoicing, expense tracking, billing.' },
+      { key:'creative',     emoji:'🎨', title:'Capturing & organising ideas', desc:'Notes, reading lists, research.' }
+    ]
   },
   {
-    id: 'strength',
-    type: 'choice',
-    badge: 'Your edge',
+    id: 'strength', badge: 'Your edge', dim: 'strength',
     text: 'What\'s your biggest strength going into this?',
-    hint: 'Be honest — the best products are built on what you\'re actually good at.',
-    dim: 'strength',
+    hint: 'Lean into what you\'re genuinely good at — it shapes the best product.',
+    placeholder: 'e.g. I\'ve been a designer for 8 years — I can make something that looks genuinely great...',
+    textToKey: {
+      builder:   ['code','build','develop','full stack','backend','frontend','engineer','program','technical'],
+      designer:  ['design','visual','brand','ux','ui','figma','aesthetic','layout','look and feel'],
+      expert:    ['domain','industry','years experience','understand the market','know the problem','expert'],
+      connector: ['people','community','grow','sell','talk to users','network','communicate','marketing']
+    },
     options: [
-      { key: 'builder',   emoji: '💻', title: 'I can build it myself',        desc: 'Strong technical skills — I can ship the full product end to end.' },
-      { key: 'designer',  emoji: '✏️',  title: 'I have great design taste',    desc: 'I know how to make interfaces feel genuinely good to use.' },
-      { key: 'expert',    emoji: '📊', title: 'I know this market deeply',     desc: 'Domain expertise — I understand this problem better than most people.' },
-      { key: 'connector', emoji: '🤝', title: 'I\'m great with people',        desc: 'I can talk to users, grow a community, sell, and gather feedback fast.' }
+      { key:'builder',   emoji:'💻', title:'I can build it myself',      desc:'Strong technical skills, can ship end to end.' },
+      { key:'designer',  emoji:'✏️',  title:'I have great design taste',  desc:'I make interfaces feel genuinely good.' },
+      { key:'expert',    emoji:'📊', title:'I know this market deeply',   desc:'Domain expertise most people don\'t have.' },
+      { key:'connector', emoji:'🤝', title:'I\'m great with people',      desc:'Grow communities, talk to users, sell.' }
     ]
   },
   {
-    id: 'tech',
-    type: 'choice',
-    badge: 'Technical ability',
+    id: 'tech_level', badge: 'Technical ability', dim: 'strength',
+    dimKeyMap: { strong:'builder', nocode:'designer', partner:'connector', learning:'expert' },
     text: 'How would you describe your technical ability right now?',
-    hint: 'This helps us match you to ideas that fit your current build capacity.',
-    dim: 'strength',
-    dimKeyMap: { 'strong': 'builder', 'nocode': 'designer', 'partner': 'connector', 'learning': 'expert' },
+    hint: 'Helps us match you to ideas that fit your current build capacity.',
+    placeholder: 'e.g. I\'m comfortable with JavaScript but I\'ve never built a backend from scratch...',
+    textToKey: {
+      builder:   ['code','develop','build anything','full stack','backend','frontend','strong dev','engineer'],
+      designer:  ['webflow','bubble','no-code','glide','airtable','low-code','without coding'],
+      connector: ['need a co-founder','need a developer','partner','technical cofounder'],
+      expert:    ['learning','picking up','self-taught','figuring it out','not technical']
+    },
     options: [
-      { key: 'strong',   emoji: '🚀', title: 'Strong developer',             desc: 'I can build almost anything — frontend, backend, or both.' },
-      { key: 'nocode',   emoji: '🧩', title: 'No-code / low-code comfortable', desc: 'Webflow, Glide, Bubble, Airtable — I can ship without writing much code.' },
-      { key: 'partner',  emoji: '🤝', title: 'I\'d need a technical co-founder', desc: 'I bring the domain knowledge, user insight, or distribution — not the code.' },
-      { key: 'learning', emoji: '📚', title: 'Learning as I go',              desc: 'I\'m picking it up — building the app would be part of the journey.' }
+      { key:'strong',  emoji:'🚀', title:'Strong developer',               desc:'I can build almost anything myself.' },
+      { key:'nocode',  emoji:'🧩', title:'No-code / low-code comfortable', desc:'Webflow, Bubble, Glide — I can ship.' },
+      { key:'partner', emoji:'🤝', title:'I\'d need a technical partner',  desc:'I bring domain knowledge, not the code.' },
+      { key:'learning',emoji:'📚', title:'Learning as I go',               desc:'Building the app is part of the journey.' }
     ]
   },
   {
-    id: 'app_admire',
-    type: 'text',
-    badge: 'Inspiration',
-    text: 'Name one app you use and actually enjoy. What do you love about how it works?',
-    hint: 'Not what it does — how it feels. The specific interaction, the speed, the design.',
-    placeholder: 'e.g. Notion — I love how flexible it is without feeling overwhelming. Or Duolingo — the streak makes me come back every day...',
-    maxLen: 280,
-    affects: ['style']
+    id: 'app_admire', badge: 'Inspiration', dim: 'style',
+    text: 'What do you love most about an app you actually enjoy using?',
+    hint: 'Not what it does — how it feels. A specific interaction, the speed, a design detail.',
+    placeholder: 'e.g. I love how Notion is so flexible without feeling overwhelming, or how Duolingo streaks make me come back daily...',
+    textToKey: {
+      utility:    ['simple','fast','clean','minimal','one thing','quick','efficient','frictionless','instant'],
+      delightful: ['beautiful','design','look','feel','aesthetic','polished','animation','magical','elegant'],
+      tracker:    ['streak','progress','track','chart','data','stats','history','insight','pattern'],
+      social:     ['share','together','friend','team','community','collaborate','invite','people']
+    },
+    options: [
+      { key:'utility',    emoji:'⚡', title:'The simplicity',        desc:'Does one thing brilliantly. No clutter.' },
+      { key:'delightful', emoji:'✨', title:'The design and feel',   desc:'Beautiful, polished, a delight to open.' },
+      { key:'tracker',    emoji:'📈', title:'The progress system',   desc:'Streaks, charts, data that feels rewarding.' },
+      { key:'social',     emoji:'👫', title:'How it involves others', desc:'Sharing, collaboration, community.' }
+    ]
   },
   {
-    id: 'revenue',
-    type: 'choice',
-    badge: 'Business model',
+    id: 'revenue', badge: 'Business model', dim: 'goal',
+    dimKeyMap: { subscription:'income', onetime:'income', freemium:'impact', notyet:'personal' },
     text: 'What revenue model feels most natural to you?',
-    hint: 'There\'s no wrong answer — some great apps start with no monetisation at all.',
-    dim: 'goal',
-    dimKeyMap: { 'subscription': 'income', 'one-time': 'income', 'freemium': 'impact', 'not-yet': 'personal' },
+    hint: 'No wrong answer — great apps have started with zero monetisation.',
+    placeholder: 'e.g. I\'d probably make it free at first to get users, then add a Pro tier for power features...',
+    textToKey: {
+      income:   ['subscription','recurring','monthly','annual','saas','one-time','buy once','license','charge'],
+      impact:   ['free','freemium','open source','donate','community','wide adoption'],
+      personal: ['not yet','no monetiz','later','first version','free first','worry about that later']
+    },
     options: [
-      { key: 'subscription', emoji: '🔄', title: 'Monthly subscription (SaaS)', desc: 'Recurring revenue — users pay to keep accessing the app.' },
-      { key: 'one-time',     emoji: '💳', title: 'One-time purchase',            desc: 'Pay once, own it. Classic software model, no ongoing commitment.' },
-      { key: 'freemium',     emoji: '🎁', title: 'Free with premium tier',       desc: 'Broad free access, charge for advanced features or power users.' },
-      { key: 'not-yet',      emoji: '🌱', title: 'Not focused on money yet',     desc: 'Build it, use it, share it — monetisation can come later.' }
+      { key:'subscription', emoji:'🔄', title:'Monthly subscription',    desc:'Recurring revenue, users pay to keep access.' },
+      { key:'onetime',      emoji:'💳', title:'One-time purchase',        desc:'Pay once, own it — classic software model.' },
+      { key:'freemium',     emoji:'🎁', title:'Free + premium tier',      desc:'Broad free access, charge for power users.' },
+      { key:'notyet',       emoji:'🌱', title:'Not focused on money yet', desc:'Build it first, monetise later.' }
     ]
   },
   {
-    id: 'scope',
-    type: 'choice',
-    badge: 'Scope',
+    id: 'scope', badge: 'Scope', dim: 'style',
+    dimKeyMap: { onething:'utility', few:'tracker', full:'social', platform:'delightful' },
     text: 'What\'s your ideal scope for version 1?',
     hint: 'Smaller is usually better — but be honest about what excites you.',
-    dim: 'style',
-    dimKeyMap: { 'one-thing': 'utility', 'few-features': 'tracker', 'full': 'social', 'platform': 'delightful' },
+    placeholder: 'e.g. I\'d want just one perfectly polished feature — if it does one thing better than anyone else, that\'s enough...',
+    textToKey: {
+      utility:    ['one thing','single','focused','just one','minimal','sharp','tight'],
+      tracker:    ['few features','several','connected','small product','cohesive'],
+      social:     ['full','complete','everything','comprehensive','all-in-one'],
+      delightful: ['platform','extensible','api','plugin','others build on']
+    },
     options: [
-      { key: 'one-thing',    emoji: '🎯', title: 'One thing done perfectly',   desc: 'A sharp, focused utility that solves exactly one problem brilliantly.' },
-      { key: 'few-features', emoji: '🗂️', title: 'A few connected features',   desc: 'A small but coherent product — 3–5 features that work together.' },
-      { key: 'full',         emoji: '📦', title: 'A full-featured product',     desc: 'A complete solution — everything the user needs in one place.' },
-      { key: 'platform',     emoji: '🏗️', title: 'A platform others build on',  desc: 'A foundation — others can extend it, integrate it, or build on top of it.' }
+      { key:'onething',  emoji:'🎯', title:'One thing done perfectly',  desc:'Sharp utility that solves exactly one problem.' },
+      { key:'few',       emoji:'🗂️', title:'A few connected features',  desc:'Small but coherent — 3–5 things that work together.' },
+      { key:'full',      emoji:'📦', title:'A full-featured product',   desc:'Everything the user needs in one place.' },
+      { key:'platform',  emoji:'🏗️', title:'A platform for others',     desc:'A foundation others can extend or build on.' }
     ]
   },
   {
-    id: 'help_with',
-    type: 'text',
-    badge: 'Your expertise',
+    id: 'expertise', badge: 'Your knowledge', dim: 'strength',
     text: 'What do people regularly come to you for help with?',
-    hint: 'Friends, colleagues, online — what knowledge or skill do people ask you about?',
-    placeholder: 'e.g. People always ask me how to set up their finances, or how to get started with coding, or how to pitch ideas...',
-    maxLen: 280,
-    affects: ['domain', 'strength']
+    hint: 'Friends, colleagues, online — what knowledge or skill do they ask about?',
+    placeholder: 'e.g. People always ask me how to set up their finances, or how to get into coding, or how to pitch ideas to clients...',
+    textToKey: {
+      builder:   ['code','build','software','develop','tech','script','automate','deploy'],
+      designer:  ['design','ux','ui','brand','look','visual','figma','logo','aesthetic'],
+      expert:    ['business','finance','strategy','market','domain','industry','invest','consult'],
+      connector: ['people','communication','network','pitch','sell','grow','community','manage']
+    },
+    options: [
+      { key:'builder',   emoji:'💻', title:'Tech, code, or building things', desc:'Software, tools, automation, debugging.' },
+      { key:'designer',  emoji:'🎨', title:'Design, visuals, or branding',   desc:'UI, brand identity, how things look.' },
+      { key:'expert',    emoji:'📊', title:'Business, strategy, or domain knowledge', desc:'Industry expertise most people lack.' },
+      { key:'connector', emoji:'🗣️', title:'People, communication, or facilitation', desc:'Advice, pitching, managing relationships.' }
+    ]
   },
   {
-    id: 'experience',
-    type: 'choice',
-    badge: 'UX feeling',
+    id: 'experience', badge: 'UX feeling', dim: 'style',
     text: 'What kind of experience do you most want to create?',
-    hint: 'Think about how you want the user to feel when they open your app.',
-    dim: 'style',
+    hint: 'Think about how the user feels the moment they open your app.',
+    placeholder: 'e.g. I want it to feel like a calm, focused ritual every morning — nothing unnecessary, just what you need...',
+    textToKey: {
+      utility:    ['fast','frictionless','in and out','simple','clean','one click','quick','minimal'],
+      tracker:    ['progress','streak','track','log','data','see improvement','motivated','chart'],
+      social:     ['share','together','team','friend','community','collaborate','invite','group'],
+      delightful: ['beautiful','polished','magical','delight','feel premium','surprising','wow']
+    },
     options: [
-      { key: 'utility',    emoji: '⚡', title: 'Fast and frictionless',      desc: 'In, done, out. No clutter. Every second saved matters.' },
-      { key: 'tracker',    emoji: '📈', title: 'Satisfying progress',        desc: 'Streaks, charts, logs — seeing growth over time feels rewarding.' },
-      { key: 'social',     emoji: '👫', title: 'Social and collaborative',   desc: 'Better together — sharing, inviting, building with others.' },
-      { key: 'delightful', emoji: '✨', title: 'Beautiful and delightful',   desc: 'Every interaction feels polished — a little bit magical to use.' }
+      { key:'utility',    emoji:'⚡', title:'Fast and frictionless',     desc:'In, done, out. Every second saved matters.' },
+      { key:'tracker',    emoji:'📈', title:'Satisfying progress',       desc:'Streaks, charts — seeing growth feels rewarding.' },
+      { key:'social',     emoji:'👫', title:'Social and collaborative',  desc:'Better together — sharing, building with others.' },
+      { key:'delightful', emoji:'✨', title:'Beautiful and delightful',  desc:'Every interaction feels polished, a bit magical.' }
     ]
   },
   {
-    id: 'time_avail',
-    type: 'choice',
-    badge: 'Your bandwidth',
+    id: 'time_avail', badge: 'Your bandwidth', dim: 'style',
+    dimKeyMap: { weekend:'utility', side:'tracker', fulltime:'social', flexible:'delightful' },
     text: 'How much time can you dedicate to building this?',
-    hint: 'Be realistic — the right idea matches the time you actually have.',
-    dim: 'style',
-    dimKeyMap: { 'weekend': 'utility', 'side': 'tracker', 'fulltime': 'social', 'flexible': 'delightful' },
+    hint: 'Be realistic — the right idea fits the time you actually have.',
+    placeholder: 'e.g. I\'ve got maybe 5–10 hours a week, serious evenings and full weekends when I\'m excited about something...',
+    textToKey: {
+      utility:    ['weekend','few hours','spare time','side project','limited','small blocks'],
+      tracker:    ['evening','one day','dedicated','part time','regular','after work'],
+      social:     ['full time','all in','focused','main priority','committed','full attention'],
+      delightful: ['flexible','depends','momentum','excited','as much as it deserves']
+    },
     options: [
-      { key: 'weekend',  emoji: '🌅', title: 'Weekends only',         desc: 'A few hours a week — it needs to be achievable as a side project.' },
-      { key: 'side',     emoji: '🌙', title: '1–2 dedicated days / week', desc: 'Serious part-time effort — evenings and dedicated work blocks.' },
-      { key: 'fulltime', emoji: '🔥', title: 'Full-time focus',        desc: 'This is the priority right now — I\'m going all in.' },
-      { key: 'flexible', emoji: '🌊', title: 'It depends on momentum', desc: 'I\'ll put in as much as the project earns — energy follows excitement.' }
+      { key:'weekend',  emoji:'🌅', title:'Weekends only',              desc:'A few hours — needs to be a realistic side project.' },
+      { key:'side',     emoji:'🌙', title:'1–2 dedicated days / week',  desc:'Serious evenings and dedicated work blocks.' },
+      { key:'fulltime', emoji:'🔥', title:'Full-time focus',            desc:'This is the priority right now — all in.' },
+      { key:'flexible', emoji:'🌊', title:'Depends on momentum',        desc:'I\'ll put in as much as the project earns.' }
     ]
   },
   {
-    id: 'success_text',
-    type: 'text',
-    badge: 'Definition of success',
+    id: 'success_def', badge: 'Success', dim: 'goal',
     text: 'What would make this app feel truly worth building?',
-    hint: 'Not metrics — the feeling. What outcome would make you proud?',
-    placeholder: 'e.g. If strangers discovered it and told me it saves them an hour a week, or if I actually used it every morning myself...',
-    maxLen: 280,
-    affects: ['goal', 'audience']
-  },
-  {
-    id: 'relationship',
-    type: 'choice',
-    badge: 'Your connection',
-    text: 'What\'s your relationship to the problem you want to solve?',
-    hint: 'The closer you are to the problem, the better your instincts about the solution.',
-    dim: 'audience',
-    dimKeyMap: { 'daily': 'self', 'watched': 'niche', 'resonated': 'broad', 'researched': 'business' },
+    hint: 'Not metrics — the feeling. What outcome would make you genuinely proud?',
+    placeholder: 'e.g. If I woke up and opened it before checking anything else, and strangers discovered it and said it saved them an hour a week...',
+    textToKey: {
+      income:   ['earn','money','revenue','paying customers','income','profit'],
+      personal: ['i use','myself','daily','every morning','my own routine','actually use'],
+      impact:   ['others','strangers','people','change','help','difference','thousands'],
+      fun:      ['enjoy building','process','learn from it','proud of the code','challenge']
+    },
     options: [
-      { key: 'daily',      emoji: '🎯', title: 'I face it myself every day',   desc: 'This is personal — I am the user.' },
-      { key: 'watched',    emoji: '👀', title: 'I\'ve watched others struggle', desc: 'I see people around me dealing with it — I want to help them.' },
-      { key: 'resonated',  emoji: '💡', title: 'I read about it and it clicked', desc: 'I discovered it through reading or listening and it resonated strongly.' },
-      { key: 'researched', emoji: '🔍', title: 'I spotted it through research',  desc: 'I found it while looking at markets, trends, or unmet needs analytically.' }
+      { key:'income',   emoji:'💰', title:'It earns consistent income',             desc:'Paying customers who renew month after month.' },
+      { key:'personal', emoji:'🔧', title:'I use it myself every single day',       desc:'It becomes part of my daily routine.' },
+      { key:'impact',   emoji:'🌍', title:'It genuinely changes how others work',   desc:'Strangers say it saved them real time or stress.' },
+      { key:'fun',      emoji:'🎮', title:'The building process itself is rewarding', desc:'I\'d be proud of what I made regardless of users.' }
     ]
   },
   {
-    id: 'validation',
-    type: 'choice',
-    badge: 'Validation style',
+    id: 'relationship', badge: 'Your connection', dim: 'audience',
+    dimKeyMap: { daily:'self', watched:'niche', resonated:'broad', researched:'business' },
+    text: 'How close are you to this problem personally?',
+    hint: 'The closer you are to the problem, the better your solution instincts.',
+    placeholder: 'e.g. I face this myself every single day at work — it costs me probably an hour each day of wasted effort...',
+    textToKey: {
+      self:     ['daily','myself','every day','i face','i deal','personally','firsthand'],
+      niche:    ['friend','colleague','people i know','team','watched','around me'],
+      broad:    ['read','heard','article','podcast','resonated','clicked','discovered'],
+      business: ['research','market','data','trend','analysis','spotted','opportunity']
+    },
+    options: [
+      { key:'daily',      emoji:'🎯', title:'I face it myself every day',   desc:'This is personal — I am the user.' },
+      { key:'watched',    emoji:'👀', title:'I\'ve watched others struggle', desc:'I see people around me dealing with it.' },
+      { key:'resonated',  emoji:'💡', title:'I read about it and it clicked', desc:'Found it through content, not lived experience.' },
+      { key:'researched', emoji:'🔍', title:'I spotted it through research',  desc:'Analytical discovery — market or trend data.' }
+    ]
+  },
+  {
+    id: 'validation', badge: 'Validation', dim: 'strength',
+    dimKeyMap: { build:'builder', talk:'connector', landing:'designer', ship:'builder' },
     text: 'How would you validate this idea before going deep?',
-    hint: 'Your natural instinct here says a lot about how you like to work.',
-    dim: 'strength',
-    dimKeyMap: { 'build': 'builder', 'talk': 'connector', 'landing': 'designer', 'ship': 'builder' },
+    hint: 'Your instinct here reveals how you naturally like to work.',
+    placeholder: 'e.g. I\'d probably just build a rough version in a weekend and show it to 5 people I trust...',
+    textToKey: {
+      builder:   ['build','prototype','code it','make it','develop','rough version','weekend build'],
+      connector: ['talk','interview','user research','5 people','ask them','listen first'],
+      designer:  ['landing page','mockup','design it first','show a concept','waitlist'],
+      expert:    ['just ship','launch it','release','post it','put it out there']
+    },
     options: [
-      { key: 'build',   emoji: '🛠️', title: 'Build a rough prototype',       desc: 'Get something working quickly and test it on real users.' },
-      { key: 'talk',    emoji: '💬', title: 'Talk to 5 people with the problem', desc: 'Deep user interviews before writing a single line of code.' },
-      { key: 'landing', emoji: '🖥️', title: 'Put up a landing page',           desc: 'Describe the product and see who signs up or pays.' },
-      { key: 'ship',    emoji: '🚀', title: 'Just ship and see what happens',   desc: 'Bias toward action — I\'ll learn faster by doing.' }
+      { key:'build',   emoji:'🛠️', title:'Build a rough prototype',          desc:'Get something working and test it on real users.' },
+      { key:'talk',    emoji:'💬', title:'Talk to 5 people with the problem', desc:'Deep user interviews before writing any code.' },
+      { key:'landing', emoji:'🖥️', title:'Put up a landing page',             desc:'Describe the product and see who signs up.' },
+      { key:'ship',    emoji:'🚀', title:'Just ship and see what happens',    desc:'Bias to action — I\'ll learn faster by doing.' }
     ]
   },
   {
-    id: 'wish_existed',
-    type: 'text',
-    badge: 'The dream',
-    text: 'Complete this sentence: "The app I wish existed right now is…"',
-    hint: 'Don\'t overthink it. What comes to mind first is usually the right answer.',
-    placeholder: 'e.g. ...a single place where I can see all my subscriptions and cancel the ones I forget to use...',
-    maxLen: 280,
-    affects: ['domain', 'goal', 'style']
-  },
-  {
-    id: 'v1_priority',
-    type: 'choice',
-    badge: 'First version',
-    text: 'What matters most when you release your first version?',
-    hint: 'You can\'t optimise for everything at once — pick your priority.',
-    dim: 'style',
-    dimKeyMap: { 'speed': 'utility', 'polish': 'delightful', 'depth': 'tracker', 'flexibility': 'social' },
+    id: 'wish_existed', badge: 'The dream', dim: 'domain',
+    text: 'Complete this: "The app I wish existed right now is…"',
+    hint: 'Whatever comes to mind first is usually the right answer.',
+    placeholder: 'e.g. ...a single inbox that groups all my client messages from email, Slack, and WhatsApp into one place...',
+    textToKey: {
+      productivity: ['task','focus','work','meeting','project','organize','schedule','plan','remind'],
+      health:       ['habit','health','fitness','sleep','eat','workout','energy','mindset'],
+      finance:      ['money','budget','invoice','income','spend','earn','payment','client'],
+      creative:     ['write','design','learn','idea','create','read','skill','content','art']
+    },
     options: [
-      { key: 'speed',       emoji: '⚡', title: 'Ship fast',             desc: 'Get something out quickly — done beats perfect.' },
-      { key: 'polish',      emoji: '💎', title: 'Look great from day one', desc: 'First impressions matter — it needs to feel premium immediately.' },
-      { key: 'depth',       emoji: '🎯', title: 'Solve the problem fully', desc: 'Don\'t cut corners — the core experience should be complete.' },
-      { key: 'flexibility', emoji: '🧩', title: 'Make it configurable',    desc: 'Let users adapt it to their workflow — flexibility is the feature.' }
+      { key:'productivity', emoji:'⚡', title:'Something that saves work time',      desc:'A smarter daily work tool.' },
+      { key:'health',       emoji:'💪', title:'Something for health or habits',      desc:'Helps me stay healthier, consistently.' },
+      { key:'finance',      emoji:'💸', title:'Something financial',                 desc:'Simplifies money or client management.' },
+      { key:'creative',     emoji:'🎨', title:'Something creative or educational',   desc:'Helps me create or learn consistently.' }
     ]
   },
   {
-    id: 'one_sentence',
-    type: 'text',
-    badge: 'Final thought',
-    text: 'In one sentence — what would the perfect version of your app do?',
-    hint: 'If you could describe it to a stranger in an elevator, what would you say?',
-    placeholder: 'e.g. It would automatically remind me to follow up with the right person at exactly the right time...',
-    maxLen: 200,
-    affects: ['domain', 'goal', 'style', 'audience']
+    id: 'v1_priority', badge: 'First version', dim: 'style',
+    dimKeyMap: { speed:'utility', polish:'delightful', depth:'tracker', flex:'social' },
+    text: 'What matters most when you ship your first version?',
+    hint: 'You can\'t optimise for everything at once — pick your real priority.',
+    placeholder: 'e.g. I\'d want it to look genuinely good from day one — first impressions are everything in consumer apps...',
+    textToKey: {
+      utility:    ['fast','ship fast','quickly','done over perfect','speed','launch first'],
+      delightful: ['polish','beautiful','quality','premium','great design','look good','feel right'],
+      tracker:    ['complete','depth','thorough','solve fully','doesn\'t cut corners'],
+      social:     ['flexible','configurable','adaptable','customizable','user controlled']
+    },
+    options: [
+      { key:'speed',  emoji:'⚡', title:'Ship fast',              desc:'Get something out — done beats perfect.' },
+      { key:'polish', emoji:'💎', title:'Look great from day one', desc:'First impressions matter — must feel premium.' },
+      { key:'depth',  emoji:'🎯', title:'Solve it completely',    desc:'No shortcuts — the core must be fully done.' },
+      { key:'flex',   emoji:'🧩', title:'Make it configurable',   desc:'Flexibility is the feature — adapt to any workflow.' }
+    ]
+  },
+  {
+    id: 'one_sentence', badge: 'Final thought', dim: 'style',
+    text: 'One sentence: what would the perfect version of your app do?',
+    hint: 'Elevator pitch to a stranger. What\'s the one thing it does?',
+    placeholder: 'e.g. It would automatically remind me to follow up with exactly the right person at exactly the right time...',
+    textToKey: {
+      utility:    ['save time','faster','easier','automate','removes','eliminates','in seconds'],
+      tracker:    ['track','build habit','consistent','every day','log','progress','improve over time'],
+      social:     ['together','collaborate','share','team','connect','other people','group'],
+      delightful: ['feel good','love using','look forward','beautiful','enjoy','seamless','effortless']
+    },
+    options: [
+      { key:'utility',    emoji:'⚡', title:'Save real time every day',       desc:'Removes a daily friction for good.' },
+      { key:'tracker',    emoji:'📈', title:'Help me build a lasting habit',  desc:'Makes consistency automatic over time.' },
+      { key:'social',     emoji:'👫', title:'Connect or collaborate with others', desc:'Better because it involves people.' },
+      { key:'delightful', emoji:'✨', title:'Create something I look forward to', desc:'An experience worth opening every day.' }
+    ]
   }
 ];
 
-// ─────────────────────────────────────────────────────────
-//  KEYWORD MAPS  (for text question scoring)
-// ─────────────────────────────────────────────────────────
-
+// ── KEYWORD MAPS (for text scoring across all questions) ────
 const KW = {
   domain: {
-    productivity: ['task','todo','focus','procrastinat','organiz','schedul','deadline','meeting','project','workflow','plan','remind','distract','time management','priority'],
-    health:       ['workout','fitness','sleep','eating','food','health','habit','exercise','weight','stress','energy','meditat','diet','gym','nutrition','calories','steps','mood'],
-    finance:      ['money','budget','spend','invoic','income','earn','payment','cost','revenue','freelanc','client','bill','expense','price','subscript','charge','rent'],
-    creative:     ['writing','design','creat','art','music','draw','content','idea','learn','skill','read','book','cours','photography','video','blog','podcast','portfolio','illustrat','animate']
+    productivity: ['task','todo','focus','procrastinat','organiz','schedul','deadline','meeting','project','workflow','plan'],
+    health:       ['workout','fitness','sleep','eating','food','health','habit','exercise','weight','stress','energy','diet'],
+    finance:      ['money','budget','spend','invoic','income','earn','payment','cost','freelanc','client','bill','expense'],
+    creative:     ['writing','design','creat','art','music','draw','learn','skill','read','book','idea','content','photography']
   },
   style: {
-    utility:    ['fast','quick','simple','clean','minimal','efficient','easy','straightforward','instant','one click','frictionless','lightweight'],
-    tracker:    ['track','log','progress','streak','data','insight','pattern','measur','history','chart','statistic','journal','record','monitor'],
-    social:     ['share','team','together','collaborat','friend','community','group','social','connect','network','invite','co-op','partner'],
-    delightful: ['beautiful','design','aesthetic','delight','polished','animation','feel','experience','satisfying','love using','enjoy','magical','elegant']
+    utility:    ['fast','quick','simple','clean','minimal','efficient','frictionless','instant','one click'],
+    tracker:    ['track','log','progress','streak','data','insight','pattern','measur','history','chart'],
+    social:     ['share','team','together','collaborat','friend','community','group','social','connect'],
+    delightful: ['beautiful','design','aesthetic','delight','polished','animation','feel','satisfying','magical']
   },
   audience: {
-    self:     ['i ','i\'m','my ','myself','personally','i use','i want','i need','i always','i often','i hate','i love'],
-    niche:    ['developer','designer','freelancer','student','writer','creator','professional','marketer','entrepreneur','teacher','photographer','musician'],
-    business: ['business','company','team','startup','enterprise','b2b','client','saas','corporate','agency','firm'],
-    broad:    ['everyone','anyone','people','most','universal','common','general','wide','anybody','mainstream']
+    self:     ['myself','my own','i use','i want','i need','personally','daily','i face'],
+    niche:    ['developer','designer','freelancer','student','writer','creator','professional','marketer'],
+    business: ['business','company','team','startup','enterprise','b2b','client','agency'],
+    broad:    ['everyone','anyone','most people','universal','common','general','wide']
   }
 };
 
-// ─────────────────────────────────────────────────────────
-//  IDEAS DATABASE
-//  scores: { goal, domain, audience, strength, style }
-//  Each value is { key1: 0-3, key2: 0-3, ... }
-// ─────────────────────────────────────────────────────────
-
+// ── IDEAS DATABASE ──────────────────────────────────────
 const IDEAS = [
   {
-    name: 'Smart Daily Planner',
-    tagline: 'Cut through chaos with one focused daily ritual',
-    target: 'Overwhelmed professionals and anyone drowning in an endless to-do list',
-    features: ['Morning flow: pick your 3 most important tasks for the day','Time-blocked schedule with drag-to-adjust','End-of-day 3-question reflection to close the loop cleanly'],
-    value: 'Removes the mental overhead of deciding what to work on — you open the app, get clarity in 2 minutes, and go execute.',
+    name: 'Smart Daily Planner', tagline: 'Cut through chaos with one focused daily ritual',
+    target: 'Overwhelmed professionals drowning in an endless to-do list',
+    features: ['Morning flow: pick your 3 most important tasks for the day','Time-blocked schedule with drag-to-adjust','End-of-day 3-question reflection to close the loop'],
+    value: 'Removes the mental overhead of deciding what to work on — 2 minutes to clarity, then go execute.',
     scores: { goal:{income:1,personal:3,impact:2,fun:1}, domain:{productivity:3,health:1,finance:0,creative:1}, audience:{self:3,niche:2,business:2,broad:2}, strength:{builder:2,designer:2,expert:1,connector:1}, style:{utility:2,tracker:2,social:0,delightful:2} }
   },
   {
-    name: 'Habit Streak Tracker',
-    tagline: 'Make consistency feel rewarding every single day',
-    target: 'Self-improvers who want to build real habits that stick',
-    features: ['Visual streak calendar with a satisfying daily check-in','Habit grouping by time of day (morning / evening routines)','Weekly summary card worth screenshotting'],
-    value: 'Turns vague goals into a daily ritual — just enough gamification to keep you coming back without turning it into a chore.',
+    name: 'Habit Streak Tracker', tagline: 'Make consistency feel rewarding every single day',
+    target: 'Self-improvers who want to build real habits that actually stick',
+    features: ['Visual streak calendar with satisfying daily check-in','Habit grouping by time of day (morning / evening)','Weekly summary card worth screenshotting'],
+    value: 'Turns vague goals into a daily ritual — just enough gamification to keep you coming back.',
     scores: { goal:{income:1,personal:3,impact:2,fun:2}, domain:{productivity:1,health:3,finance:0,creative:0}, audience:{self:3,niche:2,business:0,broad:2}, strength:{builder:2,designer:2,expert:1,connector:1}, style:{utility:1,tracker:3,social:1,delightful:2} }
   },
   {
-    name: 'Micro-Budget Tracker',
-    tagline: 'See where your money goes in under 30 seconds a day',
-    target: 'Anyone who avoids budgeting because existing apps are too complicated',
-    features: ['Weekly budget input with a single fuel-gauge visual','One-tap expense logging with smart auto-categories','Monthly recap as a clean, shareable card'],
-    value: 'Spending awareness without friction — if tracking takes more than 30 seconds, most people quit. This app banks on that insight.',
+    name: 'Micro-Budget Tracker', tagline: 'See where your money goes in under 30 seconds a day',
+    target: 'Anyone who avoids budgeting because existing apps are too complex',
+    features: ['Weekly budget with a single fuel-gauge visual','One-tap expense logging with smart auto-categories','Monthly recap as a clean, shareable card'],
+    value: 'Spending awareness without friction — if tracking takes more than 30 seconds, most people quit.',
     scores: { goal:{income:2,personal:3,impact:2,fun:1}, domain:{productivity:0,health:0,finance:3,creative:0}, audience:{self:3,niche:2,business:1,broad:2}, strength:{builder:2,designer:2,expert:2,connector:1}, style:{utility:2,tracker:3,social:0,delightful:1} }
   },
   {
-    name: 'Book Insights Capture',
-    tagline: 'Finally retain what you actually read',
+    name: 'Book Insights Capture', tagline: 'Finally retain what you actually read',
     target: 'Avid readers who highlight everything and remember nothing',
-    features: ['Frictionless quote and insight capture while reading','Weekly revisit: 3 random highlights from your past reading','Insight collections grouped by theme across all books'],
-    value: 'Bridges the gap between reading and absorbing ideas — a second brain for readers who find other tools too complex or cluttered.',
+    features: ['Frictionless quote and insight capture while reading','Weekly revisit: 3 random highlights from past reading','Collections grouped by theme across all books'],
+    value: 'Bridges the gap between reading and absorbing — a second brain for readers who find other tools cluttered.',
     scores: { goal:{income:1,personal:3,impact:2,fun:2}, domain:{productivity:1,health:0,finance:0,creative:3}, audience:{self:3,niche:2,business:0,broad:1}, strength:{builder:1,designer:2,expert:2,connector:1}, style:{utility:1,tracker:2,social:1,delightful:2} }
   },
   {
-    name: 'Freelancer Invoice Generator',
-    tagline: 'Send professional invoices in under 60 seconds',
+    name: 'Freelancer Invoice Generator', tagline: 'Send professional invoices in under 60 seconds',
     target: 'Freelancers and consultants who hate the admin side of getting paid',
-    features: ['Client profiles with saved rates and payment terms','One-click invoice creation from a logged work session','Payment status tracking with automatic overdue reminders'],
-    value: 'Gets freelancers paid faster while making them look more professional — it removes the most hated admin task in the freelance world.',
+    features: ['Client profiles with saved rates and payment terms','One-click invoice from a logged work session','Payment status tracking with overdue reminders'],
+    value: 'Gets freelancers paid faster while looking more professional — removes the most hated admin task.',
     scores: { goal:{income:3,personal:2,impact:1,fun:0}, domain:{productivity:2,health:0,finance:3,creative:0}, audience:{self:1,niche:3,business:3,broad:0}, strength:{builder:2,designer:1,expert:3,connector:1}, style:{utility:3,tracker:1,social:0,delightful:1} }
   },
   {
-    name: 'Relationship Check-In App',
-    tagline: 'Stay close to the people who matter most',
+    name: 'Relationship Check-In App', tagline: 'Stay close to the people who matter most',
     target: 'Busy adults who drift from friends and family without meaning to',
-    features: ['Contact list with a personalised check-in frequency per person','Daily nudge: "You haven\'t spoken to Alex in 3 weeks"','One-tap message starters to make reaching out frictionless'],
-    value: 'Fights the slow erosion of relationships that happens when life gets busy — a lightweight CRM for the people you actually love.',
+    features: ['Contact list with personalised check-in frequency per person','Daily nudge: "You haven\'t spoken to Alex in 3 weeks"','One-tap message starters to make reaching out frictionless'],
+    value: 'Fights the slow erosion of relationships that happens when life gets busy — a CRM for people you love.',
     scores: { goal:{income:0,personal:2,impact:3,fun:2}, domain:{productivity:1,health:2,finance:0,creative:0}, audience:{self:2,niche:2,business:0,broad:3}, strength:{builder:1,designer:2,expert:1,connector:3}, style:{utility:2,tracker:2,social:3,delightful:2} }
   },
   {
-    name: 'Meal Simplifier',
-    tagline: 'Answer "what\'s for dinner?" in 10 seconds',
+    name: 'Meal Simplifier', tagline: 'Answer "what\'s for dinner?" in 10 seconds',
     target: 'Busy people who want to eat well without overthinking every meal',
-    features: ['Recipe library with 5 ingredients or fewer per meal','Weekly meal planner with an auto-generated grocery list','Swap button when you don\'t feel like a planned meal'],
-    value: 'Removes decision fatigue around eating — the goal is fewer decisions, not more recipes. Simplicity is the feature.',
+    features: ['Recipe library with 5 ingredients or fewer per meal','Weekly meal planner with auto-generated grocery list','Swap button when you don\'t feel like a planned meal'],
+    value: 'Removes decision fatigue around eating — fewer decisions, not more recipes.',
     scores: { goal:{income:1,personal:3,impact:2,fun:2}, domain:{productivity:1,health:3,finance:1,creative:1}, audience:{self:3,niche:2,business:0,broad:2}, strength:{builder:1,designer:2,expert:2,connector:1}, style:{utility:2,tracker:1,social:1,delightful:2} }
   },
   {
-    name: 'Code Snippet Manager',
-    tagline: 'Stop rewriting the same utility function for the fifth time',
+    name: 'Code Snippet Manager', tagline: 'Stop rewriting the same utility function for the fifth time',
     target: 'Developers with useful code scattered across gists, notes, and memory',
-    features: ['Fast search across a personal snippet library with syntax highlighting','Language and tag-based organisation with quick add from clipboard','One-click copy with an optional VS Code extension'],
-    value: 'Your personal, searchable library of hard-won patterns — faster than Googling, more relevant than Stack Overflow.',
+    features: ['Fast search across personal snippet library with syntax highlighting','Language and tag-based organisation with quick add','One-click copy with optional VS Code extension'],
+    value: 'Your personal searchable library of hard-won patterns — faster than Googling, more relevant than Stack Overflow.',
     scores: { goal:{income:1,personal:3,impact:1,fun:2}, domain:{productivity:3,health:0,finance:0,creative:1}, audience:{self:3,niche:3,business:1,broad:0}, strength:{builder:3,designer:1,expert:2,connector:0}, style:{utility:3,tracker:0,social:0,delightful:1} }
   },
   {
-    name: 'Creative Prompt Generator',
-    tagline: 'Never stare at a blank page again',
+    name: 'Creative Prompt Generator', tagline: 'Never stare at a blank page again',
     target: 'Writers, designers, and artists who get stuck before they even start',
-    features: ['Daily prompt delivered to home screen, personalised by craft type','Optional community mode — share what you made from the prompt','Streak tracking for showing up creatively every day'],
-    value: 'Eliminates activation energy — a daily creative trigger that builds the muscle of starting, which is the hardest part.',
+    features: ['Daily prompt delivered to home screen, personalised by craft','Optional community mode — share what you made','Streak tracking for showing up creatively every day'],
+    value: 'Eliminates activation energy — a daily creative trigger that builds the muscle of starting.',
     scores: { goal:{income:1,personal:2,impact:2,fun:3}, domain:{productivity:0,health:1,finance:0,creative:3}, audience:{self:2,niche:3,business:0,broad:1}, strength:{builder:1,designer:3,expert:2,connector:2}, style:{utility:1,tracker:1,social:2,delightful:3} }
   },
   {
-    name: 'Energy Journal',
-    tagline: 'Understand what actually drives your best days',
-    target: 'People who want to optimise their performance and wellbeing with real data',
-    features: ['30-second daily log: sleep, mood, energy, one highlight','Pattern insights after 2 weeks — what correlates with your best days?','Weekly health snapshot as a clean, readable summary card'],
-    value: 'Reveals hidden patterns behind your best and worst days — data-driven self-awareness without the noise of a full health tracker.',
+    name: 'Energy Journal', tagline: 'Understand what actually drives your best days',
+    target: 'People optimising their performance and wellbeing with real data',
+    features: ['30-second daily log: sleep, mood, energy, one highlight','Pattern insights after 2 weeks — what correlates with your best days?','Weekly snapshot as a clean, readable summary card'],
+    value: 'Reveals hidden patterns behind your best and worst days — data-driven self-awareness without the noise.',
     scores: { goal:{income:0,personal:3,impact:2,fun:1}, domain:{productivity:1,health:3,finance:0,creative:1}, audience:{self:3,niche:2,business:0,broad:2}, strength:{builder:1,designer:2,expert:2,connector:1}, style:{utility:1,tracker:3,social:0,delightful:2} }
   },
   {
-    name: 'Skill Roadmap Builder',
-    tagline: 'Turn "I want to learn X" into a clear 12-week plan',
-    target: 'Self-learners who start courses enthusiastically and lose momentum without structure',
-    features: ['Input a skill → auto-breakdown into weekly milestones','Resource suggestions (books, courses, projects) per milestone','Progress tracker with completion percentages and milestones'],
-    value: 'Bridges "I want to learn this" and actual structured progress — turns vague ambition into a concrete, actionable path.',
+    name: 'Skill Roadmap Builder', tagline: 'Turn "I want to learn X" into a clear 12-week plan',
+    target: 'Self-learners who start enthusiastically and lose momentum without structure',
+    features: ['Input a skill → breakdown into weekly milestones','Resource suggestions per milestone (books, courses, projects)','Progress tracker with completion percentages'],
+    value: 'Bridges "I want to learn this" and actual progress — turns vague ambition into a concrete path.',
     scores: { goal:{income:1,personal:2,impact:3,fun:2}, domain:{productivity:1,health:0,finance:0,creative:3}, audience:{self:2,niche:2,business:1,broad:3}, strength:{builder:2,designer:2,expert:3,connector:1}, style:{utility:2,tracker:2,social:1,delightful:1} }
   },
   {
-    name: 'Local Event Aggregator',
-    tagline: 'Discover what\'s actually happening in your city this week',
-    target: 'People who want a more active social life but can never find what\'s on',
-    features: ['Interest-based event feed aggregated from local sources','Save and share events with a friend in one tap','Friday morning "What\'s On This Weekend" digest'],
-    value: 'Solves the surprisingly hard discovery problem for offline experiences — most people would go out more if they simply knew what to do.',
+    name: 'Local Event Aggregator', tagline: 'Discover what\'s actually happening in your city this week',
+    target: 'People who want a more active social life but can\'t find what\'s on',
+    features: ['Interest-based event feed from local sources','Save and share events with a friend in one tap','Friday "What\'s On This Weekend" digest'],
+    value: 'Solves the hard discovery problem for offline experiences — most people would go out more if they knew what to do.',
     scores: { goal:{income:2,personal:1,impact:2,fun:3}, domain:{productivity:0,health:1,finance:0,creative:2}, audience:{self:1,niche:2,business:2,broad:3}, strength:{builder:2,designer:2,expert:1,connector:3}, style:{utility:1,tracker:0,social:3,delightful:2} }
   },
   {
-    name: 'Project Idea Capture',
-    tagline: 'Capture every spark. Act on the best ones.',
+    name: 'Project Idea Capture', tagline: 'Capture every spark. Act on the best ones.',
     target: 'Entrepreneurs and creatives with more ideas than time to act on them',
-    features: ['Frictionless idea capture: voice note, text, or quick photo','Weekly prompt to rate and prioritise your captured ideas','"Next step" nudge to convert a top idea into a first action'],
-    value: 'Turns idea overflow into a curated, actionable backlog — a great idea that gets lost is worse than a mediocre one that ships.',
+    features: ['Frictionless capture: voice note, text, or quick photo','Weekly prompt to rate and prioritise your ideas','"Next step" nudge to convert a top idea into first action'],
+    value: 'Turns idea overflow into a curated, actionable backlog — a great idea lost is worse than a mediocre one that ships.',
     scores: { goal:{income:1,personal:3,impact:1,fun:2}, domain:{productivity:3,health:0,finance:0,creative:2}, audience:{self:3,niche:2,business:1,broad:1}, strength:{builder:2,designer:2,expert:1,connector:1}, style:{utility:2,tracker:1,social:0,delightful:1} }
   },
   {
-    name: 'Solopreneur CRM',
-    tagline: 'Know exactly where every lead stands, always',
-    target: 'Freelancers, consultants, and solo operators managing client relationships',
-    features: ['Lightweight pipeline: leads → active → invoiced → done','Last contact tracker with smart follow-up reminders','Revenue dashboard showing monthly pipeline health at a glance'],
-    value: 'Gives solo operators the client visibility of a sales team — without the bloat of enterprise CRM tools they\'ll never fully use.',
+    name: 'Solopreneur CRM', tagline: 'Know exactly where every lead stands, always',
+    target: 'Freelancers and consultants managing client relationships solo',
+    features: ['Lightweight pipeline: leads → active → invoiced → done','Last contact tracker with smart follow-up reminders','Revenue dashboard showing monthly pipeline health'],
+    value: 'Gives solo operators the client visibility of a sales team without enterprise CRM bloat.',
     scores: { goal:{income:3,personal:1,impact:2,fun:0}, domain:{productivity:2,health:0,finance:2,creative:0}, audience:{self:0,niche:2,business:3,broad:1}, strength:{builder:2,designer:1,expert:3,connector:2}, style:{utility:2,tracker:2,social:1,delightful:0} }
   },
   {
-    name: 'Spaced Repetition Flashcards',
-    tagline: 'Learn anything. Forget nothing.',
-    target: 'Students, language learners, and anyone absorbing large amounts of new material',
-    features: ['Create cards from text, images, or imported notes','SM-2 algorithm schedules exactly when to review each card','Daily session with a progress streak and mastery percentage'],
-    value: 'Uses proven memory science to cut study time in half — you review less but retain dramatically more than traditional methods.',
+    name: 'Spaced Repetition Flashcards', tagline: 'Learn anything. Forget nothing.',
+    target: 'Students and language learners absorbing large amounts of new material',
+    features: ['Create cards from text, images, or imported notes','SM-2 algorithm schedules exactly when to review each card','Daily session with progress streak and mastery %'],
+    value: 'Uses proven memory science to cut study time in half — review less, retain dramatically more.',
     scores: { goal:{income:1,personal:3,impact:2,fun:2}, domain:{productivity:1,health:0,finance:0,creative:3}, audience:{self:3,niche:2,business:0,broad:2}, strength:{builder:2,designer:1,expert:2,connector:1}, style:{utility:2,tracker:2,social:0,delightful:1} }
   },
   {
-    name: 'Focus Timer (Pomodoro+)',
-    tagline: 'Do more by working in shorter, deliberate bursts',
+    name: 'Focus Timer (Pomodoro+)', tagline: 'Do more by working in shorter, deliberate bursts',
     target: 'Anyone who gets distracted easily and struggles to enter deep work',
-    features: ['Customisable work / break intervals with ambient sounds','Session tagging — see which types of work get your best hours','Weekly deep work report: hours focused vs hours lost'],
-    value: 'Makes distraction-free work feel achievable — small, committed blocks with clear boundaries beat marathon vague sessions every time.',
+    features: ['Customisable work / break intervals with ambient sounds','Session tagging to see which work gets your best hours','Weekly deep work report: hours focused vs hours lost'],
+    value: 'Makes distraction-free work achievable — small committed blocks beat marathon vague sessions.',
     scores: { goal:{income:1,personal:3,impact:2,fun:2}, domain:{productivity:3,health:1,finance:0,creative:1}, audience:{self:3,niche:2,business:1,broad:2}, strength:{builder:1,designer:2,expert:1,connector:1}, style:{utility:3,tracker:2,social:0,delightful:2} }
   },
   {
-    name: 'Reading List Manager',
-    tagline: 'Read intentionally — save less, finish more',
+    name: 'Reading List Manager', tagline: 'Read intentionally — save less, finish more',
     target: 'Avid readers buried under an endless "to read" list they never get to',
-    features: ['Add books by scanning a barcode, pasting a URL, or typing a title','Smart queue: prioritised by your own ratings and reading goals','Reading stats: pages per day, books per month, genres over time'],
-    value: 'Turns a chaotic saved list into a real reading intention — when you open the app, you know exactly what to read next and why.',
+    features: ['Add books by scanning a barcode, pasting URL, or typing','Smart queue: prioritised by your own ratings and goals','Reading stats: pages per day, books per month, genres over time'],
+    value: 'Turns a chaotic saved list into a real reading intention — you always know what to read next and why.',
     scores: { goal:{income:0,personal:3,impact:1,fun:2}, domain:{productivity:1,health:0,finance:0,creative:3}, audience:{self:3,niche:2,business:0,broad:1}, strength:{builder:1,designer:2,expert:1,connector:1}, style:{utility:1,tracker:2,social:1,delightful:2} }
   },
   {
-    name: 'Job Application Tracker',
-    tagline: 'Never lose track of where you\'ve applied or what to do next',
+    name: 'Job Application Tracker', tagline: 'Never lose track of where you\'ve applied or what to do next',
     target: 'Job seekers managing multiple active applications across many companies',
     features: ['Pipeline view: applied → interviewing → offer → decision','Next step reminders per application with notes and contacts','Conversion stats: response rate, interview rate, offer rate'],
-    value: 'Turns a stressful, chaotic job search into a managed process — most candidates lose offers simply because they forget to follow up.',
+    value: 'Turns a stressful job search into a managed process — most candidates lose offers by forgetting to follow up.',
     scores: { goal:{income:1,personal:3,impact:2,fun:0}, domain:{productivity:3,health:0,finance:1,creative:0}, audience:{self:3,niche:2,business:0,broad:1}, strength:{builder:1,designer:1,expert:2,connector:2}, style:{utility:2,tracker:3,social:0,delightful:1} }
   },
   {
-    name: 'Creative Portfolio Builder',
-    tagline: 'A stunning portfolio live in under an hour',
-    target: 'Designers, photographers, writers, and developers who need an online presence but hate web dev',
-    features: ['Template gallery with genuine aesthetic range','Project builder: images, descriptions, links, case study mode','Custom subdomain with one-click publishing and custom domain support'],
-    value: 'Removes the biggest barrier to having a great portfolio — most creatives don\'t have one not because they lack work, but because building it feels hard.',
+    name: 'Creative Portfolio Builder', tagline: 'A stunning portfolio live in under an hour',
+    target: 'Designers, photographers, writers who need an online presence but hate web dev',
+    features: ['Template gallery with genuine aesthetic range','Project builder: images, descriptions, case study mode','Custom subdomain with one-click publish + custom domain'],
+    value: 'Removes the biggest barrier to having a great portfolio — most creatives don\'t have one because building it feels hard.',
     scores: { goal:{income:2,personal:2,impact:2,fun:3}, domain:{productivity:0,health:0,finance:1,creative:3}, audience:{self:2,niche:3,business:2,broad:1}, strength:{builder:1,designer:3,expert:2,connector:2}, style:{utility:1,tracker:0,social:1,delightful:3} }
   },
   {
-    name: 'Freelance Time Tracker',
-    tagline: 'Know exactly how profitable every client and project is',
-    target: 'Freelancers who have no idea if they\'re actually charging enough for their time',
+    name: 'Freelance Time Tracker', tagline: 'Know exactly how profitable every client and project is',
+    target: 'Freelancers who have no idea if they\'re actually charging enough',
     features: ['One-click timer per project with auto-session logging','Hourly rate comparison across clients and project types','Invoice generation directly from tracked hours'],
-    value: 'Most freelancers are unknowingly undercharging — this app surfaces the truth about where time actually goes and what each hour is worth.',
+    value: 'Most freelancers unknowingly undercharge — this surfaces the truth about where time goes and what each hour is worth.',
     scores: { goal:{income:3,personal:2,impact:1,fun:0}, domain:{productivity:2,health:0,finance:3,creative:0}, audience:{self:2,niche:3,business:2,broad:0}, strength:{builder:2,designer:1,expert:2,connector:1}, style:{utility:2,tracker:3,social:0,delightful:1} }
   },
   {
-    name: 'Personal Writing Journal',
-    tagline: 'Write daily. Think better. Build a record of your mind.',
-    target: 'People who want to journal consistently but find every other app too precious or complex',
-    features: ['Distraction-free editor with a daily writing prompt option','Mood and theme tagging on entries for later searching','Year-in-review: your most used words, most common themes, writing streaks'],
-    value: 'Journalling is one of the highest-leverage habits — this app removes every excuse not to by making it the simplest, most rewarding thing you do each day.',
+    name: 'Personal Writing Journal', tagline: 'Write daily. Think better. Build a record of your mind.',
+    target: 'People who want to journal consistently but find every app too precious or complex',
+    features: ['Distraction-free editor with optional daily prompt','Mood and theme tagging on entries for later searching','Year-in-review: your most used words, common themes, streaks'],
+    value: 'Journalling is one of the highest-leverage habits — this removes every excuse not to.',
     scores: { goal:{income:0,personal:3,impact:1,fun:2}, domain:{productivity:1,health:2,finance:0,creative:3}, audience:{self:3,niche:2,business:0,broad:2}, strength:{builder:1,designer:2,expert:1,connector:1}, style:{utility:1,tracker:2,social:0,delightful:3} }
   },
   {
-    name: 'Micro-SaaS Landing Page Builder',
-    tagline: 'Launch a product page that actually converts — in an afternoon',
-    target: 'Solo founders and indie makers who need to validate ideas fast without hiring a designer',
-    features: ['Conversion-focused section templates (hero, features, pricing, FAQ)','Built-in waitlist and email capture with export to CSV or Mailchimp','A/B testing for headlines with a simple built-in analytics dashboard'],
-    value: 'The single fastest way to go from "I have an idea" to "I have proof people want it" — a great landing page beats months of building blind.',
+    name: 'Micro-SaaS Landing Page Builder', tagline: 'Launch a converting product page in an afternoon',
+    target: 'Solo founders and indie makers who need to validate ideas fast without a designer',
+    features: ['Conversion-focused section templates (hero, features, pricing, FAQ)','Built-in waitlist and email capture with CSV / Mailchimp export','A/B headline testing with simple built-in analytics'],
+    value: 'The fastest path from "I have an idea" to "I have proof people want it" — a great landing page beats months of building blind.',
     scores: { goal:{income:3,personal:1,impact:2,fun:2}, domain:{productivity:2,health:0,finance:2,creative:2}, audience:{self:1,niche:3,business:3,broad:0}, strength:{builder:2,designer:2,expert:2,connector:2}, style:{utility:2,tracker:1,social:0,delightful:3} }
   }
 ];
 
-// ─────────────────────────────────────────────────────────
-//  STATE
-// ─────────────────────────────────────────────────────────
+// ── STATE ───────────────────────────────────────────────
+let answers = {};       // { questionId: { choice: key|null, text: string } }
+let currentQ = 0;
+let currentAnswer = { choice: null, text: '' };
 
-let answers      = {};  // { questionId: answerValue }
-let currentQ     = 0;
-let selectedAns  = null;
-let choicesDone  = 0;   // count of choice questions answered
-
-// ─────────────────────────────────────────────────────────
-//  SCORING
-// ─────────────────────────────────────────────────────────
-
+// ── SCORING ─────────────────────────────────────────────
 function resolveKey(q, rawKey) {
   return q.dimKeyMap ? (q.dimKeyMap[rawKey] || rawKey) : rawKey;
 }
 
-function scoreTextAgainstIdea(text, idea) {
-  if (!text || text.length < 4) return 0;
+function detectIntent(text, textToKey) {
+  if (!text || text.length < 3) return null;
+  const t = text.toLowerCase();
+  let best = null, bestScore = 0;
+  for (const [key, words] of Object.entries(textToKey)) {
+    const score = words.filter(w => t.includes(w)).length;
+    if (score > bestScore) { best = key; bestScore = score; }
+  }
+  return bestScore > 0 ? best : null;
+}
+
+function textKeywordBonus(text, idea) {
+  if (!text || text.length < 3) return 0;
   const t = text.toLowerCase();
   let bonus = 0;
   for (const [domain, words] of Object.entries(KW.domain)) {
     const hits = words.filter(w => t.includes(w)).length;
-    if (hits > 0 && idea.scores.domain[domain] != null) {
-      bonus += Math.min(hits, 3) * 0.12 * (idea.scores.domain[domain] / 3);
-    }
+    if (hits > 0 && idea.scores.domain[domain] != null)
+      bonus += Math.min(hits, 3) * 0.1 * (idea.scores.domain[domain] / 3);
   }
   for (const [style, words] of Object.entries(KW.style)) {
     const hits = words.filter(w => t.includes(w)).length;
-    if (hits > 0 && idea.scores.style[style] != null) {
-      bonus += Math.min(hits, 2) * 0.08 * (idea.scores.style[style] / 3);
-    }
+    if (hits > 0 && idea.scores.style[style] != null)
+      bonus += Math.min(hits, 2) * 0.07 * (idea.scores.style[style] / 3);
   }
   for (const [aud, words] of Object.entries(KW.audience)) {
     const hits = words.filter(w => t.includes(w)).length;
-    if (hits > 0 && idea.scores.audience[aud] != null) {
-      bonus += Math.min(hits, 2) * 0.06 * (idea.scores.audience[aud] / 3);
-    }
+    if (hits > 0 && idea.scores.audience[aud] != null)
+      bonus += Math.min(hits, 2) * 0.05 * (idea.scores.audience[aud] / 3);
   }
   return bonus;
 }
 
 function scoreIdeas() {
   return IDEAS.map(idea => {
-    let total = 0;
-    let count = 0;
-
+    let total = 0, count = 0;
     for (const q of QUESTIONS) {
       const ans = answers[q.id];
-      if (ans == null) continue;
-
-      if (q.type === 'choice') {
-        const dim = q.dim;
-        const key = resolveKey(q, ans);
-        if (idea.scores[dim] && idea.scores[dim][key] != null) {
-          total += idea.scores[dim][key];
+      if (!ans) continue;
+      // Choice answer → full weight
+      if (ans.choice) {
+        const key = resolveKey(q, ans.choice);
+        if (idea.scores[q.dim]?.[key] != null) {
+          total += idea.scores[q.dim][key];
           count++;
         }
-      } else {
-        // text question — keyword bonus (lower weight)
-        const bonus = scoreTextAgainstIdea(ans, idea);
+      }
+      // Text → keyword bonus + intent (only if no choice)
+      if (ans.text && ans.text.length >= 3) {
+        const bonus = textKeywordBonus(ans.text, idea);
         total += bonus;
-        if (bonus > 0) count += 0.4;
+        if (bonus > 0) count += 0.25;
+        if (!ans.choice && q.textToKey) {
+          const inferred = detectIntent(ans.text, q.textToKey);
+          if (inferred) {
+            const mapped = resolveKey(q, inferred);
+            if (idea.scores[q.dim]?.[mapped] != null) {
+              total += idea.scores[q.dim][mapped] * 0.65;
+              count += 0.65;
+            }
+          }
+        }
       }
     }
-
-    const avg = count > 0 ? total / Math.max(count, 1) : 0;
-    return { idea, score: avg, raw: total };
+    return { idea, score: count > 0 ? total / count : 0, raw: total };
   }).sort((a, b) => b.raw - a.raw);
 }
 
 function shouldExitEarly() {
-  if (choicesDone < 5) return false;
+  const choiceDone = QUESTIONS.slice(0, currentQ + 1).filter(q => answers[q.id]?.choice != null).length;
+  if (choiceDone < 5) return false;
   const ranked = scoreIdeas();
   const gap = ranked[2].raw - ranked[3].raw;
-  if (choicesDone >= 10 && gap >= 1.2) return true;
-  if (choicesDone >= 7  && gap >= 2.0) return true;
-  if (gap >= 3.0) return true;
+  if (choiceDone >= 10 && gap >= 1.2) return true;
+  if (choiceDone >= 7  && gap >= 2.0) return true;
+  if (gap >= 3.2) return true;
   return false;
 }
 
-// ─────────────────────────────────────────────────────────
-//  UI
-// ─────────────────────────────────────────────────────────
-
+// ── UI ───────────────────────────────────────────────────
 function setProgress(index) {
   const pct = Math.round((index / QUESTIONS.length) * 100);
   document.getElementById('progress-fill').style.width = pct + '%';
@@ -1214,8 +846,7 @@ function setProgress(index) {
 
 function showScreen(id) {
   ['welcome','question-screen','loading-screen','results-screen'].forEach(sid => {
-    const el = document.getElementById(sid);
-    el.style.display = 'none';
+    document.getElementById(sid).style.display = 'none';
   });
   const el = document.getElementById(id);
   el.style.display = id === 'loading-screen' ? 'flex' : 'block';
@@ -1224,120 +855,85 @@ function showScreen(id) {
   el.classList.add('entering');
 }
 
+function updateNextButton() {
+  const enabled = currentAnswer.choice !== null || currentAnswer.text.length >= 3;
+  document.getElementById('btn-next').classList.toggle('active', enabled);
+}
+
 function renderQuestion(index) {
   const q = QUESTIONS[index];
-  selectedAns = answers[q.id] != null ? answers[q.id] : null;
+  const saved = answers[q.id] || { choice: null, text: '' };
+  currentAnswer = { choice: saved.choice, text: saved.text };
 
-  document.getElementById('q-badge').textContent = q.badge || `Question ${index + 1}`;
+  document.getElementById('q-badge').textContent = q.badge || `Q${index + 1}`;
   document.getElementById('q-text').textContent = q.text;
   document.getElementById('q-hint').textContent = q.hint;
 
-  const typeTag = document.getElementById('q-type-tag');
-  if (q.type === 'text') {
-    typeTag.innerHTML = '<span style="color:#8888a8">✎ Write your answer</span>';
-  } else {
-    typeTag.innerHTML = '<span style="color:#8888a8">⊙ Choose one</span>';
-  }
-
-  const body = document.getElementById('q-body');
-  body.innerHTML = '';
-
-  if (q.type === 'choice') {
-    const grid = document.createElement('div');
-    grid.className = 'options-grid';
-    q.options.forEach(opt => {
-      const card = document.createElement('div');
-      card.className = 'option-card' + (selectedAns === opt.key ? ' selected' : '');
-      card.dataset.key = opt.key;
-      card.innerHTML = `<span class="option-emoji">${opt.emoji}</span><div class="option-title">${opt.title}</div><div class="option-desc">${opt.desc}</div>`;
-      card.addEventListener('click', () => {
-        selectedAns = opt.key;
-        body.querySelectorAll('.option-card').forEach(c => c.classList.toggle('selected', c.dataset.key === opt.key));
-        document.getElementById('btn-next').classList.add('active');
-      });
-      grid.appendChild(card);
+  // Options
+  const grid = document.getElementById('options-grid');
+  grid.innerHTML = '';
+  q.options.forEach(opt => {
+    const card = document.createElement('div');
+    card.className = 'option-card' + (currentAnswer.choice === opt.key ? ' selected' : '');
+    card.dataset.key = opt.key;
+    card.innerHTML = `<span class="option-emoji">${opt.emoji}</span><div class="option-body"><div class="option-title">${opt.title}</div><div class="option-desc">${opt.desc}</div></div>`;
+    card.addEventListener('click', () => {
+      currentAnswer.choice = opt.key;
+      grid.querySelectorAll('.option-card').forEach(c => c.classList.toggle('selected', c.dataset.key === opt.key));
+      updateNextButton();
     });
-    body.appendChild(grid);
-  } else {
-    const wrap = document.createElement('div');
-    wrap.className = 'text-input-wrap';
-    const ta = document.createElement('textarea');
-    ta.className = 'text-area';
-    ta.placeholder = q.placeholder || '';
-    ta.maxLength = q.maxLen || 300;
-    ta.value = typeof selectedAns === 'string' ? selectedAns : '';
-    const footer = document.createElement('div');
-    footer.className = 'text-footer';
-    const skip = document.createElement('button');
-    skip.className = 'skip-btn';
-    skip.textContent = 'Skip this question';
-    skip.onclick = () => { selectedAns = ''; document.getElementById('btn-next').classList.add('active'); };
-    const counter = document.createElement('span');
-    counter.className = 'char-count';
-    counter.textContent = `${ta.value.length} / ${q.maxLen || 300}`;
-    ta.addEventListener('input', () => {
-      const len = ta.value.length;
-      counter.textContent = `${len} / ${q.maxLen || 300}`;
-      counter.classList.toggle('limit', len > (q.maxLen || 300) * 0.9);
-      selectedAns = ta.value;
-      document.getElementById('btn-next').classList.toggle('active', len >= 3);
-    });
-    footer.appendChild(skip);
-    footer.appendChild(counter);
-    wrap.appendChild(ta);
-    wrap.appendChild(footer);
-    body.appendChild(wrap);
-    // pre-fill enables next
-    if (ta.value.length >= 3) {
-      document.getElementById('btn-next').classList.add('active');
-    }
-  }
+    grid.appendChild(card);
+  });
 
-  const nextBtn = document.getElementById('btn-next');
-  nextBtn.classList.toggle('active', selectedAns != null && (q.type === 'choice' || (typeof selectedAns === 'string' && selectedAns.length >= 3)));
+  // Textarea
+  const ta = document.getElementById('text-area');
+  const counter = document.getElementById('char-count');
+  const maxLen = 260;
+  ta.placeholder = q.placeholder || 'Or describe it in your own words...';
+  ta.value = currentAnswer.text;
+  counter.textContent = `${ta.value.length} / ${maxLen}`;
+
+  ta.oninput = () => {
+    currentAnswer.text = ta.value;
+    const len = ta.value.length;
+    counter.textContent = `${len} / ${maxLen}`;
+    counter.classList.toggle('limit', len > maxLen * 0.88);
+    if (len > maxLen) ta.value = ta.value.slice(0, maxLen);
+    updateNextButton();
+  };
 
   document.getElementById('btn-back').style.visibility = index === 0 ? 'hidden' : 'visible';
   document.getElementById('progress-container').classList.add('visible');
   setProgress(index);
+  updateNextButton();
   showScreen('question-screen');
+
+  // Focus textarea if no choice
+  if (!currentAnswer.choice) setTimeout(() => {}, 0);
 }
 
-// ─────────────────────────────────────────────────────────
-//  NAVIGATION
-// ─────────────────────────────────────────────────────────
-
+// ── NAVIGATION ───────────────────────────────────────────
 function startQuiz() {
   answers = {};
   currentQ = 0;
-  choicesDone = 0;
-  selectedAns = null;
+  currentAnswer = { choice: null, text: '' };
   renderQuestion(0);
 }
 
 function nextQuestion() {
-  if (selectedAns == null) return;
-  const q = QUESTIONS[currentQ];
-  answers[q.id] = selectedAns;
-  if (q.type === 'choice') choicesDone++;
+  if (currentAnswer.choice === null && currentAnswer.text.length < 3) return;
+  answers[QUESTIONS[currentQ].id] = { ...currentAnswer };
 
-  // Early exit check at questions 8, 12, 16, 20
   if ([7, 11, 15, 19].includes(currentQ) && shouldExitEarly()) {
-    showResults();
-    return;
+    showResults(); return;
   }
-
   currentQ++;
-  if (currentQ >= QUESTIONS.length) {
-    showResults();
-  } else {
-    renderQuestion(currentQ);
-  }
+  if (currentQ >= QUESTIONS.length) { showResults(); return; }
+  renderQuestion(currentQ);
 }
 
 function goBack() {
   if (currentQ === 0) return;
-  const q = QUESTIONS[currentQ];
-  if (q.type === 'choice') choicesDone = Math.max(0, choicesDone - 1);
   currentQ--;
   renderQuestion(currentQ);
 }
@@ -1345,86 +941,64 @@ function goBack() {
 function showResults() {
   document.getElementById('progress-container').classList.remove('visible');
   showScreen('loading-screen');
-  setTimeout(renderResults, 1200);
+  setTimeout(renderResults, 1100);
 }
 
 function restart() {
   answers = {};
   currentQ = 0;
-  choicesDone = 0;
-  selectedAns = null;
+  currentAnswer = { choice: null, text: '' };
   document.getElementById('progress-container').classList.remove('visible');
   showScreen('welcome');
 }
 
-// ─────────────────────────────────────────────────────────
-//  RESULTS
-// ─────────────────────────────────────────────────────────
-
+// ── RESULTS ──────────────────────────────────────────────
 function renderResults() {
   const ranked = scoreIdeas();
-  const top3   = ranked.slice(0, 3);
+  const top3 = ranked.slice(0, 3);
   const maxRaw = ranked[0].raw;
 
-  // Personalise subtitle
   const goalLabels = { income:'earn income', personal:'solve your own daily frustration', impact:'help a lot of people', fun:'build something genuinely fun' };
   const domainLabels = { productivity:'productivity', health:'health & growth', finance:'money management', creative:'creativity & learning' };
-  const g = goalLabels[answers.goal];
-  const d = domainLabels[answers.domain];
-  if (g && d) {
-    document.getElementById('results-sub').textContent = `Your goal is to ${g} in the ${d} space — here's what we'd build.`;
+  const goalAns = answers.goal?.choice;
+  const domAns  = answers.domain?.choice;
+  if (goalAns && domAns) {
+    document.getElementById('results-sub').textContent =
+      `Your goal is to ${goalLabels[goalAns] || goalAns} in the ${domainLabels[domAns] || domAns} space.`;
   }
 
-  // Show a user quote from the most specific text answer
-  const quoteOrder = ['wish_existed', 'one_sentence', 'problem_text', 'time_waste', 'success_text'];
+  // User quote — pick the most interesting text answer
+  const quoteOrder = ['wish_existed','one_sentence','problem_source','time_waste','success_def'];
   const quoteWrap = document.getElementById('user-quote-wrap');
   quoteWrap.innerHTML = '';
   for (const qid of quoteOrder) {
-    const val = answers[qid];
+    const val = answers[qid]?.text;
     if (val && val.length > 20) {
-      const quote = document.createElement('div');
-      quote.className = 'user-quote';
-      quote.textContent = val;
-      quoteWrap.appendChild(quote);
+      const div = document.createElement('div');
+      div.className = 'user-quote';
+      div.textContent = val;
+      quoteWrap.appendChild(div);
       break;
     }
   }
 
-  // Build idea cards
   const container = document.getElementById('ideas-container');
   container.innerHTML = '';
-
   top3.forEach(({ idea, raw }, i) => {
-    const matchPct = Math.round((raw / Math.max(maxRaw, 1)) * 100);
+    const pct = Math.round((raw / Math.max(maxRaw, 1)) * 100);
     const card = document.createElement('div');
     card.className = 'idea-card';
     card.innerHTML = `
-      <div class="idea-top">
-        <div class="idea-name">${idea.name}</div>
-        <div class="idea-rank">${i + 1}</div>
-      </div>
+      <div class="idea-top"><div class="idea-name">${idea.name}</div><div class="idea-rank">${i+1}</div></div>
       <div class="idea-tagline">${idea.tagline}</div>
-
       <div class="match-row">
         <span class="match-label">Match</span>
-        <div class="match-bar"><div class="match-fill" style="width:${matchPct}%"></div></div>
-        <span class="match-pct">${matchPct}%</span>
+        <div class="match-bar"><div class="match-fill" style="width:${pct}%"></div></div>
+        <span class="match-pct">${pct}%</span>
       </div>
-
-      <div class="idea-section">
-        <div class="idea-section-label">Target user</div>
-        <div class="idea-target">${idea.target}</div>
-      </div>
-
-      <div class="idea-section">
-        <div class="idea-section-label">Core features</div>
-        <ul class="features-list">${idea.features.map(f => `<li>${f}</li>`).join('')}</ul>
-      </div>
-
-      <div class="idea-section">
-        <div class="idea-section-label">Why it\'s valuable</div>
-        <div class="idea-value">${idea.value}</div>
-      </div>
+      <div class="idea-section"><div class="idea-section-label">Target user</div><div class="idea-target">${idea.target}</div></div>
+      <div class="idea-section"><div class="idea-section-label">Core features</div><ul class="features-list">${idea.features.map(f=>`<li>${f}</li>`).join('')}</ul></div>
+      <div class="idea-section"><div class="idea-section-label">Why it\'s valuable</div><div class="idea-value">${idea.value}</div></div>
     `;
     container.appendChild(card);
   });
@@ -1432,10 +1006,7 @@ function renderResults() {
   showScreen('results-screen');
 }
 
-// ─────────────────────────────────────────────────────────
-//  INIT
-// ─────────────────────────────────────────────────────────
-
+// ── INIT ─────────────────────────────────────────────────
 document.getElementById('question-screen').style.display = 'none';
 document.getElementById('loading-screen').style.display  = 'none';
 document.getElementById('results-screen').style.display  = 'none';
