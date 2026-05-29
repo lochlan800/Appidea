@@ -132,7 +132,7 @@
 
   <div id="progress-container">
     <div id="progress-header">
-      <span>Question <span id="q-num">1</span> of 20</span>
+      <span>Question <span id="q-num">1</span> of <span id="q-total">20</span></span>
       <span id="progress-pct">0%</span>
     </div>
     <div id="progress-track"><div id="progress-fill"></div></div>
@@ -561,7 +561,597 @@ const QUESTION_POOL = [
       { key:'social',     emoji:'👫', title:'A way to do or share something with other people',        desc:'Better together from day one.' },
       { key:'delightful', emoji:'✨', title:'Something that feels genuinely premium on first open',    desc:'Quality as the hook.' }
     ]
+  },
+  {
+    id: 'builder_cadence', badge: 'Ship Speed', dim: 'style',
+    requires: (ctx) => ctx.lead('strength') === 'builder',
+    text: 'When you build something, what\'s the rhythm that actually keeps you going?',
+    hint: 'Your shipping cadence shapes what kind of product you\'ll sustain.',
+    placeholder: 'e.g. I lose interest if I can\'t ship something visible every weekend...',
+    textToKey: {
+      utility:    ['solve','useful','works','tool','functional'],
+      tracker:    ['log','track','measure','data','metrics'],
+      social:     ['share','community','public','feedback','demo'],
+      delightful: ['polish','beautiful','craft','delight','fun']
+    },
+    options: [
+      { key:'utility',    emoji:'🔧', title:'Ship the smallest thing that works',     desc:'Function first. Beauty later. Maybe never.' },
+      { key:'tracker',    emoji:'📊', title:'Instrument it before I ship it',          desc:'I want to see what users do from day one.' },
+      { key:'social',     emoji:'📣', title:'Build in public, weekly demo',            desc:'Feedback loops keep me honest and motivated.' },
+      { key:'delightful', emoji:'✨', title:'Slow down and polish every detail',       desc:'I\'d rather ship one delightful thing than ten rough ones.' }
+    ]
+  },
+  {
+    id: 'builder_motivation', badge: 'Why Build', dim: 'goal',
+    requires: (ctx) => ctx.lead('strength') === 'builder',
+    text: 'You can build things — but why pick THIS one to actually finish?',
+    hint: 'The half-built graveyard is real. What makes one project survive?',
+    placeholder: 'e.g. I only finish things that solve a problem I personally hit every week...',
+    textToKey: {
+      income:   ['revenue','paid','money','business','income'],
+      personal: ['scratch my itch','for me','i need','myself','personal'],
+      impact:   ['help others','meaningful','change','impact','useful to people'],
+      fun:      ['fun','enjoy','interesting','curious','play']
+    },
+    options: [
+      { key:'income',   emoji:'💰', title:'It could pay me back for the time',  desc:'A real shot at revenue makes me push through the boring middle.' },
+      { key:'personal', emoji:'🎯', title:'I need it for myself, badly',         desc:'I\'m the first user. That keeps me honest.' },
+      { key:'impact',   emoji:'🌱', title:'It would genuinely help people',      desc:'Knowing it matters is what gets me to ship.' },
+      { key:'fun',      emoji:'🎮', title:'It\'s just fun to build',             desc:'If the building is enjoyable, I\'ll finish it.' }
+    ]
+  },
+  {
+    id: 'designer_problem', badge: 'Design Eye', dim: 'domain',
+    requires: (ctx) => ctx.lead('strength') === 'designer',
+    text: 'Where do you spot bad design that makes you wince every single day?',
+    hint: 'The thing that bothers you most is often the thing you should fix.',
+    placeholder: 'e.g. Every banking app I open feels like it was designed in 2009 by an accountant...',
+    textToKey: {
+      productivity: ['work apps','tools','workflow','productivity','office'],
+      health:       ['health','wellness','fitness','medical','therapy'],
+      finance:      ['banking','money','finance','invoice','payment'],
+      creative:     ['creative','art','design tools','music','writing']
+    },
+    options: [
+      { key:'productivity', emoji:'📋', title:'Work and productivity tools',     desc:'The software people use 8 hours a day looks awful.' },
+      { key:'health',       emoji:'💚', title:'Health and wellness apps',         desc:'Something this personal deserves better design.' },
+      { key:'finance',      emoji:'💳', title:'Anything involving money',         desc:'Finance UIs feel like punishment.' },
+      { key:'creative',     emoji:'🎨', title:'Creative tools themselves',        desc:'The tools we create with are weirdly uncreative.' }
+    ]
+  },
+  {
+    id: 'designer_style', badge: 'Your Touch', dim: 'style',
+    requires: (ctx) => ctx.lead('strength') === 'designer',
+    text: 'What does YOUR version of a great app feel like to use?',
+    hint: 'Designers leave fingerprints. What\'s yours?',
+    placeholder: 'e.g. Quiet, fast, no chrome, every interaction has just a little spring to it...',
+    textToKey: {
+      utility:    ['minimal','fast','clean','no friction','simple'],
+      tracker:    ['visualize','dashboard','chart','progress','data'],
+      social:     ['shareable','community','expressive','public','identity'],
+      delightful: ['playful','animated','warm','delight','personality']
+    },
+    options: [
+      { key:'utility',    emoji:'⚡', title:'Quiet, fast, gets out of the way',   desc:'The best UI is invisible.' },
+      { key:'tracker',    emoji:'📈', title:'Beautiful data, made legible',       desc:'Numbers that don\'t feel like a spreadsheet.' },
+      { key:'social',     emoji:'💬', title:'Expressive — people show it off',    desc:'Design that becomes part of someone\'s identity.' },
+      { key:'delightful', emoji:'🌈', title:'Warm, playful, full of personality', desc:'A little joy in every tap.' }
+    ]
+  },
+  {
+    id: 'expert_leverage', badge: 'Your Edge', dim: 'audience',
+    requires: (ctx) => ctx.lead('strength') === 'expert',
+    text: 'Your expertise is the unfair advantage. Who needs it most?',
+    hint: 'The narrower the audience, the bigger your edge.',
+    placeholder: 'e.g. Other physiotherapists who hate writing their patient notes...',
+    textToKey: {
+      self:     ['myself','my own work','personal','my practice'],
+      niche:    ['my field','peers','specialists','people like me','colleagues'],
+      business: ['firms','agencies','companies','professional','clients'],
+      broad:    ['everyone','consumers','wide','mainstream','public']
+    },
+    options: [
+      { key:'self',     emoji:'🧠', title:'Honestly — me, in my own work',       desc:'I\'d be the first and most demanding user.' },
+      { key:'niche',    emoji:'🎯', title:'Other specialists in my field',       desc:'My peers feel the same pain I do.' },
+      { key:'business', emoji:'🏢', title:'Firms and teams who hire experts',     desc:'Whole organizations would pay for this.' },
+      { key:'broad',    emoji:'🌍', title:'Anyone who could use what I know',     desc:'I want to make expertise accessible to everyone.' }
+    ]
+  },
+  {
+    id: 'expert_unfair', badge: 'Hidden Knowledge', dim: 'domain',
+    requires: (ctx) => ctx.lead('strength') === 'expert',
+    text: 'What do you know that most people would be shocked to learn?',
+    hint: 'The gap between what you know and what\'s common knowledge is the product.',
+    placeholder: 'e.g. Most personal trainers track client progress in a Google Doc — there\'s a real opportunity there...',
+    textToKey: {
+      productivity: ['workflow','process','operations','admin','tasks'],
+      health:       ['health','body','wellness','medical','symptoms'],
+      finance:      ['money','tax','investing','pricing','accounting'],
+      creative:     ['creative','craft','art','writing','music']
+    },
+    options: [
+      { key:'productivity', emoji:'⚙️', title:'How work actually gets done',     desc:'The hidden workflows people would pay to skip.' },
+      { key:'health',       emoji:'🩺', title:'How bodies really work',           desc:'Health knowledge most people are missing.' },
+      { key:'finance',      emoji:'📒', title:'How money actually moves',         desc:'Financial truths that aren\'t obvious.' },
+      { key:'creative',     emoji:'🎼', title:'How great creative work is made',  desc:'The craft secrets behind the polish.' }
+    ]
+  },
+  {
+    id: 'connector_network', badge: 'Your People', dim: 'audience',
+    requires: (ctx) => ctx.lead('strength') === 'connector',
+    text: 'You know people. What kind of crowd would you build something FOR?',
+    hint: 'Your network IS the distribution. Who\'s in it?',
+    placeholder: 'e.g. I know a bunch of indie podcasters who all complain about the same three things...',
+    textToKey: {
+      self:     ['just me','myself','personal'],
+      niche:    ['my community','subculture','niche','tight group','fans'],
+      business: ['founders','executives','professionals','industry','b2b'],
+      broad:    ['everyone','mainstream','wide audience','consumers']
+    },
+    options: [
+      { key:'self',     emoji:'🧍', title:'Just me — networking is for connection',  desc:'I\'d build for myself; the network is just relationships.' },
+      { key:'niche',    emoji:'🎤', title:'My tight-knit community or scene',         desc:'A specific tribe I\'m already deep in.' },
+      { key:'business', emoji:'💼', title:'Founders and professionals I know',         desc:'I have access to people with budgets.' },
+      { key:'broad',    emoji:'🌐', title:'A wide consumer audience',                 desc:'I can amplify to a lot of people fast.' }
+    ]
+  },
+  {
+    id: 'connector_format', badge: 'Connection Type', dim: 'style',
+    requires: (ctx) => ctx.lead('strength') === 'connector',
+    text: 'When you bring people together, what does the magic usually look like?',
+    hint: 'The format of connection tells us what to build.',
+    placeholder: 'e.g. I\'m always the one introducing two strangers who turn out to need each other...',
+    textToKey: {
+      utility:    ['intro','match','connect','find','match-making'],
+      tracker:    ['progress','accountability','check-in','goals'],
+      social:     ['community','group','conversation','chat','share'],
+      delightful: ['celebrate','events','fun','play','games']
+    },
+    options: [
+      { key:'utility',    emoji:'🤝', title:'Matching the right two people',      desc:'Intros and matchmaking — clean and useful.' },
+      { key:'tracker',    emoji:'📌', title:'Keeping a group accountable',        desc:'Shared progress and gentle pressure.' },
+      { key:'social',     emoji:'💬', title:'A conversation everyone joins',      desc:'A space where the community comes alive.' },
+      { key:'delightful', emoji:'🎉', title:'A shared moment of fun',             desc:'Events, rituals, games that bring joy.' }
+    ]
+  },
+  {
+    id: 'income_market', badge: 'Who Pays', dim: 'audience',
+    requires: (ctx) => ctx.lead('goal') === 'income',
+    text: 'Be real — who is most likely to actually open their wallet for this?',
+    hint: 'Revenue lives where pain meets a budget.',
+    placeholder: 'e.g. Small law firms that bleed money on admin and have no IT person...',
+    textToKey: {
+      self:     ['myself','i\'d pay','personal','my own use'],
+      niche:    ['enthusiasts','hobbyists','prosumers','small group'],
+      business: ['business','company','firm','professional','b2b','team'],
+      broad:    ['consumers','mass market','everyone','public']
+    },
+    options: [
+      { key:'self',     emoji:'💵', title:'I\'d pay for it myself — start there',   desc:'If it\'s worth my money, it\'s worth others\'.' },
+      { key:'niche',    emoji:'🎯', title:'Passionate enthusiasts in a niche',       desc:'A small group that pays well for the right thing.' },
+      { key:'business', emoji:'🏢', title:'Businesses with real budgets',            desc:'B2B is unsexy but where money lives.' },
+      { key:'broad',    emoji:'🌍', title:'A huge consumer audience, small price',   desc:'Volume play — millions of small payments.' }
+    ]
+  },
+  {
+    id: 'income_model', badge: 'Money Shape', dim: 'style',
+    requires: (ctx) => ctx.lead('goal') === 'income',
+    text: 'What shape does the money take in your head?',
+    hint: 'How users pay shapes what you actually build.',
+    placeholder: 'e.g. I want a quiet monthly subscription that compounds while I sleep...',
+    textToKey: {
+      utility:    ['subscription','saas','monthly','recurring'],
+      tracker:    ['premium','usage','tiers','metered'],
+      social:     ['community','membership','creator','audience'],
+      delightful: ['one-off','purchase','app store','consumer']
+    },
+    options: [
+      { key:'utility',    emoji:'🔁', title:'Quiet monthly subscriptions',       desc:'Recurring revenue from people who depend on it.' },
+      { key:'tracker',    emoji:'📊', title:'Free to try, pay as you grow',      desc:'Usage-based or freemium with clear tiers.' },
+      { key:'social',     emoji:'👥', title:'Memberships in a community',        desc:'People pay to belong to something.' },
+      { key:'delightful', emoji:'🛒', title:'One-off purchases that delight',    desc:'A great product someone buys once and loves.' }
+    ]
+  },
+  {
+    id: 'income_speed', badge: 'Time Horizon', dim: 'strength',
+    requires: (ctx) => ctx.lead('goal') === 'income',
+    text: 'What\'s the strength you\'d lean on to start earning fastest?',
+    hint: 'Speed-to-revenue depends on what you bring to the table.',
+    placeholder: 'e.g. I can build it myself this weekend if I keep it small enough...',
+    textToKey: {
+      builder:   ['build','ship','code','prototype','technical'],
+      designer:  ['design','look','polish','brand','aesthetic'],
+      expert:    ['knowledge','expertise','specialist','consult','field'],
+      connector: ['network','audience','people','community','reach']
+    },
+    options: [
+      { key:'builder',   emoji:'🛠️', title:'I\'ll just build it this weekend',     desc:'Skip the wait — code is my fastest path.' },
+      { key:'designer',  emoji:'🎨', title:'Make it look so good people pay',       desc:'Premium-feeling design that justifies the price.' },
+      { key:'expert',    emoji:'🧠', title:'Charge for what I already know',         desc:'Productize my expertise — fast and high-margin.' },
+      { key:'connector', emoji:'📣', title:'I have an audience I can sell to',      desc:'I already have the people; product comes next.' }
+    ]
+  },
+  {
+    id: 'personal_use_freq', badge: 'How Often', dim: 'style',
+    requires: (ctx) => ctx.lead('goal') === 'personal',
+    text: 'How often would YOU realistically use the thing you\'re imagining?',
+    hint: 'A personal tool only works if you actually open it.',
+    placeholder: 'e.g. Every morning with coffee — it has to fit into a ritual I already have...',
+    textToKey: {
+      utility:    ['daily','everyday','always','open often'],
+      tracker:    ['weekly','log','journal','review','track'],
+      social:     ['when others','share','social','occasional'],
+      delightful: ['fun','occasional','treat','enjoy']
+    },
+    options: [
+      { key:'utility',    emoji:'⏰', title:'Every single day, automatically',     desc:'Part of my daily routine without thinking.' },
+      { key:'tracker',    emoji:'📓', title:'Once a week, like a check-in',         desc:'A reflection or review ritual.' },
+      { key:'social',     emoji:'👋', title:'Whenever friends pull me in',          desc:'Social moments drive my usage.' },
+      { key:'delightful', emoji:'🎁', title:'Occasionally — as a treat',           desc:'When I want a small dose of joy.' }
+    ]
+  },
+  {
+    id: 'personal_share', badge: 'Share Or Keep', dim: 'audience',
+    requires: (ctx) => ctx.lead('goal') === 'personal',
+    text: 'If you build it for yourself first — would you ever share it?',
+    hint: 'Scratch-your-own-itch can stay tiny or scale wildly. Your call.',
+    placeholder: 'e.g. Honestly, if it works for me I\'d probably show 5 friends and stop there...',
+    textToKey: {
+      self:     ['just me','keep it','private','no one','myself'],
+      niche:    ['few friends','small group','my people','tribe'],
+      business: ['team at work','colleagues','company','work'],
+      broad:    ['anyone','public','everyone','share widely']
+    },
+    options: [
+      { key:'self',     emoji:'🔒', title:'No — it\'s just for me',               desc:'A personal tool I never need to share.' },
+      { key:'niche',    emoji:'👯', title:'A handful of friends would love it',   desc:'A small circle who\'d genuinely use it.' },
+      { key:'business', emoji:'🏢', title:'My team at work would benefit',         desc:'It\'d quietly become useful at work.' },
+      { key:'broad',    emoji:'🌍', title:'Sure — anyone can have it',            desc:'If it helps me, it might help thousands.' }
+    ]
+  },
+  {
+    id: 'impact_who', badge: 'Who Benefits', dim: 'audience',
+    requires: (ctx) => ctx.lead('goal') === 'impact',
+    text: 'Whose life would be measurably better if this existed?',
+    hint: 'Impact gets sharper when the beneficiary is specific.',
+    placeholder: 'e.g. Caregivers of elderly parents who are quietly burning out...',
+    textToKey: {
+      self:     ['me','myself','my own life'],
+      niche:    ['specific group','underserved','community','those who'],
+      business: ['workers','employees','small business','sector'],
+      broad:    ['everyone','public','society','humans']
+    },
+    options: [
+      { key:'self',     emoji:'🧍', title:'Mine — I\'m someone who needs this',     desc:'I count too. Starting here is honest.' },
+      { key:'niche',    emoji:'🫂', title:'A specific underserved group',           desc:'People nobody is building for right now.' },
+      { key:'business', emoji:'👷', title:'Workers in a hard industry',             desc:'A specific job that\'s harder than it should be.' },
+      { key:'broad',    emoji:'🌎', title:'Anyone, broadly — for everyone',         desc:'Impact at the widest possible scale.' }
+    ]
+  },
+  {
+    id: 'fun_vibe', badge: 'Vibe Check', dim: 'style',
+    requires: (ctx) => ctx.lead('goal') === 'fun',
+    text: 'What\'s the FEELING you want people to have when they open it?',
+    hint: 'Fun lives in feeling. Pick the one you want to create.',
+    placeholder: 'e.g. That little buzz when you open a great game — surprise, curiosity, a smile...',
+    textToKey: {
+      utility:    ['satisfying','clever','smart','clean'],
+      tracker:    ['progress','streak','growth','collect'],
+      social:     ['together','shared','laugh','social'],
+      delightful: ['joy','surprise','delight','wonder','magical']
+    },
+    options: [
+      { key:'utility',    emoji:'🧩', title:'A clever, satisfying click',           desc:'The feeling of something just working.' },
+      { key:'tracker',    emoji:'🏆', title:'The rush of a streak or level-up',     desc:'Tiny wins that compound into a habit.' },
+      { key:'social',     emoji:'😂', title:'Laughing with friends',                desc:'Shared moments that turn into stories.' },
+      { key:'delightful', emoji:'🪄', title:'A genuine "whoa" of surprise',         desc:'A small dose of wonder or magic.' }
+    ]
+  },
+  {
+    id: 'productivity_pain', badge: 'Daily Friction', dim: 'audience',
+    requires: (ctx) => ctx.lead('domain') === 'productivity',
+    text: 'Whose workday do you most want to make less miserable?',
+    hint: 'Productivity tools win when they target a specific role.',
+    placeholder: 'e.g. Freelancers chasing late invoices instead of doing actual work...',
+    textToKey: {
+      self:     ['my own','myself','i waste','my workflow'],
+      niche:    ['freelancers','specialists','specific role','prosumers'],
+      business: ['teams','companies','employees','enterprise'],
+      broad:    ['anyone working','knowledge workers','everyone']
+    },
+    options: [
+      { key:'self',     emoji:'🧍', title:'Mine — I lose hours every week',         desc:'Start with my own workflow problems.' },
+      { key:'niche',    emoji:'🎯', title:'A specific role with specific pain',     desc:'Freelancers, creators, a clear profession.' },
+      { key:'business', emoji:'🏢', title:'Teams trying to coordinate',             desc:'Where the friction is between people.' },
+      { key:'broad',    emoji:'💻', title:'Anyone who works on a screen',           desc:'A horizontal tool for all knowledge workers.' }
+    ]
+  },
+  {
+    id: 'productivity_format', badge: 'Tool Shape', dim: 'style',
+    requires: (ctx) => ctx.lead('domain') === 'productivity',
+    text: 'What FORM should the productivity tool actually take?',
+    hint: 'The shape of the tool decides how people use it.',
+    placeholder: 'e.g. A tiny menu-bar app that does exactly one thing brilliantly...',
+    textToKey: {
+      utility:    ['one thing','simple','focused','tool'],
+      tracker:    ['dashboard','metrics','progress','log'],
+      social:     ['shared','team','collab','chat'],
+      delightful: ['beautiful','calm','warm','feels good']
+    },
+    options: [
+      { key:'utility',    emoji:'🛠️', title:'A focused tool that does ONE thing',    desc:'Small, sharp, hard to misuse.' },
+      { key:'tracker',    emoji:'📊', title:'A dashboard that makes work visible',   desc:'See progress, patterns, blockers.' },
+      { key:'social',     emoji:'🧑‍🤝‍🧑', title:'A shared space the team works in',  desc:'Collaboration is the real product.' },
+      { key:'delightful', emoji:'☀️', title:'A calm, warm place to actually focus',  desc:'Productivity that doesn\'t feel like punishment.' }
+    ]
+  },
+  {
+    id: 'health_angle', badge: 'Health Angle', dim: 'style',
+    requires: (ctx) => ctx.lead('domain') === 'health',
+    text: 'When it comes to health, what kind of nudge actually works on you?',
+    hint: 'How you motivate yourself tells you how to motivate others.',
+    placeholder: 'e.g. I respond to seeing a graph go up — not to guilt or alarms...',
+    textToKey: {
+      utility:    ['simple','quick','easy','low effort'],
+      tracker:    ['track','log','data','metrics','streak'],
+      social:     ['friends','accountability','community','share'],
+      delightful: ['fun','game','enjoyable','playful']
+    },
+    options: [
+      { key:'utility',    emoji:'⏱️', title:'Make it dead simple to act',          desc:'Lower the friction, the rest follows.' },
+      { key:'tracker',    emoji:'📈', title:'Show me data and patterns',           desc:'I respond to seeing the numbers move.' },
+      { key:'social',     emoji:'🤝', title:'Connect me with people doing it too', desc:'Accountability and community keep me in.' },
+      { key:'delightful', emoji:'🎮', title:'Turn it into a game I want to play',  desc:'If it\'s fun, I\'ll actually do it.' }
+    ]
+  },
+  {
+    id: 'health_audience', badge: 'Who Needs It', dim: 'audience',
+    requires: (ctx) => ctx.lead('domain') === 'health',
+    text: 'Whose health are you most fired up to actually improve?',
+    hint: 'Health is huge. Pick a person you can picture.',
+    placeholder: 'e.g. People in their 40s who suddenly need to care about sleep and bloodwork...',
+    textToKey: {
+      self:     ['myself','my own','me','personal'],
+      niche:    ['specific condition','patients','underserved','community'],
+      business: ['employers','clinics','providers','workplace'],
+      broad:    ['everyone','general public','consumers']
+    },
+    options: [
+      { key:'self',     emoji:'🧍', title:'Mine — I want to feel better',          desc:'My own health is the honest starting point.' },
+      { key:'niche',    emoji:'🩺', title:'People with a specific condition',       desc:'An underserved group with real needs.' },
+      { key:'business', emoji:'🏥', title:'Clinics, providers, or employers',       desc:'B2B health where decisions get made.' },
+      { key:'broad',    emoji:'🌍', title:'The general public, broadly',            desc:'A consumer wellness play.' }
+    ]
+  },
+  {
+    id: 'finance_who', badge: 'Money Pain', dim: 'audience',
+    requires: (ctx) => ctx.lead('domain') === 'finance',
+    text: 'Whose relationship with money are you trying to fix?',
+    hint: 'Money problems are emotional. Get specific about whose.',
+    placeholder: 'e.g. Freelancers who never know what they actually take home after tax...',
+    textToKey: {
+      self:     ['myself','my own','me','personal'],
+      niche:    ['freelancers','creators','specific group','immigrants'],
+      business: ['small business','firms','accountants','b2b'],
+      broad:    ['everyone','consumers','general public']
+    },
+    options: [
+      { key:'self',     emoji:'💼', title:'Mine — I don\'t feel in control',      desc:'I want this for myself first.' },
+      { key:'niche',    emoji:'🎯', title:'A group with weird money problems',     desc:'Freelancers, creators, or another specific cohort.' },
+      { key:'business', emoji:'🏢', title:'Small businesses drowning in admin',    desc:'B2B finance is unsexy and lucrative.' },
+      { key:'broad',    emoji:'🌍', title:'Regular people, broadly',               desc:'A consumer money product.' }
+    ]
+  },
+  {
+    id: 'finance_feeling', badge: 'Money Feeling', dim: 'style',
+    requires: (ctx) => ctx.lead('domain') === 'finance',
+    text: 'What feeling do you want money tools to actually create?',
+    hint: 'Finance UX is usually anxiety. What\'s yours?',
+    placeholder: 'e.g. Calm. I want to open it and feel like an adult, not a child being scolded...',
+    textToKey: {
+      utility:    ['simple','clear','no friction','just works'],
+      tracker:    ['visibility','data','dashboard','overview'],
+      social:     ['together','shared','partners','family'],
+      delightful: ['calm','warm','reassuring','human']
+    },
+    options: [
+      { key:'utility',    emoji:'✅', title:'Dead simple — get the thing done',    desc:'No drama, just the task completed.' },
+      { key:'tracker',    emoji:'📊', title:'Total visibility of where I stand',   desc:'See everything at a glance, no surprises.' },
+      { key:'social',     emoji:'👫', title:'Shared money done without fights',    desc:'Couples, families, partners — together.' },
+      { key:'delightful', emoji:'🌿', title:'Calm — finance without the dread',    desc:'A warm, human way to handle money.' }
+    ]
+  },
+  {
+    id: 'creative_helps', badge: 'Creator Help', dim: 'audience',
+    requires: (ctx) => ctx.lead('domain') === 'creative',
+    text: 'Which kind of creator do you most want to put wind in their sails?',
+    hint: 'Creative tools are intimate. Pick the creator you understand.',
+    placeholder: 'e.g. Hobby musicians who never share anything because the tools are intimidating...',
+    textToKey: {
+      self:     ['myself','my own','my craft'],
+      niche:    ['hobbyists','specific','indie','underground'],
+      business: ['professionals','agencies','studios','working creatives'],
+      broad:    ['anyone','beginners','everyone','consumers']
+    },
+    options: [
+      { key:'self',     emoji:'🎨', title:'Me — for my own creative work',         desc:'A tool I\'d use in my own practice.' },
+      { key:'niche',    emoji:'🎤', title:'Hobbyists in a specific medium',         desc:'Underserved indie creators with passion.' },
+      { key:'business', emoji:'🏢', title:'Working creatives and studios',          desc:'Pros who\'d pay for serious tools.' },
+      { key:'broad',    emoji:'🌈', title:'Anyone who wants to make something',    desc:'Lower the barrier for total beginners.' }
+    ]
+  },
+  {
+    id: 'creative_style', badge: 'Creative Vibe', dim: 'style',
+    requires: (ctx) => ctx.lead('domain') === 'creative',
+    text: 'What does a great creative tool feel like in your hands?',
+    hint: 'The right tool disappears. What does yours do?',
+    placeholder: 'e.g. Something that gets out of my way completely and just lets me make...',
+    textToKey: {
+      utility:    ['fast','out of the way','simple','sharp'],
+      tracker:    ['versions','progress','project','iterate'],
+      social:     ['share','collab','community','remix'],
+      delightful: ['playful','expressive','toy','delight']
+    },
+    options: [
+      { key:'utility',    emoji:'✂️', title:'Sharp and out of the way',           desc:'A pro tool that disappears in use.' },
+      { key:'tracker',    emoji:'🗂️', title:'Keeps my projects and versions sane', desc:'Organization that supports the chaos.' },
+      { key:'social',     emoji:'🎭', title:'Built for sharing and remixing',     desc:'Community is woven into the tool.' },
+      { key:'delightful', emoji:'🪀', title:'Feels like a toy, makes real work',  desc:'Playful first — serious results emerge.' }
+    ]
+  },
+  {
+    id: 'self_lifelong', badge: 'For You', dim: 'goal',
+    requires: (ctx) => ctx.lead('audience') === 'self',
+    text: 'If only YOU ever used it, what would make that still worth it?',
+    hint: 'A tool of one can still be a win — if it pays off.',
+    placeholder: 'e.g. If it saved me an hour a week, I\'d call that a massive personal victory...',
+    textToKey: {
+      income:   ['saves money','income','time is money','revenue'],
+      personal: ['learn','grow','feel better','myself','daily'],
+      impact:   ['life','meaning','better','change'],
+      fun:      ['fun','enjoy','play','curiosity']
+    },
+    options: [
+      { key:'income',   emoji:'⏳', title:'Saving me hours or real money',        desc:'A tool that pays for itself in time or cash.' },
+      { key:'personal', emoji:'🌱', title:'Making me a better version of me',      desc:'Personal growth, habits, or skill.' },
+      { key:'impact',   emoji:'🎯', title:'Solving a problem that haunts me',      desc:'A genuine fix to something hard.' },
+      { key:'fun',      emoji:'🎈', title:'Pure joy and curiosity',                desc:'Something that\'s just fun to use.' }
+    ]
+  },
+  {
+    id: 'niche_depth', badge: 'How Deep', dim: 'strength',
+    requires: (ctx) => ctx.lead('audience') === 'niche',
+    text: 'For your niche to love it, what part of YOU do they need?',
+    hint: 'Niches reward depth. Which kind of depth do you bring?',
+    placeholder: 'e.g. They need to see I\'m one of them — same vocabulary, same frustrations...',
+    textToKey: {
+      builder:   ['built','technical','engineering','craft'],
+      designer:  ['design','aesthetic','look','feel'],
+      expert:    ['expert','insider','i know this','specialist'],
+      connector: ['community','people','network','tribe']
+    },
+    options: [
+      { key:'builder',   emoji:'🔧', title:'Craft — the build quality earns trust', desc:'Built with care that insiders notice.' },
+      { key:'designer',  emoji:'🎨', title:'A look that screams "for us"',          desc:'Aesthetics that signal belonging.' },
+      { key:'expert',    emoji:'🧠', title:'Insider knowledge baked in',             desc:'Defaults and details only a specialist would know.' },
+      { key:'connector', emoji:'🤝', title:'My presence in their community',         desc:'I\'m one of them — that\'s the moat.' }
+    ]
+  },
+  {
+    id: 'business_buyer', badge: 'The Buyer', dim: 'strength',
+    requires: (ctx) => ctx.lead('audience') === 'business',
+    text: 'Selling to businesses means convincing a buyer. What earns their YES?',
+    hint: 'B2B sales is trust before product. What\'s your trust?',
+    placeholder: 'e.g. I worked in their industry for 10 years — they\'ll trust me before they trust a demo...',
+    textToKey: {
+      builder:   ['build','reliable','technical','enterprise-grade'],
+      designer:  ['polish','professional','look','demo'],
+      expert:    ['industry','domain','specialist','i\'ve worked'],
+      connector: ['relationships','intros','warm','network']
+    },
+    options: [
+      { key:'builder',   emoji:'🛠️', title:'Rock-solid build they can trust',     desc:'Enterprise-grade reliability earns the deal.' },
+      { key:'designer',  emoji:'💎', title:'Polish that signals real money',       desc:'It looks like serious software, so it gets bought.' },
+      { key:'expert',    emoji:'🎯', title:'Deep domain expertise',                desc:'I speak their language; they buy from peers.' },
+      { key:'connector', emoji:'☎️', title:'Warm intros from people they trust',   desc:'Relationships open every door.' }
+    ]
+  },
+  {
+    id: 'broad_hook', badge: 'The Hook', dim: 'style',
+    requires: (ctx) => ctx.lead('audience') === 'broad',
+    text: 'For something with mass appeal — what\'s the HOOK that spreads it?',
+    hint: 'Broad audiences need a reason to share. Pick yours.',
+    placeholder: 'e.g. Something so satisfying you screenshot it and text it to your group chat...',
+    textToKey: {
+      utility:    ['useful','solves','works','must-have'],
+      tracker:    ['streak','progress','collect','stats'],
+      social:     ['share','viral','group','text it'],
+      delightful: ['cute','delight','wow','beautiful']
+    },
+    options: [
+      { key:'utility',    emoji:'🪛', title:'It\'s just genuinely useful',         desc:'People share things that actually help them.' },
+      { key:'tracker',    emoji:'🔥', title:'Streaks and stats people brag about', desc:'Numbers that beg to be screenshotted.' },
+      { key:'social',     emoji:'💬', title:'Built to text to your group chat',    desc:'A social loop is in the product itself.' },
+      { key:'delightful', emoji:'😍', title:'So delightful people show it off',    desc:'Pure wow-factor drives organic spread.' }
+    ]
+  },
+  {
+    id: 'utility_focus', badge: 'Utility Focus', dim: 'domain',
+    requires: (ctx) => ctx.lead('style') === 'utility',
+    text: 'You like utility. In which domain is the gap between "tool exists" and "tool is good" widest?',
+    hint: 'Useful tools win in domains full of crappy useful tools.',
+    placeholder: 'e.g. Honestly, every accounting tool feels like it was built in 2003...',
+    textToKey: {
+      productivity: ['work','workflow','tasks','admin'],
+      health:       ['health','body','wellness','medical'],
+      finance:      ['money','tax','invoice','accounting'],
+      creative:     ['creative','art','make','design tools']
+    },
+    options: [
+      { key:'productivity', emoji:'📋', title:'Work and productivity tools',       desc:'Where people suffer through bad software daily.' },
+      { key:'health',       emoji:'💚', title:'Health and wellness tools',          desc:'A space where utility could replace anxiety.' },
+      { key:'finance',      emoji:'💳', title:'Finance and money tools',            desc:'Every finance UI is begging to be redone.' },
+      { key:'creative',     emoji:'🎨', title:'Tools for creative work',            desc:'Make creating less painful.' }
+    ]
+  },
+  {
+    id: 'tracker_what', badge: 'What To Track', dim: 'domain',
+    requires: (ctx) => ctx.lead('style') === 'tracker',
+    text: 'You\'re drawn to tracking. What\'s the THING worth tracking that nobody does well?',
+    hint: 'The world has too many trackers. Which one is genuinely missing?',
+    placeholder: 'e.g. Mood and energy across the day — most apps treat it like a checkbox...',
+    textToKey: {
+      productivity: ['time','tasks','focus','work','output'],
+      health:       ['sleep','mood','body','symptoms','energy'],
+      finance:      ['spending','income','savings','net worth'],
+      creative:     ['practice','progress','creative output','reps']
+    },
+    options: [
+      { key:'productivity', emoji:'⏱️', title:'Time, focus, and actual output',    desc:'Track what you really got done — not just busy work.' },
+      { key:'health',       emoji:'❤️', title:'Mood, energy, body signals',         desc:'The personal data nobody captures well.' },
+      { key:'finance',      emoji:'📊', title:'Money flowing in, out, and grown',    desc:'A clear view of your financial life.' },
+      { key:'creative',     emoji:'🎶', title:'Creative practice and progress',      desc:'Reps, output, skill growth over time.' }
+    ]
+  },
+  {
+    id: 'social_kind', badge: 'Social Type', dim: 'audience',
+    requires: (ctx) => ctx.lead('style') === 'social',
+    text: 'You lean social. What kind of GROUP does the app pull together?',
+    hint: 'Social means different things. Pick the size of "us".',
+    placeholder: 'e.g. A small group of close friends — not a feed full of strangers...',
+    textToKey: {
+      self:     ['just me','reflect','solo'],
+      niche:    ['close friends','small group','community','tribe'],
+      business: ['team','colleagues','coworkers','workplace'],
+      broad:    ['everyone','public','viral','strangers']
+    },
+    options: [
+      { key:'self',     emoji:'🧍', title:'Just me — but reflecting on others',    desc:'A quiet personal layer with social inputs.' },
+      { key:'niche',    emoji:'👯', title:'My close friends and tight community',  desc:'Small groups who actually know each other.' },
+      { key:'business', emoji:'🧑‍💼', title:'My team or coworkers',                 desc:'Workplace social — chat, coordination, culture.' },
+      { key:'broad',    emoji:'🌐', title:'Strangers turning into something',      desc:'A public space anyone can join.' }
+    ]
+  },
+  {
+    id: 'delightful_who', badge: 'Delight For', dim: 'audience',
+    requires: (ctx) => ctx.lead('style') === 'delightful',
+    text: 'You want it to feel delightful. Whose day are you trying to make?',
+    hint: 'Delight is a gift. Who are you giving it to?',
+    placeholder: 'e.g. Tired parents who never get a moment of pure fun in their app stack...',
+    textToKey: {
+      self:     ['myself','my own','me'],
+      niche:    ['specific group','community','people who'],
+      business: ['workers','professionals','team'],
+      broad:    ['everyone','anyone','consumers']
+    },
+    options: [
+      { key:'self',     emoji:'🧍', title:'Mine — I want more delight in my day', desc:'A treat for myself, first.' },
+      { key:'niche',    emoji:'🫶', title:'A specific group who needs a smile',    desc:'People who get overlooked by mainstream apps.' },
+      { key:'business', emoji:'🏢', title:'Workers stuck in joyless software',     desc:'Bring delight to a grim work context.' },
+      { key:'broad',    emoji:'🌍', title:'Anyone — the world could use it',       desc:'Mass delight, freely given.' }
+    ]
   }
+
 ];
 
 // ── KEYWORD MAPS (for text scoring across all questions) ────
@@ -741,7 +1331,547 @@ const IDEAS = [
     features: ['Conversion-focused section templates (hero, features, pricing, FAQ)','Built-in waitlist and email capture with CSV / Mailchimp export','A/B headline testing with simple built-in analytics'],
     value: 'The fastest path from "I have an idea" to "I have proof people want it" — a great landing page beats months of building blind.',
     scores: { goal:{income:3,personal:1,impact:2,fun:2}, domain:{productivity:2,health:0,finance:2,creative:2}, audience:{self:1,niche:3,business:3,broad:0}, strength:{builder:2,designer:2,expert:2,connector:2}, style:{utility:2,tracker:1,social:0,delightful:3} }
+  },
+  {
+    name: 'Niche Newsletter Studio', tagline: 'Launch a paid newsletter without wrestling with tools',
+    target: 'Domain experts who want subscription income from their writing',
+    features: ['Drag-and-drop email composer with reusable blocks','Stripe-powered paid tiers and member-only archives','Open-rate and churn dashboard with subscriber notes'],
+    value: 'Turns your expertise into recurring revenue without forcing you to become a marketer.',
+    scores: { goal:{income:3,personal:1,impact:2,fun:1}, domain:{productivity:2,health:0,finance:1,creative:3}, audience:{self:1,niche:3,business:2,broad:1}, strength:{builder:1,designer:2,expert:3,connector:2}, style:{utility:2,tracker:1,social:1,delightful:2} }
+  },
+  {
+    name: 'Client Proposal Builder', tagline: 'Send polished proposals in minutes, not afternoons',
+    target: 'Freelance consultants who lose hours to repetitive proposal writing',
+    features: ['Template library for common service offerings','Smart pricing tables with optional add-ons','E-signature and proposal view tracking'],
+    value: 'Removes the friction between a sales conversation and a signed deal.',
+    scores: { goal:{income:3,personal:1,impact:1,fun:0}, domain:{productivity:3,health:0,finance:2,creative:1}, audience:{self:1,niche:2,business:3,broad:1}, strength:{builder:2,designer:2,expert:2,connector:1}, style:{utility:3,tracker:1,social:0,delightful:1} }
+  },
+  {
+    name: 'Workshop Booking Hub', tagline: 'Sell workshops and classes without juggling six tools',
+    target: 'Coaches and creatives running paid live sessions on the side',
+    features: ['Scheduling with Zoom and Calendar integration','Built-in checkout and refund handling','Waitlists and automated reminders'],
+    value: 'Lets you run a workshop business without becoming an operations admin.',
+    scores: { goal:{income:3,personal:1,impact:2,fun:1}, domain:{productivity:3,health:0,finance:2,creative:1}, audience:{self:1,niche:2,business:3,broad:1}, strength:{builder:2,designer:1,expert:2,connector:3}, style:{utility:3,tracker:1,social:1,delightful:1} }
+  },
+  {
+    name: 'Affiliate Link Tracker', tagline: 'See which links actually pay the bills',
+    target: 'Content creators with multiple affiliate streams to optimise',
+    features: ['Unified dashboard for Amazon, Impact, ShareASale and more','Per-post and per-channel revenue attribution','Smart link rewriting and geo-routing'],
+    value: 'Turns a messy spreadsheet of affiliate IDs into a clear revenue map.',
+    scores: { goal:{income:3,personal:1,impact:0,fun:1}, domain:{productivity:2,health:0,finance:3,creative:1}, audience:{self:1,niche:3,business:2,broad:1}, strength:{builder:3,designer:1,expert:2,connector:1}, style:{utility:3,tracker:3,social:0,delightful:0} }
+  },
+  {
+    name: 'Etsy Shop Optimiser', tagline: 'Boost your handmade shop with data-driven tweaks',
+    target: 'Etsy sellers struggling to figure out why some listings outperform others',
+    features: ['Listing SEO score with concrete suggestions','Competitor price and tag analysis','Daily ranking and traffic alerts'],
+    value: 'Turns gut-feel Etsy strategy into a deliberate, repeatable growth process.',
+    scores: { goal:{income:3,personal:1,impact:1,fun:1}, domain:{productivity:2,health:0,finance:2,creative:3}, audience:{self:1,niche:3,business:2,broad:1}, strength:{builder:2,designer:1,expert:3,connector:1}, style:{utility:3,tracker:2,social:0,delightful:1} }
+  },
+  {
+    name: 'Local Service Quote Engine', tagline: 'Quote tradesmen jobs from the van in under a minute',
+    target: 'Independent tradespeople who hate paperwork but need accurate pricing',
+    features: ['Voice-driven job intake and measurement capture','Auto-calculated labour and materials','Instant branded PDF quotes by SMS'],
+    value: 'Lets one-person trades businesses win more jobs without an office admin.',
+    scores: { goal:{income:3,personal:1,impact:2,fun:0}, domain:{productivity:3,health:0,finance:2,creative:0}, audience:{self:1,niche:3,business:2,broad:1}, strength:{builder:2,designer:1,expert:3,connector:1}, style:{utility:3,tracker:1,social:0,delightful:1} }
+  },
+  {
+    name: 'Coaching Session Notes', tagline: 'Replace messy notebooks with structured client memory',
+    target: 'Coaches who want clients to feel deeply known between sessions',
+    features: ['Session templates with goals, blockers and wins','Client-shared action items with check-ins','Searchable history across all clients'],
+    value: 'Helps you deliver visibly better coaching by remembering everything that matters.',
+    scores: { goal:{income:3,personal:1,impact:3,fun:0}, domain:{productivity:3,health:1,finance:1,creative:0}, audience:{self:0,niche:3,business:2,broad:1}, strength:{builder:1,designer:2,expert:3,connector:2}, style:{utility:3,tracker:2,social:1,delightful:1} }
+  },
+  {
+    name: 'Micro-Course Platform', tagline: 'Sell a sharp 60-minute course on your one expertise',
+    target: 'Practitioners who want to package their knowledge without building a school',
+    features: ['Linear video and text course flow','One-time price or pay-what-you-want checkout','Student progress and feedback collection'],
+    value: 'Lowers the barrier to monetising expertise from a months-long project to a weekend.',
+    scores: { goal:{income:3,personal:1,impact:2,fun:1}, domain:{productivity:1,health:0,finance:1,creative:3}, audience:{self:0,niche:3,business:1,broad:2}, strength:{builder:2,designer:2,expert:3,connector:1}, style:{utility:2,tracker:1,social:1,delightful:2} }
+  },
+  {
+    name: 'Subscription Box Manager', tagline: 'Run a small subscription box without a warehouse team',
+    target: 'Indie makers shipping monthly boxes from a spare room',
+    features: ['Recurring billing with skip-this-month controls','Shipping label batch printing','Inventory forecasting per SKU'],
+    value: 'Lets a kitchen-table business operate with the polish of a much bigger one.',
+    scores: { goal:{income:3,personal:1,impact:1,fun:1}, domain:{productivity:3,health:0,finance:2,creative:1}, audience:{self:0,niche:2,business:3,broad:1}, strength:{builder:3,designer:1,expert:2,connector:1}, style:{utility:3,tracker:2,social:0,delightful:1} }
+  },
+  {
+    name: 'Freelance Retainer Tracker', tagline: 'Stop giving away free hours on monthly retainers',
+    target: 'Freelancers on recurring contracts who lose track of scope',
+    features: ['Per-client hour budgets with rollover rules','Threshold alerts before overruns','Monthly retainer report ready to send'],
+    value: 'Protects your margin on the contracts that keep the lights on.',
+    scores: { goal:{income:3,personal:1,impact:1,fun:0}, domain:{productivity:3,health:0,finance:2,creative:0}, audience:{self:1,niche:3,business:2,broad:0}, strength:{builder:2,designer:1,expert:3,connector:0}, style:{utility:3,tracker:3,social:0,delightful:0} }
+  },
+  {
+    name: 'Agency Client Portal', tagline: 'Give clients one place instead of forty Slack pings',
+    target: 'Small agencies tired of repeating answers in five different threads',
+    features: ['Branded portal per client with project status','File requests and approval workflows','Self-serve invoice and contract history'],
+    value: 'Turns client communication from chaos into something clients actually praise.',
+    scores: { goal:{income:3,personal:0,impact:2,fun:0}, domain:{productivity:3,health:0,finance:1,creative:1}, audience:{self:0,niche:2,business:3,broad:1}, strength:{builder:2,designer:2,expert:2,connector:3}, style:{utility:3,tracker:1,social:1,delightful:1} }
+  },
+  {
+    name: 'Print-on-Demand Designer', tagline: 'Design and list POD products faster than competitors',
+    target: 'POD sellers grinding through Photoshop and listing forms',
+    features: ['Template engine for mockups across mugs, tees and posters','One-click publish to Printful, Printify and Redbubble','Trend keyword discovery panel'],
+    value: 'Cuts product creation time from hours to minutes so volume becomes possible.',
+    scores: { goal:{income:3,personal:1,impact:0,fun:2}, domain:{productivity:2,health:0,finance:1,creative:3}, audience:{self:1,niche:3,business:2,broad:1}, strength:{builder:2,designer:3,expert:2,connector:1}, style:{utility:3,tracker:1,social:0,delightful:2} }
+  },
+  {
+    name: 'Niche Job Board Builder', tagline: 'Launch a paid job board for your community in a weekend',
+    target: 'Community leaders sitting on a network worth monetising',
+    features: ['Paid listing checkout and admin moderation','Embeddable widget for your site or newsletter','Applicant tracking for posting companies'],
+    value: 'Converts your audience into a defensible recurring revenue stream.',
+    scores: { goal:{income:3,personal:1,impact:2,fun:1}, domain:{productivity:2,health:0,finance:1,creative:1}, audience:{self:0,niche:3,business:2,broad:1}, strength:{builder:2,designer:2,expert:2,connector:3}, style:{utility:3,tracker:1,social:2,delightful:1} }
+  },
+  {
+    name: 'Local Tour Marketplace', tagline: 'Sell quirky local tours without a TripAdvisor takeover',
+    target: 'Locals who know hidden corners of their city and want side income',
+    features: ['Tour listing pages with photos and routes','Booking calendar with deposit handling','Guest reviews and host messaging'],
+    value: 'Lets passionate locals turn neighbourhood expertise into real money.',
+    scores: { goal:{income:3,personal:1,impact:2,fun:2}, domain:{productivity:1,health:0,finance:1,creative:2}, audience:{self:0,niche:2,business:1,broad:3}, strength:{builder:1,designer:2,expert:2,connector:3}, style:{utility:2,tracker:1,social:3,delightful:2} }
+  },
+  {
+    name: 'AI Content Repurposer', tagline: 'Turn one podcast into ten posts overnight',
+    target: 'Solo creators who publish one long thing and run dry on social',
+    features: ['Drop in transcript, get tweets, threads, captions','Brand-voice customisation per channel','Scheduled publishing across platforms'],
+    value: 'Multiplies the reach of every piece of content you already worked hard on.',
+    scores: { goal:{income:3,personal:1,impact:1,fun:1}, domain:{productivity:2,health:0,finance:0,creative:3}, audience:{self:1,niche:2,business:3,broad:1}, strength:{builder:3,designer:1,expert:2,connector:2}, style:{utility:3,tracker:1,social:2,delightful:1} }
+  },
+  {
+    name: 'Property Manager Light', tagline: 'Run a few rentals without enterprise software pain',
+    target: 'Landlords with two to ten units who outgrew spreadsheets',
+    features: ['Rent collection with automatic late reminders','Maintenance ticket inbox per property','End-of-year tax export by unit'],
+    value: 'Makes small-portfolio landlording feel professional without hiring a manager.',
+    scores: { goal:{income:3,personal:1,impact:1,fun:0}, domain:{productivity:3,health:0,finance:3,creative:0}, audience:{self:1,niche:3,business:2,broad:0}, strength:{builder:2,designer:1,expert:3,connector:1}, style:{utility:3,tracker:2,social:0,delightful:0} }
+  },
+  {
+    name: 'Restaurant Menu Optimiser', tagline: 'Price and design menus that actually move margin',
+    target: 'Independent restaurant owners flying blind on which dishes really earn',
+    features: ['Per-dish ingredient cost and profit dashboard','Drag-and-drop menu layout with psychology hints','Printable and QR-code menus generated together'],
+    value: 'Turns gut-feel menu decisions into a quiet but real profit lift.',
+    scores: { goal:{income:3,personal:0,impact:2,fun:1}, domain:{productivity:2,health:1,finance:3,creative:2}, audience:{self:0,niche:3,business:3,broad:0}, strength:{builder:1,designer:2,expert:3,connector:1}, style:{utility:3,tracker:2,social:0,delightful:1} }
+  },
+  {
+    name: 'Membership Community App', tagline: 'Run a paid community that actually feels like one',
+    target: 'Creators with a tribe who want depth, not a noisy Discord',
+    features: ['Threaded discussion with rich profiles','Tiered membership with member-only content','Events, live calls and resource library'],
+    value: 'Gives your audience a real home that converts attention into recurring revenue.',
+    scores: { goal:{income:3,personal:1,impact:2,fun:2}, domain:{productivity:1,health:0,finance:1,creative:2}, audience:{self:0,niche:3,business:1,broad:2}, strength:{builder:2,designer:2,expert:2,connector:3}, style:{utility:2,tracker:1,social:3,delightful:2} }
+  },
+  {
+    name: 'Podcast Sponsor Marketplace', tagline: 'Match indie podcasts with sponsors that fit',
+    target: 'Mid-size podcasters too small for agencies but too big to negotiate solo',
+    features: ['Audience demographic and listen-rate profile','Sponsor bidding and contract templates','Read tracking with promo code analytics'],
+    value: 'Solves the awkward gap between hobby podcasting and full ad-rep representation.',
+    scores: { goal:{income:3,personal:1,impact:1,fun:1}, domain:{productivity:2,health:0,finance:2,creative:2}, audience:{self:0,niche:3,business:2,broad:1}, strength:{builder:2,designer:1,expert:2,connector:3}, style:{utility:2,tracker:2,social:2,delightful:1} }
+  },
+  {
+    name: 'Bookkeeping Inbox', tagline: 'Email a receipt, get a clean book entry back',
+    target: 'Service business owners who keep "doing the books later"',
+    features: ['Email-in receipt parsing with category guesses','Bank-feed reconciliation with one-tap matching','Year-end pack ready for your accountant'],
+    value: 'Removes the dread from bookkeeping by making it almost zero-effort.',
+    scores: { goal:{income:3,personal:1,impact:1,fun:0}, domain:{productivity:3,health:0,finance:3,creative:0}, audience:{self:1,niche:2,business:3,broad:1}, strength:{builder:2,designer:1,expert:3,connector:0}, style:{utility:3,tracker:2,social:0,delightful:1} }
+  },
+  {
+    name: 'Morning Pages Companion', tagline: 'A calm space for three pages every morning',
+    target: 'People rebuilding a daily writing practice for clarity, not output',
+    features: ['Distraction-free typing with gentle word goal','Mood and theme tagging post-write','Private monthly insight summary'],
+    value: 'Protects a small daily ritual that quietly shapes the rest of your day.',
+    scores: { goal:{income:0,personal:3,impact:1,fun:1}, domain:{productivity:2,health:2,finance:0,creative:3}, audience:{self:3,niche:1,business:0,broad:2}, strength:{builder:1,designer:2,expert:1,connector:0}, style:{utility:2,tracker:2,social:0,delightful:3} }
+  },
+  {
+    name: 'Personal Finance Pulse', tagline: 'A weekly money check-in that takes five minutes',
+    target: 'People who feel anxious about money but avoid spreadsheets',
+    features: ['Auto-imported balances across all accounts','One screen weekly money snapshot','Gentle nudges for upcoming bills'],
+    value: 'Replaces vague money anxiety with a calm, regular awareness habit.',
+    scores: { goal:{income:0,personal:3,impact:1,fun:0}, domain:{productivity:2,health:1,finance:3,creative:0}, audience:{self:3,niche:1,business:0,broad:2}, strength:{builder:2,designer:2,expert:2,connector:0}, style:{utility:2,tracker:3,social:0,delightful:1} }
+  },
+  {
+    name: 'Sleep Wind-Down Coach', tagline: 'Drift off without doomscrolling for an hour',
+    target: 'Knowledge workers whose brains refuse to switch off at night',
+    features: ['Personalised wind-down routine with timed cues','Phone lockdown with allowed contacts','Morning sleep quality review'],
+    value: 'Reclaims the hour before sleep so the next day actually starts well.',
+    scores: { goal:{income:0,personal:3,impact:1,fun:1}, domain:{productivity:1,health:3,finance:0,creative:0}, audience:{self:3,niche:1,business:0,broad:2}, strength:{builder:2,designer:2,expert:2,connector:0}, style:{utility:2,tracker:2,social:0,delightful:3} }
+  },
+  {
+    name: 'Weekly Review Ritual', tagline: 'A guided 20-minute reset every Sunday',
+    target: 'GTD-curious folks who never quite stick the weekly review',
+    features: ['Step-by-step prompts across roles and projects','Inbox-to-action triage helper','Trend lines for completed reviews'],
+    value: 'Builds the one habit productivity nerds always recommend and never do.',
+    scores: { goal:{income:1,personal:3,impact:1,fun:0}, domain:{productivity:3,health:1,finance:0,creative:1}, audience:{self:3,niche:2,business:1,broad:1}, strength:{builder:1,designer:2,expert:3,connector:0}, style:{utility:3,tracker:2,social:0,delightful:1} }
+  },
+  {
+    name: 'Personal Energy Map', tagline: 'See when your best hours actually happen',
+    target: 'Anyone whose calendar ignores their real cognitive rhythms',
+    features: ['Hourly mood and energy micro-logs','Weekly heatmap of peak focus windows','Suggested deep-work time blocks'],
+    value: 'Stops you scheduling hard work in your worst hours by mistake.',
+    scores: { goal:{income:1,personal:3,impact:1,fun:0}, domain:{productivity:3,health:2,finance:0,creative:1}, audience:{self:3,niche:2,business:1,broad:1}, strength:{builder:1,designer:2,expert:2,connector:0}, style:{utility:2,tracker:3,social:0,delightful:1} }
+  },
+  {
+    name: 'Wardrobe Outfit Planner', tagline: 'Plan a week of outfits in five minutes',
+    target: 'Busy professionals who waste time staring into their closet',
+    features: ['Snap-and-tag wardrobe inventory','Outfit calendar with weather sync','Underused item reminders'],
+    value: 'Removes a tiny daily decision that secretly drains the start of every day.',
+    scores: { goal:{income:0,personal:3,impact:0,fun:2}, domain:{productivity:2,health:0,finance:1,creative:3}, audience:{self:3,niche:1,business:0,broad:2}, strength:{builder:1,designer:3,expert:1,connector:0}, style:{utility:2,tracker:2,social:1,delightful:3} }
+  },
+  {
+    name: 'Home Maintenance Calendar', tagline: 'Never forget the boiler service again',
+    target: 'New homeowners overwhelmed by what their house actually needs',
+    features: ['Recurring task plan by appliance and season','Photo log per repair and warranty','Trusted local tradesperson notes'],
+    value: 'Replaces low-grade homeowner anxiety with a calm, scheduled rhythm.',
+    scores: { goal:{income:0,personal:3,impact:1,fun:0}, domain:{productivity:3,health:0,finance:2,creative:0}, audience:{self:3,niche:1,business:0,broad:2}, strength:{builder:2,designer:1,expert:2,connector:1}, style:{utility:3,tracker:3,social:0,delightful:1} }
+  },
+  {
+    name: 'Travel Memory Map', tagline: 'Relive every trip on one beautiful world map',
+    target: 'Travellers who feel their memories are buried in camera rolls',
+    features: ['Trip auto-import from photo geotags','Hand-curated highlight cards per city','Shareable interactive map of your life'],
+    value: 'Turns scattered travel memories into a story you can revisit any time.',
+    scores: { goal:{income:0,personal:3,impact:1,fun:3}, domain:{productivity:1,health:0,finance:0,creative:3}, audience:{self:3,niche:1,business:0,broad:2}, strength:{builder:2,designer:3,expert:1,connector:1}, style:{utility:1,tracker:2,social:2,delightful:3} }
+  },
+  {
+    name: 'Decision Journal', tagline: 'Make better calls by reviewing your old ones',
+    target: 'Thoughtful operators who want to learn from their own track record',
+    features: ['Templated entries for context, options and reasoning','Future review reminders to revisit outcomes','Pattern tags across decisions over time'],
+    value: 'Compounds judgement by turning every important decision into future learning.',
+    scores: { goal:{income:1,personal:3,impact:1,fun:0}, domain:{productivity:3,health:0,finance:1,creative:1}, audience:{self:3,niche:2,business:1,broad:1}, strength:{builder:1,designer:1,expert:3,connector:0}, style:{utility:2,tracker:3,social:0,delightful:1} }
+  },
+  {
+    name: 'Hydration Nudger', tagline: 'Drink enough water without an annoying alarm',
+    target: 'People who reach 4pm and realise they\'ve had one coffee and nothing else',
+    features: ['Subtle smart notifications based on intake','Weather and activity adjustments','Streak rewards without shame'],
+    value: 'Builds a small, almost invisible habit that quietly improves your whole day.',
+    scores: { goal:{income:0,personal:3,impact:0,fun:1}, domain:{productivity:1,health:3,finance:0,creative:0}, audience:{self:3,niche:1,business:0,broad:2}, strength:{builder:2,designer:2,expert:1,connector:0}, style:{utility:2,tracker:3,social:0,delightful:2} }
+  },
+  {
+    name: 'Personal Quiet Hours', tagline: 'Carve out genuine focus time, automatically',
+    target: 'Remote workers whose calendars are a meeting buffet',
+    features: ['Auto-blocked focus windows synced across calendars','Slack and email status automation','Weekly focus-time score'],
+    value: 'Defends the time you actually need to do the work that matters.',
+    scores: { goal:{income:1,personal:3,impact:1,fun:0}, domain:{productivity:3,health:1,finance:0,creative:1}, audience:{self:3,niche:2,business:2,broad:1}, strength:{builder:3,designer:1,expert:2,connector:0}, style:{utility:3,tracker:2,social:0,delightful:1} }
+  },
+  {
+    name: 'Birthday and Gift Tracker', tagline: 'Be the friend who never forgets and always nails it',
+    target: 'Thoughtful people who hate feeling caught out by birthdays',
+    features: ['Contact-linked birthday and anniversary calendar','Gift idea capture per person','Budget and order tracking'],
+    value: 'Turns being a thoughtful friend from a stressful scramble into an easy habit.',
+    scores: { goal:{income:0,personal:3,impact:2,fun:2}, domain:{productivity:2,health:0,finance:1,creative:1}, audience:{self:3,niche:1,business:0,broad:2}, strength:{builder:1,designer:2,expert:1,connector:3}, style:{utility:2,tracker:2,social:2,delightful:3} }
+  },
+  {
+    name: 'Calm Email Triage', tagline: 'Get to inbox zero without a productivity cult',
+    target: 'Knowledge workers drowning in low-priority email',
+    features: ['One-key triage actions across providers','Snooze and follow-up reminders','Weekly email diet report'],
+    value: 'Makes email feel like a tool you control rather than a master you serve.',
+    scores: { goal:{income:1,personal:3,impact:1,fun:0}, domain:{productivity:3,health:1,finance:0,creative:0}, audience:{self:3,niche:1,business:2,broad:2}, strength:{builder:3,designer:2,expert:2,connector:0}, style:{utility:3,tracker:2,social:0,delightful:1} }
+  },
+  {
+    name: 'Music Practice Companion', tagline: 'Make every 20-minute practice session actually count',
+    target: 'Adult learners returning to an instrument after years away',
+    features: ['Per-piece practice plan with focus areas','Tempo and recording log over time','Gentle daily reminders, no streak shame'],
+    value: 'Brings real progress to amateur practice without making it feel like school.',
+    scores: { goal:{income:0,personal:3,impact:1,fun:2}, domain:{productivity:2,health:1,finance:0,creative:3}, audience:{self:3,niche:2,business:0,broad:1}, strength:{builder:1,designer:2,expert:2,connector:0}, style:{utility:2,tracker:3,social:0,delightful:2} }
+  },
+  {
+    name: 'Personal CRM Lite', tagline: 'Keep your important relationships warm without effort',
+    target: 'Professionals whose network slowly cools because life is busy',
+    features: ['Auto-suggested check-ins by recency','Light notes per person and conversation','Birthday and milestone reminders'],
+    value: 'Turns network maintenance from guilty obligation into easy, kind habit.',
+    scores: { goal:{income:1,personal:3,impact:1,fun:0}, domain:{productivity:3,health:0,finance:0,creative:0}, audience:{self:3,niche:2,business:1,broad:1}, strength:{builder:2,designer:1,expert:2,connector:3}, style:{utility:2,tracker:2,social:2,delightful:1} }
+  },
+  {
+    name: 'Gardening Season Planner', tagline: 'Know what to plant, when, where you live',
+    target: 'New gardeners who buy seeds and miss the planting window',
+    features: ['Zone-based planting calendar','Per-bed crop rotation memory','Photo grow log with notes'],
+    value: 'Turns hopeful seed packets into actual harvests through right-time planting.',
+    scores: { goal:{income:0,personal:3,impact:1,fun:2}, domain:{productivity:2,health:2,finance:0,creative:2}, audience:{self:3,niche:2,business:0,broad:1}, strength:{builder:1,designer:1,expert:3,connector:0}, style:{utility:2,tracker:3,social:0,delightful:2} }
+  },
+  {
+    name: 'Workout Block Designer', tagline: 'Build training blocks you\'ll actually follow',
+    target: 'Self-coached lifters bored of generic apps and PDF programmes',
+    features: ['Drag-and-drop weekly training template','Auto-progression rules per lift','Deload and PR tracking'],
+    value: 'Gives serious amateurs a coach\'s structure without the coach\'s price.',
+    scores: { goal:{income:0,personal:3,impact:1,fun:1}, domain:{productivity:1,health:3,finance:0,creative:1}, audience:{self:3,niche:3,business:0,broad:1}, strength:{builder:2,designer:1,expert:3,connector:0}, style:{utility:2,tracker:3,social:0,delightful:1} }
+  },
+  {
+    name: 'Pantry Inventory Helper', tagline: 'Stop buying a fourth jar of cumin',
+    target: 'Households that throw away food because they forgot what they had',
+    features: ['Barcode-scan pantry intake','Use-by date alerts','Recipe suggestions from on-hand items'],
+    value: 'Cuts grocery waste in a way you actually notice in your monthly bill.',
+    scores: { goal:{income:0,personal:3,impact:2,fun:1}, domain:{productivity:2,health:2,finance:2,creative:1}, audience:{self:3,niche:1,business:0,broad:2}, strength:{builder:2,designer:1,expert:2,connector:0}, style:{utility:3,tracker:2,social:0,delightful:1} }
+  },
+  {
+    name: 'Mindful Spending Pause', tagline: 'A 24-hour cooling-off step for impulse buys',
+    target: 'People trying to break a small online-shopping habit',
+    features: ['Browser plugin to queue carts for review','Reflection prompt before purchase','Monthly "money saved by waiting" total'],
+    value: 'Adds a tiny pause that turns regretful spending into deliberate spending.',
+    scores: { goal:{income:0,personal:3,impact:1,fun:0}, domain:{productivity:1,health:1,finance:3,creative:0}, audience:{self:3,niche:1,business:0,broad:2}, strength:{builder:2,designer:1,expert:2,connector:0}, style:{utility:2,tracker:2,social:0,delightful:1} }
+  },
+  {
+    name: 'Mentor Match for Career Switchers', tagline: 'Find a mentor who actually made the leap you want',
+    target: 'Mid-career professionals trying to change industries',
+    features: ['Filtered mentor profiles by transition path','Lightweight scheduling for 30-minute calls','Structured conversation templates'],
+    value: 'Replaces lonely googling with conversations that change the trajectory of a career.',
+    scores: { goal:{income:1,personal:2,impact:3,fun:1}, domain:{productivity:2,health:0,finance:1,creative:0}, audience:{self:1,niche:3,business:1,broad:2}, strength:{builder:1,designer:1,expert:2,connector:3}, style:{utility:2,tracker:1,social:3,delightful:1} }
+  },
+  {
+    name: 'Neighbourhood Skill Swap', tagline: 'Trade what you can do for what your neighbours can',
+    target: 'Locals who want help with small jobs without using cash',
+    features: ['Skill listing with availability windows','Trust scores from verified neighbours','Built-in messaging and follow-up'],
+    value: 'Builds local community by making mutual help easy and visible.',
+    scores: { goal:{income:0,personal:1,impact:3,fun:2}, domain:{productivity:2,health:0,finance:1,creative:1}, audience:{self:1,niche:2,business:0,broad:3}, strength:{builder:1,designer:1,expert:1,connector:3}, style:{utility:2,tracker:1,social:3,delightful:2} }
+  },
+  {
+    name: 'Volunteer Shift Finder', tagline: 'Match free hours to causes that need them right now',
+    target: 'People who want to help but never find the right opportunity at the right time',
+    features: ['Filter by cause, distance and shift length','One-tap sign-up with calendar sync','Track lifetime hours and impact'],
+    value: 'Removes every friction between good intention and showing up.',
+    scores: { goal:{income:0,personal:2,impact:3,fun:1}, domain:{productivity:2,health:0,finance:0,creative:0}, audience:{self:1,niche:1,business:0,broad:3}, strength:{builder:2,designer:1,expert:1,connector:3}, style:{utility:3,tracker:2,social:2,delightful:1} }
+  },
+  {
+    name: 'Tutoring Connector', tagline: 'Match willing tutors with kids who need free help',
+    target: 'Education-minded adults who want to give an hour a week, not money',
+    features: ['Curriculum-matched pairing','Background-checked safe video room','Progress notes shared with parents'],
+    value: 'Channels spare expertise into measurable life change for a young person.',
+    scores: { goal:{income:0,personal:1,impact:3,fun:1}, domain:{productivity:2,health:0,finance:0,creative:1}, audience:{self:0,niche:2,business:0,broad:3}, strength:{builder:1,designer:1,expert:3,connector:3}, style:{utility:2,tracker:1,social:2,delightful:1} }
+  },
+  {
+    name: 'Disaster Response Hub', tagline: 'Coordinate neighbourhood help when something goes wrong',
+    target: 'Community organisers in regions hit by floods, storms or fires',
+    features: ['Resource and shelter map with live updates','Volunteer skill matching','Verified information channels'],
+    value: 'Replaces panicked group chats with calm, coordinated mutual aid.',
+    scores: { goal:{income:0,personal:1,impact:3,fun:0}, domain:{productivity:3,health:2,finance:0,creative:0}, audience:{self:0,niche:2,business:1,broad:3}, strength:{builder:2,designer:1,expert:2,connector:3}, style:{utility:3,tracker:2,social:2,delightful:0} }
+  },
+  {
+    name: 'Climate Action Tracker', tagline: 'See your household climate impact and what moves the needle',
+    target: 'Climate-conscious families wanting more than vague guilt',
+    features: ['Connect bills to compute real emissions','Personalised high-impact actions','Compare against neighbourhood average'],
+    value: 'Translates abstract climate anxiety into a clear list of things that actually matter.',
+    scores: { goal:{income:0,personal:2,impact:3,fun:0}, domain:{productivity:2,health:1,finance:2,creative:0}, audience:{self:2,niche:2,business:0,broad:3}, strength:{builder:2,designer:1,expert:3,connector:1}, style:{utility:2,tracker:3,social:1,delightful:1} }
+  },
+  {
+    name: 'Open Source Onboarding Hub', tagline: 'Make first-time OSS contribution genuinely easy',
+    target: 'Developers who want to give back but stall at the first PR',
+    features: ['Curated good-first-issues by skill','Step-by-step contribution walkthroughs','Buddy assignment from maintainers'],
+    value: 'Removes the silent barrier that keeps thousands of devs out of open source.',
+    scores: { goal:{income:0,personal:2,impact:3,fun:1}, domain:{productivity:3,health:0,finance:0,creative:1}, audience:{self:1,niche:3,business:1,broad:2}, strength:{builder:3,designer:1,expert:2,connector:2}, style:{utility:2,tracker:2,social:2,delightful:1} }
+  },
+  {
+    name: 'Accessibility Audit Tool', tagline: 'Make the web work better for everyone, one site at a time',
+    target: 'Indie web devs who want to ship accessible products by default',
+    features: ['One-click audit with prioritised issues','Code-level fix suggestions','Track improvement over time'],
+    value: 'Turns accessibility from afterthought into a normal part of shipping web work.',
+    scores: { goal:{income:1,personal:1,impact:3,fun:0}, domain:{productivity:3,health:0,finance:0,creative:2}, audience:{self:1,niche:3,business:2,broad:1}, strength:{builder:3,designer:2,expert:3,connector:1}, style:{utility:3,tracker:2,social:1,delightful:1} }
+  },
+  {
+    name: 'Caregiver Coordination App', tagline: 'Help families share the load of caring for a loved one',
+    target: 'Adult siblings juggling care for a parent across cities',
+    features: ['Shared task and medication calendar','Visit log and short voice notes','Doctor appointment summaries'],
+    value: 'Lifts a quietly enormous burden by turning chaos into shared rhythm.',
+    scores: { goal:{income:0,personal:2,impact:3,fun:0}, domain:{productivity:3,health:3,finance:0,creative:0}, audience:{self:1,niche:3,business:0,broad:2}, strength:{builder:1,designer:2,expert:2,connector:3}, style:{utility:3,tracker:2,social:2,delightful:1} }
+  },
+  {
+    name: 'Refugee Skills Bridge', tagline: 'Match newcomer talent with employers who need it',
+    target: 'NGOs and employers wanting to hire refugees but unsure how',
+    features: ['Profile builder with language and skill verification','Employer matching with cultural notes','Resettlement support contact integration'],
+    value: 'Closes the gap between human talent and the dignity of work.',
+    scores: { goal:{income:0,personal:1,impact:3,fun:0}, domain:{productivity:2,health:0,finance:1,creative:0}, audience:{self:0,niche:3,business:2,broad:2}, strength:{builder:1,designer:1,expert:3,connector:3}, style:{utility:2,tracker:1,social:2,delightful:1} }
+  },
+  {
+    name: 'Animal Shelter Foster Match', tagline: 'Match shelter animals with the right temporary home',
+    target: 'Shelters losing animals due to overcrowding and slow foster matching',
+    features: ['Animal personality and household compatibility quiz','One-tap foster application','Foster diary with vet reminders'],
+    value: 'Saves real lives by replacing slow paperwork with quick, good matches.',
+    scores: { goal:{income:0,personal:1,impact:3,fun:2}, domain:{productivity:2,health:1,finance:0,creative:1}, audience:{self:0,niche:3,business:1,broad:2}, strength:{builder:1,designer:2,expert:2,connector:3}, style:{utility:2,tracker:1,social:2,delightful:2} }
+  },
+  {
+    name: 'Mental Health Check-In', tagline: 'A gentle weekly conversation with yourself',
+    target: 'People between therapy sessions who want structured reflection',
+    features: ['Evidence-based questionnaire, kindly delivered','Trend tracking with privacy-first storage','Optional share-with-therapist export'],
+    value: 'Brings clinical care language into daily life without making it cold.',
+    scores: { goal:{income:0,personal:2,impact:3,fun:0}, domain:{productivity:1,health:3,finance:0,creative:0}, audience:{self:2,niche:2,business:0,broad:3}, strength:{builder:1,designer:2,expert:3,connector:1}, style:{utility:2,tracker:3,social:0,delightful:2} }
+  },
+  {
+    name: 'Civic Issue Reporter', tagline: 'Tell your council about that pothole in 20 seconds',
+    target: 'Engaged residents tired of complicated council websites',
+    features: ['Photo and location capture in one tap','Auto-route to correct department','Public map of issue status'],
+    value: 'Turns passive complaints into a small but persistent civic feedback loop.',
+    scores: { goal:{income:0,personal:1,impact:3,fun:0}, domain:{productivity:2,health:0,finance:0,creative:0}, audience:{self:1,niche:1,business:0,broad:3}, strength:{builder:2,designer:1,expert:2,connector:2}, style:{utility:3,tracker:2,social:2,delightful:0} }
+  },
+  {
+    name: 'School Reading Buddy', tagline: 'Pair adult readers with kids who need practice',
+    target: 'Retirees and remote workers who could give a weekly reading hour',
+    features: ['Verified video reading sessions','Book progress and milestone celebrations','Teacher dashboard for class oversight'],
+    value: 'Quietly closes the reading gap one warm, one-to-one half-hour at a time.',
+    scores: { goal:{income:0,personal:1,impact:3,fun:2}, domain:{productivity:1,health:0,finance:0,creative:2}, audience:{self:0,niche:2,business:0,broad:3}, strength:{builder:1,designer:1,expert:2,connector:3}, style:{utility:2,tracker:1,social:3,delightful:2} }
+  },
+  {
+    name: 'Repair Cafe Locator', tagline: 'Find a place to fix it before you bin it',
+    target: 'People who want to consume less but don\'t know who can repair what',
+    features: ['Searchable map of repair cafes and pros','Item-type tagging and availability','Community success stories feed'],
+    value: 'Makes repair the default option in a world that quietly defaults to replace.',
+    scores: { goal:{income:0,personal:1,impact:3,fun:1}, domain:{productivity:1,health:0,finance:2,creative:1}, audience:{self:1,niche:2,business:1,broad:3}, strength:{builder:1,designer:1,expert:2,connector:3}, style:{utility:3,tracker:1,social:2,delightful:1} }
+  },
+  {
+    name: 'Microloan Circle App', tagline: 'Run a community savings circle without spreadsheets',
+    target: 'Diaspora and community groups running rotating savings clubs',
+    features: ['Member contribution and payout schedule','Transparent ledger for all members','Notifications for due payments'],
+    value: 'Brings century-old community finance practice into a clear, modern tool.',
+    scores: { goal:{income:1,personal:1,impact:3,fun:0}, domain:{productivity:2,health:0,finance:3,creative:0}, audience:{self:0,niche:3,business:1,broad:2}, strength:{builder:2,designer:1,expert:2,connector:3}, style:{utility:3,tracker:2,social:2,delightful:1} }
+  },
+  {
+    name: 'Doodle-a-Day Sketchbook', tagline: 'A daily prompt and a tiny canvas, nothing more',
+    target: 'People who say they "can\'t draw" but secretly want to start',
+    features: ['Fresh daily drawing prompt','Tiny canvas with calm tool palette','Private year-end flipbook of your year'],
+    value: 'Lowers the bar so far that the habit actually starts and quietly sticks.',
+    scores: { goal:{income:0,personal:2,impact:1,fun:3}, domain:{productivity:0,health:1,finance:0,creative:3}, audience:{self:3,niche:1,business:0,broad:2}, strength:{builder:1,designer:3,expert:1,connector:0}, style:{utility:1,tracker:2,social:1,delightful:3} }
+  },
+  {
+    name: 'Tiny Story Generator', tagline: 'A 100-word story prompt for your morning coffee',
+    target: 'Hobby writers who want playful daily writing without pressure',
+    features: ['Constrained prompts with word and time limits','Private library of your tiny stories','Optional anonymous sharing wall'],
+    value: 'Keeps the writing muscle limber when life makes the novel impossible.',
+    scores: { goal:{income:0,personal:2,impact:1,fun:3}, domain:{productivity:0,health:0,finance:0,creative:3}, audience:{self:2,niche:2,business:0,broad:2}, strength:{builder:1,designer:2,expert:1,connector:1}, style:{utility:1,tracker:1,social:1,delightful:3} }
+  },
+  {
+    name: 'Recipe Remix Generator', tagline: 'Reinvent tonight\'s dinner with what\'s in your fridge',
+    target: 'Curious home cooks bored of the same five midweek meals',
+    features: ['Ingredient-in, ideas-out engine','Cuisine-style remix sliders','Save successful experiments to your cookbook'],
+    value: 'Makes cooking feel like creative play instead of nightly logistics.',
+    scores: { goal:{income:0,personal:1,impact:1,fun:3}, domain:{productivity:1,health:2,finance:1,creative:3}, audience:{self:2,niche:1,business:0,broad:3}, strength:{builder:2,designer:2,expert:1,connector:0}, style:{utility:2,tracker:1,social:1,delightful:3} }
+  },
+  {
+    name: 'Karaoke Party Host', tagline: 'Run a smooth living-room karaoke night',
+    target: 'Friends who want a low-effort, high-fun night in',
+    features: ['Crowd-sourced song queue with QR join','Auto-rotating singer order','Reaction soundboard and confetti moments'],
+    value: 'Replaces awkward setup with a night that everyone actually wants to repeat.',
+    scores: { goal:{income:0,personal:1,impact:1,fun:3}, domain:{productivity:0,health:0,finance:0,creative:2}, audience:{self:0,niche:1,business:0,broad:3}, strength:{builder:2,designer:2,expert:1,connector:2}, style:{utility:1,tracker:0,social:3,delightful:3} }
+  },
+  {
+    name: 'Dungeon Master Sidekick', tagline: 'Run smoother tabletop nights with less prep',
+    target: 'D&D and TTRPG hosts juggling notes, music and dice',
+    features: ['Scene-based prep templates','Initiative tracker with one-tap monster moves','Soundscape player tied to scenes'],
+    value: 'Lets the DM be present with the story instead of buried in notes.',
+    scores: { goal:{income:0,personal:1,impact:1,fun:3}, domain:{productivity:2,health:0,finance:0,creative:3}, audience:{self:1,niche:3,business:0,broad:1}, strength:{builder:2,designer:2,expert:3,connector:1}, style:{utility:2,tracker:2,social:2,delightful:3} }
+  },
+  {
+    name: 'Plant Parent Diary', tagline: 'Keep your houseplants alive and thriving',
+    target: 'New plant owners overwhelmed by conflicting care advice',
+    features: ['Per-plant care plan with smart reminders','Photo growth log','Diagnose-by-photo trouble shooter'],
+    value: 'Replaces hopeful overwatering with real, quiet plant-parent confidence.',
+    scores: { goal:{income:0,personal:2,impact:1,fun:3}, domain:{productivity:1,health:1,finance:0,creative:2}, audience:{self:3,niche:2,business:0,broad:2}, strength:{builder:1,designer:2,expert:2,connector:0}, style:{utility:2,tracker:3,social:0,delightful:2} }
+  },
+  {
+    name: 'Movie Night Picker', tagline: 'End the 40-minute "what should we watch" debate',
+    target: 'Couples and groups who waste prime evening time picking',
+    features: ['Combined watchlists and streaming availability','Mood and length filters','Tie-break voting for groups'],
+    value: 'Buys back the best hour of the evening to actually enjoy a film.',
+    scores: { goal:{income:0,personal:2,impact:0,fun:3}, domain:{productivity:1,health:0,finance:0,creative:2}, audience:{self:1,niche:1,business:0,broad:3}, strength:{builder:2,designer:2,expert:1,connector:1}, style:{utility:2,tracker:1,social:2,delightful:3} }
+  },
+  {
+    name: 'Trivia Night Builder', tagline: 'Build a pub-quality quiz in under an hour',
+    target: 'Quiz hosts at pubs, weddings and team offsites',
+    features: ['Topic-aware question generator with difficulty mix','Branded answer sheets and slides export','Live scoring with team buzzers'],
+    value: 'Lets anyone host a night that feels professionally produced.',
+    scores: { goal:{income:1,personal:1,impact:1,fun:3}, domain:{productivity:2,health:0,finance:0,creative:3}, audience:{self:1,niche:2,business:1,broad:3}, strength:{builder:2,designer:2,expert:2,connector:2}, style:{utility:2,tracker:1,social:3,delightful:3} }
+  },
+  {
+    name: 'Photography Prompt Walks', tagline: 'Daily prompts that get you out with your camera',
+    target: 'Hobby photographers stuck in a creative rut',
+    features: ['Themed photo walk prompts with examples','Geolocated portfolio of your local archive','Friendly weekly community challenge'],
+    value: 'Turns a dusty camera into a regular reason to leave the house.',
+    scores: { goal:{income:0,personal:2,impact:1,fun:3}, domain:{productivity:0,health:1,finance:0,creative:3}, audience:{self:2,niche:3,business:0,broad:1}, strength:{builder:1,designer:2,expert:2,connector:2}, style:{utility:1,tracker:2,social:2,delightful:3} }
+  },
+  {
+    name: 'Lego Build Inspiration', tagline: 'Build something fresh from the bricks you already own',
+    target: 'Adult lego fans whose collections sit untouched in storage',
+    features: ['Inventory your bricks by photo or sets','AI-generated builds you can actually make','Share builds with the community'],
+    value: 'Unlocks endless creative play from bricks you already paid for.',
+    scores: { goal:{income:0,personal:1,impact:1,fun:3}, domain:{productivity:0,health:0,finance:0,creative:3}, audience:{self:2,niche:3,business:0,broad:1}, strength:{builder:2,designer:2,expert:2,connector:1}, style:{utility:1,tracker:1,social:1,delightful:3} }
+  },
+  {
+    name: 'Couples Date Idea Jar', tagline: 'A fresh date every Friday without the planning',
+    target: 'Long-term couples whose date nights default to the same place',
+    features: ['Shared idea jar you both add to','Surprise mode that picks for you','Date memory log with photos'],
+    value: 'Brings small bursts of newness into the relationship without huge effort.',
+    scores: { goal:{income:0,personal:2,impact:1,fun:3}, domain:{productivity:0,health:1,finance:0,creative:2}, audience:{self:1,niche:1,business:0,broad:3}, strength:{builder:1,designer:2,expert:1,connector:2}, style:{utility:1,tracker:1,social:2,delightful:3} }
+  },
+  {
+    name: 'Karaoke-Style Language App', tagline: 'Learn a language by singing songs you love',
+    target: 'Music lovers who bounce off traditional grammar drills',
+    features: ['Lyrics with line-by-line translation','Sing-along scoring with pronunciation feedback','Custom playlists by difficulty'],
+    value: 'Makes language practice the most fun part of your day, not a chore.',
+    scores: { goal:{income:0,personal:2,impact:2,fun:3}, domain:{productivity:1,health:0,finance:0,creative:3}, audience:{self:2,niche:2,business:0,broad:3}, strength:{builder:2,designer:2,expert:2,connector:1}, style:{utility:1,tracker:2,social:1,delightful:3} }
+  },
+  {
+    name: 'Story-a-Day Kids App', tagline: 'A personalised bedtime story with your kid as the hero',
+    target: 'Parents who run out of bedtime story creativity by Wednesday',
+    features: ['Kid profile drives recurring characters','Choose-your-own-adventure pages','Library of every story your kid stars in'],
+    value: 'Turns bedtime from logistical scramble into a small daily piece of magic.',
+    scores: { goal:{income:0,personal:2,impact:2,fun:3}, domain:{productivity:0,health:1,finance:0,creative:3}, audience:{self:1,niche:2,business:0,broad:3}, strength:{builder:2,designer:3,expert:1,connector:1}, style:{utility:1,tracker:1,social:1,delightful:3} }
+  },
+  {
+    name: 'Backyard Birdwatch Log', tagline: 'Notice the birds you didn\'t know were already visiting',
+    target: 'Curious adults rediscovering the joy of paying attention outside',
+    features: ['Photo or sound bird ID','Year-round visitor calendar','Local hotspot map and migration tips'],
+    value: 'Opens a small, gentle door to wonder right outside your kitchen window.',
+    scores: { goal:{income:0,personal:2,impact:1,fun:3}, domain:{productivity:0,health:1,finance:0,creative:2}, audience:{self:3,niche:2,business:0,broad:2}, strength:{builder:1,designer:1,expert:3,connector:1}, style:{utility:1,tracker:3,social:1,delightful:3} }
+  },
+  {
+    name: 'Festival Lineup Planner', tagline: 'Never miss your favourite act at a music festival again',
+    target: 'Festival-goers tired of paper schedules and conflicting set times',
+    features: ['Personal lineup with conflict warnings','Friend group sync and meet-up pins','Set reminders 15 minutes before'],
+    value: 'Removes the small chaos that ruins big festival days.',
+    scores: { goal:{income:0,personal:1,impact:0,fun:3}, domain:{productivity:2,health:0,finance:0,creative:2}, audience:{self:2,niche:3,business:0,broad:2}, strength:{builder:2,designer:2,expert:1,connector:2}, style:{utility:2,tracker:1,social:3,delightful:2} }
+  },
+  {
+    name: 'Hobby Project Journal', tagline: 'Document a long hobby build so you actually finish it',
+    target: 'Makers with workshops full of half-finished projects',
+    features: ['Per-project log with photo and decision notes','Weekly micro-goal nudges','Public showcase when you finish'],
+    value: 'Quietly increases the number of hobby projects that actually cross the line.',
+    scores: { goal:{income:0,personal:2,impact:1,fun:3}, domain:{productivity:2,health:0,finance:0,creative:3}, audience:{self:3,niche:2,business:0,broad:1}, strength:{builder:2,designer:2,expert:2,connector:1}, style:{utility:2,tracker:3,social:1,delightful:2} }
+  },
+  {
+    name: 'Indie Game Devlog Hub', tagline: 'Share your indie game journey and find your first fans',
+    target: 'Solo game developers building in public for the first time',
+    features: ['Weekly devlog templates with embeds','Wishlist and follow links per game','Cross-post to Twitter, Reddit, Discord'],
+    value: 'Turns development isolation into a small but growing audience over time.',
+    scores: { goal:{income:2,personal:2,impact:1,fun:3}, domain:{productivity:2,health:0,finance:0,creative:3}, audience:{self:1,niche:3,business:1,broad:1}, strength:{builder:3,designer:2,expert:2,connector:2}, style:{utility:2,tracker:2,social:2,delightful:2} }
+  },
+  {
+    name: 'Pickup Sports Finder', tagline: 'Find a 5-a-side game tonight near you',
+    target: 'Adults who want to play but don\'t have a regular team anymore',
+    features: ['Local pickup games filtered by sport and skill','One-tap join with player count','Captain tools to organise weekly games'],
+    value: 'Brings adult sport back into reach for people whose social sport days felt over.',
+    scores: { goal:{income:0,personal:2,impact:2,fun:3}, domain:{productivity:0,health:3,finance:0,creative:0}, audience:{self:2,niche:2,business:0,broad:3}, strength:{builder:2,designer:1,expert:1,connector:3}, style:{utility:2,tracker:1,social:3,delightful:2} }
+  },
+  {
+    name: 'Crafternoon Class Marketplace', tagline: 'Find a fun two-hour craft class this weekend',
+    target: 'People wanting analog hobbies and real-world social time',
+    features: ['Local class discovery by craft and date','Group bookings for friends','Host tools for indie teachers'],
+    value: 'Turns a quiet itch for analog creativity into a real evening out.',
+    scores: { goal:{income:1,personal:1,impact:1,fun:3}, domain:{productivity:1,health:1,finance:0,creative:3}, audience:{self:1,niche:2,business:1,broad:3}, strength:{builder:1,designer:2,expert:2,connector:3}, style:{utility:2,tracker:1,social:3,delightful:3} }
+  },
+  {
+    name: 'Comic Strip Builder', tagline: 'Draw a weekly comic strip even if you can\'t draw',
+    target: 'People with story ideas but no formal art training',
+    features: ['Character library you can pose and reuse','Panel templates and speech bubbles','One-tap publish to social'],
+    value: 'Lowers the bar so far that a real comic actually gets made each week.',
+    scores: { goal:{income:0,personal:2,impact:1,fun:3}, domain:{productivity:0,health:0,finance:0,creative:3}, audience:{self:2,niche:2,business:0,broad:2}, strength:{builder:2,designer:3,expert:1,connector:1}, style:{utility:1,tracker:1,social:2,delightful:3} }
+  },
+  {
+    name: 'Recipe Cost-per-Serve Calculator', tagline: 'See exactly what each meal really costs',
+    target: 'Home cooks managing tight grocery budgets without losing variety',
+    features: ['Ingredient pricing from your local store','Per-serve cost on every saved recipe','Weekly meal plan total at a glance'],
+    value: 'Makes the family food budget feel controllable rather than mysterious.',
+    scores: { goal:{income:0,personal:3,impact:2,fun:0}, domain:{productivity:2,health:1,finance:3,creative:1}, audience:{self:3,niche:1,business:0,broad:2}, strength:{builder:2,designer:1,expert:2,connector:0}, style:{utility:3,tracker:2,social:0,delightful:1} }
+  },
+  {
+    name: 'AI Headshot Studio', tagline: 'Get a professional headshot without a studio visit',
+    target: 'Job seekers and freelancers needing polished profile photos fast',
+    features: ['Upload a few selfies for trained model','Multiple style and background presets','High-res downloads ready for LinkedIn'],
+    value: 'Removes the cost and awkwardness barrier to looking professional online.',
+    scores: { goal:{income:3,personal:2,impact:1,fun:1}, domain:{productivity:2,health:0,finance:1,creative:3}, audience:{self:2,niche:2,business:2,broad:3}, strength:{builder:3,designer:3,expert:1,connector:1}, style:{utility:3,tracker:0,social:1,delightful:3} }
   }
+
 ];
 
 // ── STATE ───────────────────────────────────────────────
