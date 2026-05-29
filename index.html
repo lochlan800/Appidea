@@ -208,10 +208,10 @@ const QUESTION_POOL = [
     hint: 'Think about where your time and energy actually goes — not the ideal, the real version.',
     placeholder: 'e.g. I spend most of my week doing freelance design work while building a side project in the evenings...',
     textToKey: {
-      personal: ['solo','alone','myself','my own','head down','quiet','focused','independent','remote'],
-      income:   ['client','freelanc','side hustle','income','earn','revenue','consulting','sell','business','gig'],
-      fun:      ['creative','passion','art','music','writing','hobbies','love doing','enjoy','make things','design'],
-      impact:   ['help','difference','mission','cause','meaning','purpose','community','teach','volunteer','nonprofit']
+      personal: ['solo','alone','by myself','my own','head down','quiet','focused','independent','remote','work from home','own projects','own time','self-directed'],
+      income:   ['client','freelanc','side hustle','income','earn','revenue','consulting','sell','business','gig','juggling','invoice','paying work','contracts'],
+      fun:      ['creative','passion','art','music','writing','hobbies','love doing','enjoy','make things','design','genuinely love','tinker','for fun'],
+      impact:   ['help','difference','mission','cause','meaning','purpose','community','teach','volunteer','nonprofit','bigger than me','give back','serve']
     },
     options: [
       { key:'personal', emoji:'🏠', title:'Mostly solo, head-down work',           desc:'I manage my own projects, time, and output alone.' },
@@ -226,10 +226,10 @@ const QUESTION_POOL = [
     hint: 'Not what you think you should care about — what you actually click on at midnight.',
     placeholder: 'e.g. I\'m always reading about productivity systems — I\'ve tried every method and still can\'t stop experimenting...',
     textToKey: {
-      productivity: ['work smarter','get things done','productivity','focus','efficiency','systems','how to','tips'],
-      health:       ['health','fitness','feel better','diet','workout','sleep','habits','wellness','nutrition'],
-      finance:      ['money','investing','financial','wealth','budget','income','savings','earn','crypto'],
-      creative:     ['making','art','writing','music','ideas','creative','design','photography','craft']
+      productivity: ['work smarter','get things done','productivity','focus','efficiency','systems','how to','tips','workflow','time management','organis','gtd','deep work'],
+      health:       ['health','fitness','feel better','diet','workout','sleep','habits','wellness','nutrition','exercise','gym','mental health','energy'],
+      finance:      ['money','investing','financial','wealth','budget','income','savings','earn','crypto','stocks','retire','net worth','spending'],
+      creative:     ['making','painting','writing','music','ideas','creative','design','photography','craft','draw','storytelling','aesthetic','build things']
     },
     options: [
       { key:'productivity', emoji:'⚡', title:'How to work smarter and get more done',             desc:'Productivity systems, focus, and efficiency.' },
@@ -244,10 +244,10 @@ const QUESTION_POOL = [
     hint: 'Think about your day-to-day reality — who you work with and how you spend your time.',
     placeholder: 'e.g. I work as an independent consultant from home, with a few long-term clients I check in with weekly...',
     textToKey: {
-      self:     ['solo','myself','alone','my own','independent','self-employed','remote','work from home'],
-      niche:    ['profession','community','field','industry','colleagues','peers','specialist','part of'],
-      business: ['company','team','startup','corporate','clients','enterprise','organisation','manager'],
-      broad:    ['figuring out','variety','many hats','general','mixed','all sorts','different things']
+      self:     ['solo','myself','alone','my own','independent','self-employed','remote','work from home','own schedule','own agenda','just me'],
+      niche:    ['profession','community','field','industry','colleagues','peers','specialist','part of','shared language','my world','tight group','same as me'],
+      business: ['company','team','startup','corporate','clients','enterprise','organisation','manager','office','coworkers','client-facing','employees'],
+      broad:    ['figuring out','variety','many hats','general','mixed','all sorts','different things','exploring','between things','generalist','bit of everything']
     },
     options: [
       { key:'self',     emoji:'🧍', title:'I work mostly for myself or on my own things',   desc:'Independent, self-directed — own time, own agenda.' },
@@ -262,10 +262,10 @@ const QUESTION_POOL = [
     hint: 'Not the outcome — the feeling in the moment when things are clicking.',
     placeholder: 'e.g. I love the feeling of solving a puzzle no one else has cracked — the moment something hard clicks into place...',
     textToKey: {
-      fun:      ['curiosity','joy','love','making','fun','explore','discover','tinker','play','create','puzzle'],
-      personal: ['fix','solve','bother','frustrate','annoy','itch','scratch','improve','my own'],
-      impact:   ['help','people','contribute','difference','change','serve','others','community','real'],
-      income:   ['freedom','financial','money','income','earn','replace','livelihood','independence','sustain']
+      fun:      ['curiosity','joy','love making','for fun','explore','discover','tinker','play around','create','puzzle','clicks into place','enjoyment','the process'],
+      personal: ['fix','solve','bugs me','frustrate','annoy','itch','scratch','improve','my own problem','build what i need','for myself','pet peeve'],
+      impact:   ['help','people','contribute','difference','change lives','serve','others','community','real impact','meaningful','matters','give back'],
+      income:   ['freedom','financial','money','income','earn','replace','livelihood','independence','sustain','make a living','quit my job','revenue']
     },
     options: [
       { key:'fun',      emoji:'🎮', title:'Pure curiosity and the joy of making',            desc:'The process itself is the reward.' },
@@ -280,10 +280,10 @@ const QUESTION_POOL = [
     hint: 'Complaints are clues. What keeps coming up as broken, slow, or painful in your life?',
     placeholder: 'e.g. I always complain about how much time I waste switching between apps and losing track of what I was doing...',
     textToKey: {
-      productivity: ['time','wasted','admin','task','email','meeting','organised','workflow','context switch','slow'],
-      health:       ['consistent','habit','healthy','routine','energy','sleep','fitness','diet','stress','balance'],
-      finance:      ['money','invoice','budget','expenses','financial','confusing','painful','billing','taxes'],
-      creative:     ['creative','blocked','distracted','scattered','ideas','note','inspiration','learning','focus']
+      productivity: ['wasted time','wasted','admin','task','email','meeting','organised','workflow','context switch','too slow','overhead','distraction','keep track'],
+      health:       ['consistent','habit','healthy','routine','energy','sleep','fitness','diet','stress','balance','tired','out of shape','skip the gym'],
+      finance:      ['money','invoice','budget','expenses','financial','confusing','painful','billing','taxes','overspend','can\'t track','where it goes'],
+      creative:     ['creative','blocked','distracted','scattered','ideas','note','inspiration','learning','can\'t focus','unfinished','half done','procrastinat']
     },
     options: [
       { key:'productivity', emoji:'⚡', title:'How much of my time gets wasted on pointless admin',   desc:'The overhead that eats into real work.' },
@@ -298,10 +298,10 @@ const QUESTION_POOL = [
     hint: 'What you get asked for without advertising it is usually your clearest edge.',
     placeholder: 'e.g. People always DM me for advice on design tools and how to make their slides look professional...',
     textToKey: {
-      builder:   ['code','build','tech','technical','automate','develop','script','software','engineering'],
-      designer:  ['design','visual','look','brand','feel','ui','ux','aesthetic','creative','figma'],
-      expert:    ['advice','knowledge','know','expert','experience','industry','domain','understand','strategy'],
-      connector: ['people','relationships','connect','introduce','communicate','manage','lead','pitch','network']
+      builder:   ['code','build','tech','technical','automate','develop','script','software','engineering','fix my computer','set up','make it work'],
+      designer:  ['design','visual','make it look','brand','feel','user interface','ux','aesthetic','slides','figma','colours','layout','looks good'],
+      expert:    ['advice','knowledge','they ask me','expert','experience','industry','domain','understand','strategy','explain','know my stuff'],
+      connector: ['people','relationships','connect','introduce','communicate','manage','lead','pitch','network','bring together','rally','organise people']
     },
     options: [
       { key:'builder',   emoji:'💻', title:'Anything technical — code, tools, automations',       desc:'I can build things others can only imagine.' },
@@ -316,10 +316,10 @@ const QUESTION_POOL = [
     hint: 'Think about the last thing you complained about — who else is dealing with that same thing?',
     placeholder: 'e.g. Honestly, anyone who runs their own small business — the invoicing and admin is brutal for all of them...',
     textToKey: {
-      self:     ['me','myself','i am','just me','primarily me','my own','i deal','i face'],
-      niche:    ['specific','group','community','field','know well','like me','profession','my world'],
-      business: ['teams','companies','businesses','professional','loses','cost','productivity'],
-      broad:    ['everyone','universal','anyone','widespread','most people','common problem']
+      self:     ['just me','myself','i am the one','primarily me','my own','i deal with','i face','personal to me','only me'],
+      niche:    ['specific group','community','field','know well','people like me','my trade','my world','same scene','tight circle','others like me'],
+      business: ['teams','companies','businesses','professional','loses money','costs them','productivity','firms','organisations','employees'],
+      broad:    ['everyone','universal','anyone','widespread','most people','common problem','all kinds of people','near everyone','the whole world']
     },
     options: [
       { key:'self',     emoji:'🎯', title:"Mostly me — I'm the one stuck with it",               desc:'This is personal. I live with this problem daily.' },
@@ -334,10 +334,10 @@ const QUESTION_POOL = [
     hint: 'Not what you can do — what makes you lose track of time when you\'re doing it.',
     placeholder: 'e.g. I get completely absorbed when I\'m designing something from scratch — layout, colour, the whole thing...',
     textToKey: {
-      builder:   ['build','make','code','develop','ship','create','problem solve','technical','engineer'],
-      designer:  ['design','shape','look','feel','craft','visual','polish','layout','beautiful'],
-      expert:    ['think','analyse','research','dig deep','understand','strategy','knowledge','insight'],
-      connector: ['people','collaborate','communicate','lead','teach','present','relationship','work with']
+      builder:   ['build','make something','code','develop','ship','create','problem solve','technical','engineer','hands-on','producing','tinkering'],
+      designer:  ['design','shape','make it look','make it feel','craft','visual','polish','layout','beautiful','colour','typography','aesthetic'],
+      expert:    ['think','analyse','research','dig deep','understand','strategy','knowledge','insight','figure out','study','expertise'],
+      connector: ['people','collaborate','communicate','lead','teach','present','rapport','work with others','team up','rally','for people']
     },
     options: [
       { key:'builder',   emoji:'🚀', title:"I'm in flow when I'm building or making something",         desc:'Hands-on, producing, shipping.' },
@@ -352,10 +352,10 @@ const QUESTION_POOL = [
     hint: 'The thing you sigh about, defer to later, or do on autopilot without getting anything real done.',
     placeholder: 'e.g. I spend way too long on back-and-forth emails setting up meetings that could be a 2-minute decision...',
     textToKey: {
-      productivity: ['task','email','meeting','context switch','admin','overhead','status','chase','follow up'],
-      health:       ['routine','habit','meal','workout','health','prep','tracking','energy','friction'],
-      finance:      ['invoice','expense','billing','payment','budget','receipt','financial','admin','money'],
-      creative:     ['note','capture','idea','reading','writing','content','scattered','half-finished','project']
+      productivity: ['task','email','meeting','context switch','admin','overhead','status update','chase','follow up','back-and-forth','scheduling','coordination'],
+      health:       ['routine','habit','meal prep','workout','health','prep','tracking food','energy dip','friction','staying on track','logging'],
+      finance:      ['invoice','expense','billing','payment','budget','receipt','financial','money paperwork','reconcile','chasing payment','bookkeeping'],
+      creative:     ['note','capture','idea','reading','writing','content','scattered','half-finished','project','organising notes','where i saved','inspiration']
     },
     options: [
       { key:'productivity', emoji:'⚡', title:'Task and communication overhead',              desc:'Emails, meetings, status updates, chasing.' },
@@ -370,10 +370,10 @@ const QUESTION_POOL = [
     hint: 'Think about the last thing you recommended to someone — what made it worth sharing?',
     placeholder: 'e.g. I love when something just works without me having to think — zero learning curve, instant result...',
     textToKey: {
-      utility:    ['simple','fast','works','frictionless','clean','instant','quick','minimal','efficient','just does it'],
-      delightful: ['beautiful','design','looks','feels','polished','well-made','attention to detail','thoughtful'],
-      tracker:    ['progress','streak','data','history','track','log','see over time','improve','insight','chart'],
-      social:     ['share','together','others','community','friend','people','better with others','collaborate']
+      utility:    ['simple','fast','just works','frictionless','clean','instant','quick','minimal','efficient','just does it','zero learning curve','no fuss'],
+      delightful: ['beautiful','gorgeous','looks great','feels great','polished','well-made','attention to detail','thoughtful','charming','little touches'],
+      tracker:    ['progress','streak','data','history','track','log','see over time','improve','insight','chart','graph','watch myself'],
+      social:     ['share','together','with others','community','friend','people','better with others','collaborate','group','social']
     },
     options: [
       { key:'utility',    emoji:'⚡', title:'It just works — fast, simple, no friction',           desc:'Instant value. No learning curve. Gets out of my way.' },
@@ -388,10 +388,10 @@ const QUESTION_POOL = [
     hint: 'Skip the modest answer. What would genuinely feel like a win?',
     placeholder: 'e.g. Honestly, if 10,000 people used it every day and I earned enough to work on it full-time, that would feel real...',
     textToKey: {
-      personal: ['use it myself','daily','every day','saves me','personal','my workflow','i rely'],
-      impact:   ['strangers','others','help people','change','thousands','lives','make a difference'],
-      income:   ['income','revenue','replace','earn','paying','financial','consistent','salary','living'],
-      fun:      ['proud','built it','craft','challenge','regardless','process','learning','enjoyed']
+      personal: ['use it myself','use it daily','every day','saves me','for myself','my workflow','i rely on it','part of my life','my own tool'],
+      impact:   ['strangers','helps others','help people','changed how','thousands','lives','make a difference','real-world impact','people i\'ll never meet'],
+      income:   ['income','revenue','replace my job','earn','paying customers','financial','consistent','salary','make a living','full-time','quit'],
+      fun:      ['proud','i built it','craft','challenge','regardless','the process','enjoyed making','worth it for the build','satisfaction']
     },
     options: [
       { key:'personal', emoji:'🔧', title:'I use it myself every day and it saves me real time',    desc:'It becomes a genuine part of my daily life.' },
@@ -406,10 +406,10 @@ const QUESTION_POOL = [
     hint: 'The thing that comes naturally to you but seems hard for others — that\'s a product moat.',
     placeholder: 'e.g. I can look at any interface and immediately see 5 things that would make it dramatically better...',
     textToKey: {
-      builder:   ['code','build','technical','develop','ship','automate','engineer','software'],
-      designer:  ['design','taste','look','feel','visual','aesthetic','craft','creative direction'],
-      expert:    ['understand','know','domain','expert','market','insight','experience','knowledge'],
-      connector: ['people','relationships','network','influence','communicate','persuade','get things done']
+      builder:   ['code','build it','technical','develop','i can ship','automate','engineer','software','programming','make it work','no developer needed'],
+      designer:  ['design','taste','make it look','make it feel','visual','aesthetic','craft','creative direction','eye for detail','interface'],
+      expert:    ['understand','i know','domain','expert','market','insight','experience','knowledge','deep context','i get this space'],
+      connector: ['people','relationships','network','influence','communicate','persuade','get things done through','rally people','sell','convince']
     },
     options: [
       { key:'builder',   emoji:'💻', title:'I can build things — code, systems, technical work',     desc:'End-to-end. No need to wait for a developer.' },
@@ -424,10 +424,10 @@ const QUESTION_POOL = [
     hint: 'Picture the call or message you\'d feel best about sending — who\'s on the other end?',
     placeholder: 'e.g. Honestly, someone running a small creative business — a photographer or designer trying to look more professional...',
     textToKey: {
-      self:     ['myself','me','i would','my own','personally','i\'m the'],
-      niche:    ['professional','my field','my world','exact','like me','specialist','industry'],
-      business: ['job','work','company','team','career','corporate','client','their job'],
-      broad:    ['anyone','everyone','background irrelevant','most people','universal','whoever']
+      self:     ['myself','help me','i would help me','my own','personally','i\'m the','for me first'],
+      niche:    ['someone like me','my field','my world','exact same','people like me','specialist','industry','my kind of'],
+      business: ['job','at work','company','team','career','corporate','client','their job','workplace','professional'],
+      broad:    ['anyone','everyone','background irrelevant','most people','universal','whoever','all kinds','any person']
     },
     options: [
       { key:'self',     emoji:'🧍', title:"Honestly — myself. I'm the person I'm trying to help.",  desc:'Build for me first, ship it after.' },
@@ -442,10 +442,10 @@ const QUESTION_POOL = [
     hint: 'Think about the rhythm of it — when, how often, and how it fits into real life.',
     placeholder: 'e.g. A quick check-in every morning that takes 2 minutes, then I forget about it for the rest of the day...',
     textToKey: {
-      utility:    ['quick','daily','in and out','under a minute','fast','every day','simple','minimal'],
-      tracker:    ['builds over time','log','track','picture','history','review','see progress','longer term'],
-      social:     ['share','with others','together','group','people','collaborative','community'],
-      delightful: ['look forward','open','enjoy','experience','something special','ritual','moment']
+      utility:    ['quick','daily','in and out','under a minute','fast','every day','simple','minimal','two minutes','forget about it','gets out of the way'],
+      tracker:    ['builds over time','log','track','picture over time','history','review','see progress','longer term','compounds','look back'],
+      social:     ['share','with others','together','group','with people','collaborative','community','with friends'],
+      delightful: ['look forward to','enjoy opening','experience','something special','ritual','a moment','worth making time','delight']
     },
     options: [
       { key:'utility',    emoji:'⚡', title:'A quick daily action — in and out in under a minute',    desc:'Frictionless. Fits in the gaps of real life.' },
@@ -460,10 +460,10 @@ const QUESTION_POOL = [
     hint: "You've been thinking about your frustrations — which world does the solution live in?",
     placeholder: 'e.g. Probably something around work and focus — I keep coming back to how hard it is to do deep work consistently...',
     textToKey: {
-      productivity: ['work','task','focus','productivity','getting things done','organised','projects','workflow'],
-      health:       ['health','fitness','habits','wellbeing','physical','nutrition','sleep','mental health'],
-      finance:      ['money','budget','freelancing','earnings','income','financial','invoicing','saving'],
-      creative:     ['creative','writing','learning','art','making','design','skills','craft','knowledge']
+      productivity: ['work','task','focus','productivity','getting things done','organised','projects','workflow','deep work','efficiency','output'],
+      health:       ['health','fitness','habits','wellbeing','physical','nutrition','sleep','mental health','exercise','wellness','body'],
+      finance:      ['money','budget','freelancing','earnings','income','financial','invoicing','saving','spending','taxes','wealth'],
+      creative:     ['creative','writing','learning','art','making','design','skills','craft','knowledge','music','ideas']
     },
     options: [
       { key:'productivity', emoji:'⚡', title:'Work, tasks, focus, and getting things done',  desc:'The engine of professional and personal output.' },
@@ -478,10 +478,10 @@ const QUESTION_POOL = [
     hint: "Imagine 3am and you're still working on it. What thought keeps you going?",
     placeholder: 'e.g. If I could eventually run it as a proper business and stop freelancing — that would be worth any amount of late nights...',
     textToKey: {
-      personal: ['use it','myself','daily','my own','personal','i rely','actually use','my problem'],
-      impact:   ['helps people','others','strangers','difference','many people','lives','real impact'],
-      income:   ['income','money','revenue','financial','replace','earn','living','salary','pay'],
-      fun:      ['craft','challenge','build it well','proud','learning','process','regardless']
+      personal: ['use it myself','for myself','daily','my own','personal','i rely on it','actually use it','solves my problem','my own time saved'],
+      impact:   ['helps people','helps others','strangers','difference','many people','lives','real impact','at scale','people i\'ll never meet'],
+      income:   ['income','money','revenue','financial','replace freelancing','earn','make a living','salary','pay','proper business','pays for itself'],
+      fun:      ['craft','challenge','build it well','proud','the process','regardless','enjoy building','satisfaction of making','love the build']
     },
     options: [
       { key:'personal', emoji:'🔧', title:'Using it myself every day and knowing it solves my problem',  desc:'It pays for itself in my own time saved.' },
@@ -496,10 +496,10 @@ const QUESTION_POOL = [
     hint: 'Think about what makes your version of this uniquely positioned to win.',
     placeholder: 'e.g. I\'ve spent 6 years doing financial planning — I know exactly what\'s wrong with every tool on the market...',
     textToKey: {
-      builder:   ['build it','code','develop','no waiting','technical','engineer','ship it myself'],
-      designer:  ['design','beautiful','intuitive','look great','feel right','craft','taste','visual'],
-      expert:    ['understand','know','domain','market','experience','insight','context','depth'],
-      connector: ['know people','reach them','network','audience','relationships','community','trust']
+      builder:   ['build it myself','code','develop','no waiting','technical','engineer','ship it myself','i can build','programming','speed to build'],
+      designer:  ['design','beautiful','intuitive','look great','feel right','craft','taste','visual','make it polished','design sense'],
+      expert:    ['understand the problem','i know','domain','market','years of experience','insight','context','depth','i\'ve worked in','exactly what\'s wrong'],
+      connector: ['know people','reach them','network','audience','relationships','community','trust','distribution','i can get to them']
     },
     options: [
       { key:'builder',   emoji:'💻', title:'I can build it myself — no waiting on developers',          desc:'Speed and autonomy from day one.' },
@@ -514,10 +514,10 @@ const QUESTION_POOL = [
     hint: 'A real person, not a demographic. What are they doing right before they open your app?',
     placeholder: 'e.g. A freelance photographer who just finished a shoot and needs to invoice the client before she forgets...',
     textToKey: {
-      self:     ['like me','same as me','look like me','my situation','i would','myself'],
-      niche:    ['specific profession','community','field','my world','defined','their industry'],
-      business: ['professional','work','job','company','team','career','corporate','doing their job'],
-      broad:    ['anyone','different backgrounds','variety','universal','many kinds','background irrelevant']
+      self:     ['like me','same as me','looks like me','my situation','i would use','myself','someone like me'],
+      niche:    ['specific profession','community','field','my world','defined identity','their industry','a particular kind','specialist'],
+      business: ['professional','at work','their job','company','team','career','corporate','doing their job','workplace'],
+      broad:    ['anyone','different backgrounds','variety','universal','many kinds','background irrelevant','could be anyone','all sorts']
     },
     options: [
       { key:'self',     emoji:'🧍', title:'Someone who looks a lot like me',              desc:'Same situation, same frustrations, same story.' },
@@ -532,10 +532,10 @@ const QUESTION_POOL = [
     hint: 'Not the features. The emotion in the first 30 seconds of using it.',
     placeholder: 'e.g. Relief — like someone finally built the thing I\'ve been asking for and it just works exactly how I imagined...',
     textToKey: {
-      utility:    ['relief','weight lifted','finally','works','easier','simple','done','off my plate'],
-      delightful: ['delight','surprised','wow','didn\'t expect','premium','beautiful','pleasure'],
-      tracker:    ['proud','progress','improving','better','see it','watch myself','growth'],
-      social:     ['connection','not alone','together','shared','community','others get it']
+      utility:    ['relief','weight lifted','finally','it just works','easier','simple','done','off my plate','sorted','no more hassle'],
+      delightful: ['delight','surprised','wow','didn\'t expect','premium','beautiful','a pleasure','this is how software should feel','charming'],
+      tracker:    ['proud','progress','improving','getting better','see it grow','watch myself','growth','evidence','how far i\'ve come'],
+      social:     ['connection','not alone','together','shared','community','others get it','belonging','people like me']
     },
     options: [
       { key:'utility',    emoji:'⚡', title:'Relief — like a weight just got lifted',                   desc:'The problem is gone. Instantly.' },
@@ -550,10 +550,10 @@ const QUESTION_POOL = [
     hint: "Strip away everything optional. What's the single thing that makes it worth using at all?",
     placeholder: 'e.g. Just a smart daily task list that actually helps me decide what to work on first — nothing else to start...',
     textToKey: {
-      utility:    ['one action','solve immediately','instant','quick','immediate','done','removes','single thing'],
-      tracker:    ['log','review','track','progress','over time','see','build a picture','history'],
-      social:     ['share','others','together','community','invite','group','other people'],
-      delightful: ['premium','feels great','polished','well-made','beautiful','quality','first open','wow']
+      utility:    ['one action','solve immediately','instant','quick','immediate','done','removes the pain','single thing','just the core','no extras'],
+      tracker:    ['log','review','track','progress','over time','see history','build a picture','keep a record','watch it grow'],
+      social:     ['share','with others','together','community','invite','group','other people','collaborate'],
+      delightful: ['premium','feels great','polished','well-made','beautiful','quality','first open','wow on opening','crafted']
     },
     options: [
       { key:'utility',    emoji:'⚡', title:'One action that solves the problem immediately',          desc:'No preamble. Just the thing, working.' },
@@ -569,10 +569,10 @@ const QUESTION_POOL = [
     hint: 'Your shipping cadence shapes what kind of product you\'ll sustain.',
     placeholder: 'e.g. I lose interest if I can\'t ship something visible every weekend...',
     textToKey: {
-      utility:    ['solve','useful','works','tool','functional'],
-      tracker:    ['log','track','measure','data','metrics'],
-      social:     ['share','community','public','feedback','demo'],
-      delightful: ['polish','beautiful','craft','delight','fun']
+      utility:    ['solve','useful','smallest thing','it works','functional','function first','ship the basics','just make it do'],
+      tracker:    ['log','track','measure','data','metrics','instrument','see what users do','analytics'],
+      social:     ['share','community','build in public','feedback','demo','public','weekly demo','show people'],
+      delightful: ['polish','beautiful','craft','delight','make it perfect','every detail','slow down','one polished thing']
     },
     options: [
       { key:'utility',    emoji:'🔧', title:'Ship the smallest thing that works',     desc:'Function first. Beauty later. Maybe never.' },
@@ -588,10 +588,10 @@ const QUESTION_POOL = [
     hint: 'The half-built graveyard is real. What makes one project survive?',
     placeholder: 'e.g. I only finish things that solve a problem I personally hit every week...',
     textToKey: {
-      income:   ['revenue','paid','money','business','income'],
-      personal: ['scratch my itch','for me','i need','myself','personal'],
-      impact:   ['help others','meaningful','change','impact','useful to people'],
-      fun:      ['fun','enjoy','interesting','curious','play']
+      income:   ['revenue','paid','money','business','income','pay me back','make money','earn from it','sell it'],
+      personal: ['scratch my own itch','for me','i need it','myself','personal','first user','i hit this problem','my own problem'],
+      impact:   ['help others','meaningful','change','impact','useful to people','it matters','helps real people','good for people'],
+      fun:      ['fun to build','enjoy','interesting','curious','play','enjoyable','i like making it','the building is fun']
     },
     options: [
       { key:'income',   emoji:'💰', title:'It could pay me back for the time',  desc:'A real shot at revenue makes me push through the boring middle.' },
@@ -607,10 +607,10 @@ const QUESTION_POOL = [
     hint: 'The thing that bothers you most is often the thing you should fix.',
     placeholder: 'e.g. Every banking app I open feels like it was designed in 2009 by an accountant...',
     textToKey: {
-      productivity: ['work apps','tools','workflow','productivity','office'],
-      health:       ['health','wellness','fitness','medical','therapy'],
-      finance:      ['banking','money','finance','invoice','payment'],
-      creative:     ['creative','art','design tools','music','writing']
+      productivity: ['work apps','work tools','workflow','productivity','office software','dashboards','enterprise software','task apps'],
+      health:       ['health','wellness','fitness','medical','therapy','clinical','wellbeing apps','symptom'],
+      finance:      ['banking','money','finance','invoice','payment','accounting','spreadsheet','statements'],
+      creative:     ['creative','art','design tools','music','writing','editing apps','creative software','editors']
     },
     options: [
       { key:'productivity', emoji:'📋', title:'Work and productivity tools',     desc:'The software people use 8 hours a day looks awful.' },
@@ -626,10 +626,10 @@ const QUESTION_POOL = [
     hint: 'Designers leave fingerprints. What\'s yours?',
     placeholder: 'e.g. Quiet, fast, no chrome, every interaction has just a little spring to it...',
     textToKey: {
-      utility:    ['minimal','fast','clean','no friction','simple'],
-      tracker:    ['visualize','dashboard','chart','progress','data'],
-      social:     ['shareable','community','expressive','public','identity'],
-      delightful: ['playful','animated','warm','delight','personality']
+      utility:    ['minimal','fast','clean','no friction','simple','quiet','no chrome','gets out of the way','invisible'],
+      tracker:    ['visualize','dashboard','chart','progress','data','legible numbers','graphs','metrics made clear'],
+      social:     ['shareable','community','expressive','public','identity','show it off','part of their identity','people share'],
+      delightful: ['playful','animated','warm','delight','personality','springy','joy in every tap','charming','little bounce']
     },
     options: [
       { key:'utility',    emoji:'⚡', title:'Quiet, fast, gets out of the way',   desc:'The best UI is invisible.' },
@@ -645,10 +645,10 @@ const QUESTION_POOL = [
     hint: 'The narrower the audience, the bigger your edge.',
     placeholder: 'e.g. Other physiotherapists who hate writing their patient notes...',
     textToKey: {
-      self:     ['myself','my own work','personal','my practice'],
-      niche:    ['my field','peers','specialists','people like me','colleagues'],
-      business: ['firms','agencies','companies','professional','clients'],
-      broad:    ['everyone','consumers','wide','mainstream','public']
+      self:     ['myself','my own work','personal','my practice','for me','i\'d be the user','my own use'],
+      niche:    ['my field','peers','specialists','people like me','colleagues','others in my profession','same specialty','fellow'],
+      business: ['firms','agencies','companies','professional teams','clients','organisations','who hire experts','employers'],
+      broad:    ['everyone','consumers','wide audience','mainstream','public','accessible to all','anyone could use']
     },
     options: [
       { key:'self',     emoji:'🧠', title:'Honestly — me, in my own work',       desc:'I\'d be the first and most demanding user.' },
@@ -664,10 +664,10 @@ const QUESTION_POOL = [
     hint: 'The gap between what you know and what\'s common knowledge is the product.',
     placeholder: 'e.g. Most personal trainers track client progress in a Google Doc — there\'s a real opportunity there...',
     textToKey: {
-      productivity: ['workflow','process','operations','admin','tasks'],
-      health:       ['health','body','wellness','medical','symptoms'],
-      finance:      ['money','tax','investing','pricing','accounting'],
-      creative:     ['creative','craft','art','writing','music']
+      productivity: ['workflow','process','operations','admin','tasks','how work gets done','hidden processes','behind the scenes'],
+      health:       ['health','body','wellness','medical','symptoms','how bodies work','physiology','what doctors know'],
+      finance:      ['money','tax','investing','pricing','accounting','how money moves','financial truths','margins'],
+      creative:     ['creative','craft','art','writing','music','how great work is made','craft secrets','behind the polish']
     },
     options: [
       { key:'productivity', emoji:'⚙️', title:'How work actually gets done',     desc:'The hidden workflows people would pay to skip.' },
@@ -683,10 +683,10 @@ const QUESTION_POOL = [
     hint: 'Your network IS the distribution. Who\'s in it?',
     placeholder: 'e.g. I know a bunch of indie podcasters who all complain about the same three things...',
     textToKey: {
-      self:     ['just me','myself','personal'],
-      niche:    ['my community','subculture','niche','tight group','fans'],
-      business: ['founders','executives','professionals','industry','b2b'],
-      broad:    ['everyone','mainstream','wide audience','consumers']
+      self:     ['just me','myself','personal','for my own connection','just relationships'],
+      niche:    ['my community','subculture','niche','tight group','fans','my scene','my tribe','specific crowd','deep in'],
+      business: ['founders','executives','professionals','industry','b2b','people with budgets','business contacts','clients'],
+      broad:    ['everyone','mainstream','wide audience','consumers','huge crowd','the masses','general public']
     },
     options: [
       { key:'self',     emoji:'🧍', title:'Just me — networking is for connection',  desc:'I\'d build for myself; the network is just relationships.' },
@@ -702,10 +702,10 @@ const QUESTION_POOL = [
     hint: 'The format of connection tells us what to build.',
     placeholder: 'e.g. I\'m always the one introducing two strangers who turn out to need each other...',
     textToKey: {
-      utility:    ['intro','match','connect','find','match-making'],
-      tracker:    ['progress','accountability','check-in','goals'],
-      social:     ['community','group','conversation','chat','share'],
-      delightful: ['celebrate','events','fun','play','games']
+      utility:    ['intro','match','connect the right','find the right person','matchmaking','pairing','introduce two','clean intro'],
+      tracker:    ['progress','accountability','check-in','goals','keep everyone on track','collective progress','gentle pressure'],
+      social:     ['community','group','conversation','chat','a space','everyone joins','discussion','forum','people hanging out'],
+      delightful: ['celebrate','events','fun','play','games','a moment of joy','rituals','party','joy together']
     },
     options: [
       { key:'utility',    emoji:'🤝', title:'Matching the right two people',      desc:'Intros and matchmaking — clean and useful.' },
@@ -721,10 +721,10 @@ const QUESTION_POOL = [
     hint: 'Revenue lives where pain meets a budget.',
     placeholder: 'e.g. Small law firms that bleed money on admin and have no IT person...',
     textToKey: {
-      self:     ['myself','i\'d pay','personal','my own use'],
-      niche:    ['enthusiasts','hobbyists','prosumers','small group'],
-      business: ['business','company','firm','professional','b2b','team'],
-      broad:    ['consumers','mass market','everyone','public']
+      self:     ['myself','i\'d pay for it','personal','my own use','start with me','if it\'s worth my money'],
+      niche:    ['enthusiasts','hobbyists','prosumers','small group','passionate niche','superfans','a dedicated few'],
+      business: ['business','company','firm','professional','b2b','team','real budgets','small business','enterprise'],
+      broad:    ['consumers','mass market','everyone','public','volume','millions','huge audience','small price each']
     },
     options: [
       { key:'self',     emoji:'💵', title:'I\'d pay for it myself — start there',   desc:'If it\'s worth my money, it\'s worth others\'.' },
@@ -740,10 +740,10 @@ const QUESTION_POOL = [
     hint: 'How users pay shapes what you actually build.',
     placeholder: 'e.g. I want a quiet monthly subscription that compounds while I sleep...',
     textToKey: {
-      utility:    ['subscription','saas','monthly','recurring'],
-      tracker:    ['premium','usage','tiers','metered'],
-      social:     ['community','membership','creator','audience'],
-      delightful: ['one-off','purchase','app store','consumer']
+      utility:    ['subscription','saas','monthly','recurring','quiet monthly','they depend on it','recurring revenue'],
+      tracker:    ['premium','usage-based','tiers','metered','free to try','freemium','pay as you grow','upgrade'],
+      social:     ['community','membership','creator','audience','pay to belong','members','join something'],
+      delightful: ['one-off','one-time purchase','app store','consumer','buy once','pay once','paid download']
     },
     options: [
       { key:'utility',    emoji:'🔁', title:'Quiet monthly subscriptions',       desc:'Recurring revenue from people who depend on it.' },
@@ -759,10 +759,10 @@ const QUESTION_POOL = [
     hint: 'Speed-to-revenue depends on what you bring to the table.',
     placeholder: 'e.g. I can build it myself this weekend if I keep it small enough...',
     textToKey: {
-      builder:   ['build','ship','code','prototype','technical'],
-      designer:  ['design','look','polish','brand','aesthetic'],
-      expert:    ['knowledge','expertise','specialist','consult','field'],
-      connector: ['network','audience','people','community','reach']
+      builder:   ['build it myself','ship','code','prototype','technical','this weekend','i can make it','no developer'],
+      designer:  ['design','make it look good','polish','brand','aesthetic','premium feel','justify the price','looks worth paying'],
+      expert:    ['knowledge','expertise','specialist','consult','my field','productize what i know','charge for what i know','high-margin'],
+      connector: ['network','audience','people i know','community','reach','i can sell to them','already have the people','distribution']
     },
     options: [
       { key:'builder',   emoji:'🛠️', title:'I\'ll just build it this weekend',     desc:'Skip the wait — code is my fastest path.' },
@@ -778,10 +778,10 @@ const QUESTION_POOL = [
     hint: 'A personal tool only works if you actually open it.',
     placeholder: 'e.g. Every morning with coffee — it has to fit into a ritual I already have...',
     textToKey: {
-      utility:    ['daily','everyday','always','open often'],
-      tracker:    ['weekly','log','journal','review','track'],
-      social:     ['when others','share','social','occasional'],
-      delightful: ['fun','occasional','treat','enjoy']
+      utility:    ['daily','every day','every morning','always','open often','part of my routine','constantly','all the time'],
+      tracker:    ['weekly','log','journal','review','track','once a week','check-in','reflection','look back'],
+      social:     ['when others','share','social','when friends','with people','group moments','when someone pulls me in'],
+      delightful: ['occasional','treat','enjoy','as a treat','small dose of joy','now and then','when i want fun']
     },
     options: [
       { key:'utility',    emoji:'⏰', title:'Every single day, automatically',     desc:'Part of my daily routine without thinking.' },
@@ -797,10 +797,10 @@ const QUESTION_POOL = [
     hint: 'Scratch-your-own-itch can stay tiny or scale wildly. Your call.',
     placeholder: 'e.g. Honestly, if it works for me I\'d probably show 5 friends and stop there...',
     textToKey: {
-      self:     ['just me','keep it','private','no one','myself'],
-      niche:    ['few friends','small group','my people','tribe'],
-      business: ['team at work','colleagues','company','work'],
-      broad:    ['anyone','public','everyone','share widely']
+      self:     ['just me','keep it private','private','no one else','myself','never share','only mine'],
+      niche:    ['few friends','small group','my people','tribe','handful of friends','small circle','show 5 friends'],
+      business: ['team at work','colleagues','company','at work','my coworkers','useful at work','my team'],
+      broad:    ['anyone','public','everyone','share widely','release it','open to all','thousands']
     },
     options: [
       { key:'self',     emoji:'🔒', title:'No — it\'s just for me',               desc:'A personal tool I never need to share.' },
@@ -816,10 +816,10 @@ const QUESTION_POOL = [
     hint: 'Impact gets sharper when the beneficiary is specific.',
     placeholder: 'e.g. Caregivers of elderly parents who are quietly burning out...',
     textToKey: {
-      self:     ['me','myself','my own life'],
-      niche:    ['specific group','underserved','community','those who'],
-      business: ['workers','employees','small business','sector'],
-      broad:    ['everyone','public','society','humans']
+      self:     ['me','myself','my own life','i need this too','i count too','starting with me'],
+      niche:    ['specific group','underserved','community','those who','nobody builds for','overlooked group','a particular cohort'],
+      business: ['workers','employees','small business','sector','hard industry','a tough job','people in a trade'],
+      broad:    ['everyone','public','society','humans','at scale','the widest','anyone broadly','all people']
     },
     options: [
       { key:'self',     emoji:'🧍', title:'Mine — I\'m someone who needs this',     desc:'I count too. Starting here is honest.' },
@@ -835,10 +835,10 @@ const QUESTION_POOL = [
     hint: 'Fun lives in feeling. Pick the one you want to create.',
     placeholder: 'e.g. That little buzz when you open a great game — surprise, curiosity, a smile...',
     textToKey: {
-      utility:    ['satisfying','clever','smart','clean'],
-      tracker:    ['progress','streak','growth','collect'],
-      social:     ['together','shared','laugh','social'],
-      delightful: ['joy','surprise','delight','wonder','magical']
+      utility:    ['satisfying','clever','smart','clean','just works','a satisfying click','neat','crisp'],
+      tracker:    ['progress','streak','growth','collect','level up','tiny wins','build a habit','points'],
+      social:     ['together','shared','laugh','social','with friends','shared moments','stories','play together'],
+      delightful: ['joy','surprise','delight','wonder','magical','whoa','little buzz','smile','a treat']
     },
     options: [
       { key:'utility',    emoji:'🧩', title:'A clever, satisfying click',           desc:'The feeling of something just working.' },
@@ -854,10 +854,10 @@ const QUESTION_POOL = [
     hint: 'Productivity tools win when they target a specific role.',
     placeholder: 'e.g. Freelancers chasing late invoices instead of doing actual work...',
     textToKey: {
-      self:     ['my own','myself','i waste','my workflow'],
-      niche:    ['freelancers','specialists','specific role','prosumers'],
-      business: ['teams','companies','employees','enterprise'],
-      broad:    ['anyone working','knowledge workers','everyone']
+      self:     ['my own','myself','i waste hours','my workflow','i lose hours','start with me','my own problems'],
+      niche:    ['freelancers','specialists','specific role','prosumers','creators','a clear profession','particular job'],
+      business: ['teams','companies','employees','enterprise','coordinate','between people','departments','organisations'],
+      broad:    ['anyone working','knowledge workers','everyone','works on a screen','horizontal','any office worker']
     },
     options: [
       { key:'self',     emoji:'🧍', title:'Mine — I lose hours every week',         desc:'Start with my own workflow problems.' },
@@ -873,10 +873,10 @@ const QUESTION_POOL = [
     hint: 'The shape of the tool decides how people use it.',
     placeholder: 'e.g. A tiny menu-bar app that does exactly one thing brilliantly...',
     textToKey: {
-      utility:    ['one thing','simple','focused','tool'],
-      tracker:    ['dashboard','metrics','progress','log'],
-      social:     ['shared','team','collab','chat'],
-      delightful: ['beautiful','calm','warm','feels good']
+      utility:    ['one thing','does one thing','simple','focused','tool','small and sharp','menu-bar','hard to misuse','single purpose'],
+      tracker:    ['dashboard','metrics','progress','log','makes work visible','see patterns','blockers','overview','analytics'],
+      social:     ['shared','team','collab','chat','shared space','team works in','together','coordination'],
+      delightful: ['beautiful','calm','warm','feels good','calm place','focus','doesn\'t feel like punishment','soothing']
     },
     options: [
       { key:'utility',    emoji:'🛠️', title:'A focused tool that does ONE thing',    desc:'Small, sharp, hard to misuse.' },
@@ -892,10 +892,10 @@ const QUESTION_POOL = [
     hint: 'How you motivate yourself tells you how to motivate others.',
     placeholder: 'e.g. I respond to seeing a graph go up — not to guilt or alarms...',
     textToKey: {
-      utility:    ['simple','quick','easy','low effort'],
-      tracker:    ['track','log','data','metrics','streak'],
-      social:     ['friends','accountability','community','share'],
-      delightful: ['fun','game','enjoyable','playful']
+      utility:    ['simple','quick','easy','low effort','dead simple','lower the friction','effortless','just do it'],
+      tracker:    ['track','log','data','metrics','streak','see the numbers','graph','numbers move','patterns'],
+      social:     ['friends','accountability','community','share','people doing it too','support group','others keep me in'],
+      delightful: ['fun','game','enjoyable','playful','turn it into a game','if it\'s fun','rewarding','playful nudge']
     },
     options: [
       { key:'utility',    emoji:'⏱️', title:'Make it dead simple to act',          desc:'Lower the friction, the rest follows.' },
@@ -911,10 +911,10 @@ const QUESTION_POOL = [
     hint: 'Health is huge. Pick a person you can picture.',
     placeholder: 'e.g. People in their 40s who suddenly need to care about sleep and bloodwork...',
     textToKey: {
-      self:     ['myself','my own','me','personal'],
-      niche:    ['specific condition','patients','underserved','community'],
-      business: ['employers','clinics','providers','workplace'],
-      broad:    ['everyone','general public','consumers']
+      self:     ['myself','my own health','me','personal','feel better myself','i want to feel better','my body'],
+      niche:    ['specific condition','patients','underserved','community','a particular group','chronic','people with'],
+      business: ['employers','clinics','providers','workplace','hospitals','b2b health','where decisions get made'],
+      broad:    ['everyone','general public','consumers','broadly','mass wellness','anyone','the public']
     },
     options: [
       { key:'self',     emoji:'🧍', title:'Mine — I want to feel better',          desc:'My own health is the honest starting point.' },
@@ -930,10 +930,10 @@ const QUESTION_POOL = [
     hint: 'Money problems are emotional. Get specific about whose.',
     placeholder: 'e.g. Freelancers who never know what they actually take home after tax...',
     textToKey: {
-      self:     ['myself','my own','me','personal'],
-      niche:    ['freelancers','creators','specific group','immigrants'],
-      business: ['small business','firms','accountants','b2b'],
-      broad:    ['everyone','consumers','general public']
+      self:     ['myself','my own money','me','personal','for myself first','i don\'t feel in control','my finances'],
+      niche:    ['freelancers','creators','specific group','immigrants','gig workers','a particular cohort','weird money problems'],
+      business: ['small business','firms','accountants','b2b','drowning in admin','companies','bookkeepers'],
+      broad:    ['everyone','consumers','general public','regular people','the masses','anyone','ordinary people']
     },
     options: [
       { key:'self',     emoji:'💼', title:'Mine — I don\'t feel in control',      desc:'I want this for myself first.' },
@@ -949,10 +949,10 @@ const QUESTION_POOL = [
     hint: 'Finance UX is usually anxiety. What\'s yours?',
     placeholder: 'e.g. Calm. I want to open it and feel like an adult, not a child being scolded...',
     textToKey: {
-      utility:    ['simple','clear','no friction','just works'],
-      tracker:    ['visibility','data','dashboard','overview'],
-      social:     ['together','shared','partners','family'],
-      delightful: ['calm','warm','reassuring','human']
+      utility:    ['simple','clear','no friction','just works','get the thing done','no drama','straightforward','task done'],
+      tracker:    ['visibility','data','dashboard','overview','see where i stand','at a glance','no surprises','full picture'],
+      social:     ['together','shared money','partners','family','couples','without fights','joint','with my partner'],
+      delightful: ['calm','warm','reassuring','human','without the dread','feel like an adult','soothing','gentle']
     },
     options: [
       { key:'utility',    emoji:'✅', title:'Dead simple — get the thing done',    desc:'No drama, just the task completed.' },
@@ -968,10 +968,10 @@ const QUESTION_POOL = [
     hint: 'Creative tools are intimate. Pick the creator you understand.',
     placeholder: 'e.g. Hobby musicians who never share anything because the tools are intimidating...',
     textToKey: {
-      self:     ['myself','my own','my craft'],
-      niche:    ['hobbyists','specific','indie','underground'],
-      business: ['professionals','agencies','studios','working creatives'],
-      broad:    ['anyone','beginners','everyone','consumers']
+      self:     ['myself','my own creative work','my craft','for my own practice','a tool i\'d use','me as a creator'],
+      niche:    ['hobbyists','specific medium','indie','underground','amateur','passionate hobby','a particular art form'],
+      business: ['professionals','agencies','studios','working creatives','pros','serious tools','paid creatives'],
+      broad:    ['anyone','beginners','everyone','consumers','total beginners','lower the barrier','first-timers']
     },
     options: [
       { key:'self',     emoji:'🎨', title:'Me — for my own creative work',         desc:'A tool I\'d use in my own practice.' },
@@ -987,10 +987,10 @@ const QUESTION_POOL = [
     hint: 'The right tool disappears. What does yours do?',
     placeholder: 'e.g. Something that gets out of my way completely and just lets me make...',
     textToKey: {
-      utility:    ['fast','out of the way','simple','sharp'],
-      tracker:    ['versions','progress','project','iterate'],
-      social:     ['share','collab','community','remix'],
-      delightful: ['playful','expressive','toy','delight']
+      utility:    ['fast','out of the way','simple','sharp','disappears','just lets me make','pro tool','no distraction'],
+      tracker:    ['versions','progress','project','iterate','keep things sane','organise my work','history','revisions'],
+      social:     ['share','collab','community','remix','built for sharing','collaborate','show others','woven in'],
+      delightful: ['playful','expressive','toy','delight','feels like a toy','fun first','joyful','springy']
     },
     options: [
       { key:'utility',    emoji:'✂️', title:'Sharp and out of the way',           desc:'A pro tool that disappears in use.' },
@@ -1006,10 +1006,10 @@ const QUESTION_POOL = [
     hint: 'A tool of one can still be a win — if it pays off.',
     placeholder: 'e.g. If it saved me an hour a week, I\'d call that a massive personal victory...',
     textToKey: {
-      income:   ['saves money','income','time is money','revenue'],
-      personal: ['learn','grow','feel better','myself','daily'],
-      impact:   ['life','meaning','better','change'],
-      fun:      ['fun','enjoy','play','curiosity']
+      income:   ['saves money','income','time is money','revenue','saves me hours','pays for itself','an hour a week','cash'],
+      personal: ['learn','grow','feel better','better version of me','daily','build a habit','self improvement','skill'],
+      impact:   ['solves a problem','meaning','genuine fix','change','a real fix','haunts me','hard problem'],
+      fun:      ['fun','enjoy','play','curiosity','pure joy','just fun to use','delightful','playful']
     },
     options: [
       { key:'income',   emoji:'⏳', title:'Saving me hours or real money',        desc:'A tool that pays for itself in time or cash.' },
@@ -1025,10 +1025,10 @@ const QUESTION_POOL = [
     hint: 'Niches reward depth. Which kind of depth do you bring?',
     placeholder: 'e.g. They need to see I\'m one of them — same vocabulary, same frustrations...',
     textToKey: {
-      builder:   ['built','technical','engineering','craft'],
-      designer:  ['design','aesthetic','look','feel'],
-      expert:    ['expert','insider','i know this','specialist'],
-      connector: ['community','people','network','tribe']
+      builder:   ['built','build quality','technical','engineering','craft','made with care','solid build','robust'],
+      designer:  ['design','aesthetic','look','feel','a look for us','visual signal','style','signals belonging'],
+      expert:    ['expert','insider knowledge','i know this','specialist','baked-in defaults','details only i know','insider'],
+      connector: ['community','people','network','tribe','one of them','my presence','i\'m in their world','part of the scene']
     },
     options: [
       { key:'builder',   emoji:'🔧', title:'Craft — the build quality earns trust', desc:'Built with care that insiders notice.' },
@@ -1044,10 +1044,10 @@ const QUESTION_POOL = [
     hint: 'B2B sales is trust before product. What\'s your trust?',
     placeholder: 'e.g. I worked in their industry for 10 years — they\'ll trust me before they trust a demo...',
     textToKey: {
-      builder:   ['build','reliable','technical','enterprise-grade'],
-      designer:  ['polish','professional','look','demo'],
-      expert:    ['industry','domain','specialist','i\'ve worked'],
-      connector: ['relationships','intros','warm','network']
+      builder:   ['build','reliable','rock-solid','technical','enterprise-grade','it just works','dependable','robust'],
+      designer:  ['polish','professional','looks the part','demo','looks like serious software','premium look','signals money'],
+      expert:    ['industry','domain expertise','specialist','i\'ve worked in','speak their language','peer','i know their world'],
+      connector: ['relationships','intros','warm intros','network','people they trust','referrals','open doors']
     },
     options: [
       { key:'builder',   emoji:'🛠️', title:'Rock-solid build they can trust',     desc:'Enterprise-grade reliability earns the deal.' },
@@ -1063,10 +1063,10 @@ const QUESTION_POOL = [
     hint: 'Broad audiences need a reason to share. Pick yours.',
     placeholder: 'e.g. Something so satisfying you screenshot it and text it to your group chat...',
     textToKey: {
-      utility:    ['useful','solves','works','must-have'],
-      tracker:    ['streak','progress','collect','stats'],
-      social:     ['share','viral','group','text it'],
-      delightful: ['cute','delight','wow','beautiful']
+      utility:    ['useful','genuinely useful','solves a problem','it works','must-have','actually helps','practical','indispensable'],
+      tracker:    ['streak','progress','collect','stats','numbers to brag about','screenshot my stats','leaderboard','milestones'],
+      social:     ['share','viral','group chat','text it','built to share','social loop','tell friends','send to people'],
+      delightful: ['cute','delight','wow','beautiful','so delightful','show it off','adorable','jaw-dropping']
     },
     options: [
       { key:'utility',    emoji:'🪛', title:'It\'s just genuinely useful',         desc:'People share things that actually help them.' },
@@ -1082,10 +1082,10 @@ const QUESTION_POOL = [
     hint: 'Useful tools win in domains full of crappy useful tools.',
     placeholder: 'e.g. Honestly, every accounting tool feels like it was built in 2003...',
     textToKey: {
-      productivity: ['work','workflow','tasks','admin'],
-      health:       ['health','body','wellness','medical'],
-      finance:      ['money','tax','invoice','accounting'],
-      creative:     ['creative','art','make','design tools']
+      productivity: ['work','workflow','tasks','admin','office tools','productivity software','daily work tools','project tools'],
+      health:       ['health','body','wellness','medical','fitness tools','tracking health','wellbeing apps'],
+      finance:      ['money','tax','invoice','accounting','finance tools','budgeting','payments','bookkeeping'],
+      creative:     ['creative','art','make','design tools','tools for creating','editing tools','craft software']
     },
     options: [
       { key:'productivity', emoji:'📋', title:'Work and productivity tools',       desc:'Where people suffer through bad software daily.' },
@@ -1101,10 +1101,10 @@ const QUESTION_POOL = [
     hint: 'The world has too many trackers. Which one is genuinely missing?',
     placeholder: 'e.g. Mood and energy across the day — most apps treat it like a checkbox...',
     textToKey: {
-      productivity: ['time','tasks','focus','work','output'],
-      health:       ['sleep','mood','body','symptoms','energy'],
-      finance:      ['spending','income','savings','net worth'],
-      creative:     ['practice','progress','creative output','reps']
+      productivity: ['time','tasks','focus','work','output','what i got done','deep work hours','real productivity'],
+      health:       ['sleep','mood','body','symptoms','energy','how i feel','energy levels','physical signals'],
+      finance:      ['spending','income','savings','net worth','money in and out','cash flow','where money goes'],
+      creative:     ['practice','creative output','reps','progress on craft','skill growth','my work over time','sessions']
     },
     options: [
       { key:'productivity', emoji:'⏱️', title:'Time, focus, and actual output',    desc:'Track what you really got done — not just busy work.' },
@@ -1120,10 +1120,10 @@ const QUESTION_POOL = [
     hint: 'Social means different things. Pick the size of "us".',
     placeholder: 'e.g. A small group of close friends — not a feed full of strangers...',
     textToKey: {
-      self:     ['just me','reflect','solo'],
-      niche:    ['close friends','small group','community','tribe'],
-      business: ['team','colleagues','coworkers','workplace'],
-      broad:    ['everyone','public','viral','strangers']
+      self:     ['just me','reflect','solo','personal layer','quiet','social inputs but private','for myself'],
+      niche:    ['close friends','small group','community','tribe','people who know each other','my circle','tight-knit'],
+      business: ['team','colleagues','coworkers','workplace','at work','coordination','company culture'],
+      broad:    ['everyone','public','viral','strangers','open to anyone','public space','the masses']
     },
     options: [
       { key:'self',     emoji:'🧍', title:'Just me — but reflecting on others',    desc:'A quiet personal layer with social inputs.' },
@@ -1139,10 +1139,10 @@ const QUESTION_POOL = [
     hint: 'Delight is a gift. Who are you giving it to?',
     placeholder: 'e.g. Tired parents who never get a moment of pure fun in their app stack...',
     textToKey: {
-      self:     ['myself','my own','me'],
-      niche:    ['specific group','community','people who'],
-      business: ['workers','professionals','team'],
-      broad:    ['everyone','anyone','consumers']
+      self:     ['myself','my own day','me','more delight in my day','a treat for me','for myself first'],
+      niche:    ['specific group','community','people who','overlooked','a particular crowd','who need a smile','underserved'],
+      business: ['workers','professionals','team','joyless software','grim work','at work','people stuck in tools'],
+      broad:    ['everyone','anyone','consumers','the world','mass delight','any person','broadly']
     },
     options: [
       { key:'self',     emoji:'🧍', title:'Mine — I want more delight in my day', desc:'A treat for myself, first.' },
